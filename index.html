@@ -15,19 +15,27 @@
         :root { --main-gold: #c2a379; --bg-gray: #f8f8f8; }
         body { font-family: 'Noto Serif KR', serif; margin: 0; color: #333; background: #fff; line-height: 1.6; }
         .section { padding: 80px 20px; text-align: center; overflow: hidden; }
+        
         .hero { 
-        height: 100vh; 
-        /* 사진 경로를 방금 만든 폴더와 파일명으로 교체합니다 */
-        background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), 
-                    url('./assets/images/KakaoTalk_Photo_2026-04-17-20-33-59 022.p...') center/cover no-repeat; 
-        display: flex; 
-        align-items: flex-end; 
-        justify-content: center; 
-        padding-bottom: 80px; /* 글자 위치를 살짝 위로 조정 */
-        color: white; 
-        text-shadow: 0 2px 10px rgba(0,0,0,0.5); 
-    }
-</style>
+            height: 100vh; 
+            /* 이미지 경로를 ./assets/images/main.png로 설정했습니다 */
+            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), 
+                        url('./assets/images/main.png') center/cover no-repeat; 
+            display: flex; 
+            align-items: flex-end; 
+            justify-content: center; 
+            padding-bottom: 80px; 
+            color: white; 
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5); 
+        }
+        
+        .btn-gold { background: var(--main-gold); color: white; border: none; padding: 12px 30px; border-radius: 5px; cursor: pointer; text-decoration: none; display: inline-block; margin: 10px; }
+        .kakao-pay { background: #fee500; color: #3c1e1e; font-weight: bold; border-radius: 8px; padding: 15px; display: inline-flex; align-items: center; text-decoration: none; }
+        #guestbook { background: var(--bg-gray); border-radius: 15px; padding: 20px; margin-top: 30px; }
+        
+        /* 계좌 복사 기능을 위한 스타일 */
+        button:active { opacity: 0.7; }
+    </style>
 </head>
 <body>
 
@@ -64,44 +72,64 @@
         </div>
     </section>
 
- <section class="section" data-aos="fade-up">
-    <h3>마음 전하실 곳</h3>
-    <p>참석이 어려우신 분들을 위해<br>송금 페이지를 마련했습니다.</p>
+    <section class="section" data-aos="fade-up">
+        <h3>마음 전하실 곳</h3>
+        <p>참석이 어려우신 분들을 위해<br>송금 페이지를 마련했습니다.</p>
 
-    <div style="max-width: 400px; margin: 0 auto; text-align: left;">
-        
-        <details style="background: #fdfdfd; border: 1px solid #eee; border-radius: 10px; margin-bottom: 10px;">
-            <summary style="padding: 15px; cursor: pointer; font-weight: bold; color: var(--main-gold); outline: none;">
-                신랑측 계좌번호 확인하기
-            </summary>
-            <div style="padding: 15px; border-top: 1px solid #eee; background: #fff;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                    <span>우리은행 <strong id="acc-groom">1002-xxx-xxxxxx</strong></span>
-                    <button onclick="copyAccount('acc-groom')" style="padding: 5px 10px; font-size: 0.8rem; border: 1px solid var(--main-gold); background: none; color: var(--main-gold); border-radius: 4px; cursor: pointer;">복사</button>
+        <div style="max-width: 400px; margin: 0 auto; text-align: left;">
+            
+            <details style="background: #fdfdfd; border: 1px solid #eee; border-radius: 10px; margin-bottom: 10px;">
+                <summary style="padding: 15px; cursor: pointer; font-weight: bold; color: var(--main-gold); outline: none;">
+                    신랑측 계좌번호 확인하기
+                </summary>
+                <div style="padding: 15px; border-top: 1px solid #eee; background: #fff;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <span>우리은행 <strong id="acc-groom">1002-xxx-xxxxxx</strong></span>
+                        <button onclick="copyAccount('acc-groom')" style="padding: 5px 10px; font-size: 0.8rem; border: 1px solid var(--main-gold); background: none; color: var(--main-gold); border-radius: 4px; cursor: pointer;">복사</button>
+                    </div>
+                    <a href="kakaotalk://kakaopay/money/to/qr?qr_code=본인링크" class="kakao-pay" style="display: block; text-align: center; font-size: 0.9rem;">카카오페이 송금</a>
                 </div>
-                <a href="kakaotalk://kakaopay/money/to/qr?qr_code=본인링크" class="kakao-pay" style="display: block; text-align: center; font-size: 0.9rem;">카카오페이 송금</a>
-            </div>
-        </details>
+            </details>
 
-        <details style="background: #fdfdfd; border: 1px solid #eee; border-radius: 10px;">
-            <summary style="padding: 15px; cursor: pointer; font-weight: bold; color: var(--main-gold); outline: none;">
-                신부측 계좌번호 확인하기
-            </summary>
-            <div style="padding: 15px; border-top: 1px solid #eee; background: #fff;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                    <span>카카오뱅크 <strong id="acc-bride">3333-xx-xxxxxxx</strong></span>
-                    <button onclick="copyAccount('acc-bride')" style="padding: 5px 10px; font-size: 0.8rem; border: 1px solid var(--main-gold); background: none; color: var(--main-gold); border-radius: 4px; cursor: pointer;">복사</button>
+            <details style="background: #fdfdfd; border: 1px solid #eee; border-radius: 10px;">
+                <summary style="padding: 15px; cursor: pointer; font-weight: bold; color: var(--main-gold); outline: none;">
+                    신부측 계좌번호 확인하기
+                </summary>
+                <div style="padding: 15px; border-top: 1px solid #eee; background: #fff;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <span>카카오뱅크 <strong id="acc-bride">3333-xx-xxxxxxx</strong></span>
+                        <button onclick="copyAccount('acc-bride')" style="padding: 5px 10px; font-size: 0.8rem; border: 1px solid var(--main-gold); background: none; color: var(--main-gold); border-radius: 4px; cursor: pointer;">복사</button>
+                    </div>
+                    <a href="https://toss.im/_m/아이디" style="display: block; text-align: center; background: #0050ff; color: white; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem;">토스로 송금하기</a>
                 </div>
-                <a href="https://toss.im/_m/아이디" style="display: block; text-align: center; background: #0050ff; color: white; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem;">토스로 송금하기</a>
-            </div>
-        </details>
+            </details>
 
-    </div>
-</section>
+        </div>
+    </section>
+
+    <section class="section" style="background: var(--bg-gray);">
+        <div data-aos="fade-up">
+            <h3>방명록</h3>
+            <div id="guestbook">
+                <input type="text" id="name" placeholder="이름" style="width: 80%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ddd;"><br>
+                <textarea id="message" placeholder="축하 메시지를 남겨주세요" style="width: 80%; padding: 10px; height: 100px; border-radius: 5px; border: 1px solid #ddd;"></textarea><br>
+                <button onclick="saveMessage()" class="btn-gold">메시지 남기기</button>
+                <div id="guestbook-list" style="margin-top: 20px; text-align: left;"></div>
+            </div>
+        </div>
+    </section>
 
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
     <script>
+        // 계좌 복사 함수
+        function copyAccount(id) {
+            const text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert("계좌번호가 복사되었습니다.");
+            });
+        }
+
         // [승건님 설정 구역] 파이어베이스 콘솔에서 발급받은 키를 아래에 넣으세요
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
