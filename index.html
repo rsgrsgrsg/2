@@ -15,11 +15,19 @@
         :root { --main-gold: #c2a379; --bg-gray: #f8f8f8; }
         body { font-family: 'Noto Serif KR', serif; margin: 0; color: #333; background: #fff; line-height: 1.6; }
         .section { padding: 80px 20px; text-align: center; overflow: hidden; }
-        .hero { height: 100vh; background: url('https://your-image-url.com/main.jpg') center/cover no-repeat; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 50px; color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-        .btn-gold { background: var(--main-gold); color: white; border: none; padding: 12px 30px; border-radius: 5px; cursor: pointer; text-decoration: none; display: inline-block; margin: 10px; }
-        .kakao-pay { background: #fee500; color: #3c1e1e; font-weight: bold; border-radius: 8px; padding: 15px; display: inline-flex; align-items: center; text-decoration: none; }
-        #guestbook { background: var(--bg-gray); border-radius: 15px; padding: 20px; margin-top: 30px; }
-    </style>
+        .hero { 
+        height: 100vh; 
+        /* 사진 경로를 방금 만든 폴더와 파일명으로 교체합니다 */
+        background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), 
+                    url('./assets/images/KakaoTalk_Photo_2026-04-17-20-33-59 022.p...') center/cover no-repeat; 
+        display: flex; 
+        align-items: flex-end; 
+        justify-content: center; 
+        padding-bottom: 80px; /* 글자 위치를 살짝 위로 조정 */
+        color: white; 
+        text-shadow: 0 2px 10px rgba(0,0,0,0.5); 
+    }
+</style>
 </head>
 <body>
 
