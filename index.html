@@ -4,36 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-    <meta name="googlebot" content="noindex, nofollow">
-    <meta name="naverbot" content="noindex, nofollow">
-    
-    <title>류승건 &amp; 이지연 결혼식 초대장</title>
+    <title>류승건 & 이지연 결혼식 초대장</title>
     
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;400;700&family=Montserrat:wght@100;300;400&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        :root {
-            --point-black: #000000;
-            --deep-gray: #333333;
-            --bg-white: #ffffff;
-        }
-
-        /* [보안] 드래그 및 선택 금지 */
-        * { 
-            box-sizing: border-box; 
-            -webkit-tap-highlight-color: transparent;
-            -webkit-user-select: none; 
-            user-select: none;
-        }
-
-        /* 입력창 및 복사 영역 예외 허용 */
-        input, textarea, [id*="acc-"], [id*="addr-"] { 
-            -webkit-user-select: text; 
-            user-select: text; 
-        }
-
+        :root { --point-black: #000000; --deep-gray: #333333; --bg-white: #ffffff; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; }
+        input, textarea, [id*="acc-"], [id*="addr-"] { -webkit-user-select: text; user-select: text; }
         body { font-family: 'Noto Serif KR', serif; margin: 0; color: var(--point-black); background: var(--bg-white); line-height: 1.8; word-break: keep-all; }
 
         /* AOS 안전장치 */
@@ -41,40 +20,30 @@
         html.aos-init [data-aos] { opacity: 0; }
         html.aos-init .aos-animate { opacity: 1 !important; }
 
-        .h-divider { width: 100%; height: 1px; background-color: var(--point-black); margin: 0; }
         .section { padding: 80px 30px; text-align: center; }
         .section-title { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--point-black); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 30px; display: block; }
+        .h-divider { width: 100%; height: 1px; background-color: var(--point-black); margin: 0; }
 
-        /* 1. Hero Slider */
+        /* 메인 슬라이더 */
         .hero-slider { height: 100vh; width: 100%; overflow: hidden; position: relative; background: #fff; }
         .hero-container { display: flex; height: 100%; width: 100%; will-change: transform; }
         .hero-item { min-width: 100%; height: 100%; position: relative; }
         .hero-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
-        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.15); border: none; color: white; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; font-size: 1.2rem; }
+        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.15); border: none; color: white; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; }
         .prev-btn { left: 10px; } .next-btn { right: 10px; }
         .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 60px; color: white; text-align: center; pointer-events: none; z-index: 5; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
         .hero-names { font-size: 2.2rem; font-weight: 400; letter-spacing: 8px; margin-bottom: 10px; }
         .hero-date { font-size: 1.1rem; letter-spacing: 2px; opacity: 0.9; font-weight: 400; }
 
-        /* 2. D-Day */
-        .countdown-wrap { display: flex; justify-content: center; gap: 30px; margin: 30px 0; }
-        .count-num { font-family: 'Montserrat', sans-serif; font-size: 1.8rem; font-weight: 300; }
-        .count-label { font-size: 0.65rem; color: #999; letter-spacing: 2px; }
-
-        /* 3. Location */
-        .address-box { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; }
-        .btn-copy-sm { border: 1px solid #000; background: none; padding: 2px 8px; font-size: 0.7rem; cursor: pointer; font-family: inherit; }
-        .map-link-area { width: 100%; display: block; margin: 20px auto; border: 1px solid #eee; background-color: #f4f4f4; background-size: cover; background-position: center; background-repeat: no-repeat; }
-
-        /* 4. Gallery Grid & Toggle */
+        /* 갤러리 그리드 */
         .gallery-wrap { position: relative; overflow: hidden; transition: max-height 0.5s ease-in-out; }
         .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 0 10px; }
-        .gallery-wrap.limited { max-height: 450px; } /* 약 3줄만 표시 */
+        .gallery-wrap.limited { max-height: 450px; }
         .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer; background: #f0f0f0; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
         .btn-more { margin: 20px auto; padding: 12px 30px; border: 1px solid #000; background: #fff; cursor: pointer; font-family: inherit; font-size: 0.85rem; display: block; }
 
-        /* 확대 뷰어 모달 스타일 */
+        /* 확대 뷰어 모달 */
         #galleryViewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10001; align-items: center; justify-content: center; }
         .viewer-content { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
         .viewer-img { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
@@ -83,22 +52,19 @@
         .v-prev { left: 10px; } .v-next { right: 10px; }
         .viewer-count { position: absolute; bottom: 40px; color: #fff; font-size: 0.85rem; letter-spacing: 2px; }
 
-        /* 5. Account & Guestbook */
+        /* 위치/디데이/계좌/방명록 공통 */
+        .address-box { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; }
+        .btn-copy-sm { border: 1px solid #000; background: none; padding: 4px 10px; font-size: 0.75rem; cursor: pointer; font-family: inherit; }
+        .map-link-area { width: 100%; display: block; margin: 20px auto; border: 1px solid #eee; background-color: #f4f4f4; background-size: cover; background-position: center; }
+        .btn-black { background: var(--point-black); color: white; border: none; padding: 18px; width: 100%; cursor: pointer; font-family: inherit; font-weight: 700; letter-spacing: 2px; }
         .gb-card { background: white; padding: 30px 20px; border: 1px solid #eee; max-width: 450px; margin: 0 auto; }
-        input, textarea { width: 100%; padding: 15px; border: 1px solid #eee; margin-bottom: 10px; font-family: inherit; font-size: 0.9rem; border-radius: 0; outline: none; }
-        .btn-black { background: var(--point-black); color: white; border: none; padding: 18px; width: 100%; cursor: pointer; letter-spacing: 2px; font-weight: 700; font-family: inherit; font-size: 0.9rem; }
-        
-        #gb-list { margin-top: 20px; max-height: 400px; overflow-y: auto; border-top: 1px solid #f2f2f2; padding-right: 5px; }
-        #gb-list::-webkit-scrollbar { width: 3px; }
-        #gb-list::-webkit-scrollbar-thumb { background: #ddd; }
+        input, textarea { width: 100%; padding: 15px; border: 1px solid #eee; margin-bottom: 10px; font-family: inherit; font-size: 0.9rem; outline: none; }
+        #gb-list { margin-top: 20px; max-height: 400px; overflow-y: auto; border-top: 1px solid #f2f2f2; }
         .guest-item { border-bottom: 1px solid #f2f2f2; padding: 20px 0; text-align: left; }
         .guest-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 5px; display: block; }
-        .guest-msg { font-size: 0.85rem; color: var(--deep-gray); line-height: 1.6; }
-
         .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
         .modal-content { background: white; padding: 40px 25px; width: 90%; max-width: 400px; text-align: center; position: relative; }
         .close-modal { position: absolute; right: 15px; top: 15px; font-size: 1.5rem; cursor: pointer; color: #999; }
-        .btn-kakaopay { display: flex; align-items: center; justify-content: center; gap: 8px; background: #FEE500; color: #191919; text-align: center; padding: 12px; font-size: 0.85rem; font-weight: 700; text-decoration: none; border-radius: 6px; margin-top: 10px; }
     </style>
 </head>
 <body oncontextmenu="return false">
@@ -115,7 +81,7 @@
         <button class="nav-btn next-btn" onclick="moveSlider(1)">&#10095;</button>
         <div class="hero-overlay">
             <div data-aos="fade-up" data-aos-duration="2000">
-                <h1 class="hero-names">류승건 &amp; 이지연</h1>
+                <h1 class="hero-names">류승건 & 이지연</h1>
                 <p class="hero-date">2026. 08. 15. 토요일 오후 12시</p>
             </div>
         </div>
@@ -125,27 +91,16 @@
 
     <section class="section" data-aos="fade-up">
         <span class="section-title">Invitation</span>
-        <p style="font-size: 1rem; line-height: 2.4;">곁에 있을 때 가장 나다워지는 사람을 만났습니다.<br>서로의 결을 닮아가는 사랑으로<br>함께 걸어갈 새날의 시작을 약속합니다.</p>
-    </section>
-
-    <div class="h-divider"></div>
-
-    <section class="section" data-aos="fade-up">
-        <span class="section-title">D-Day</span>
-        <div class="countdown-wrap">
-            <div class="count-item"><span class="count-num" id="days">00</span><br><span class="count-label">DAYS</span></div>
-            <div class="count-item"><span class="count-num" id="hours">00</span><br><span class="count-label">HOURS</span></div>
-            <div class="count-item"><span class="count-num" id="mins">00</span><br><span class="count-label">MINS</span></div>
-        </div>
+        <p style="font-size: 1.1rem; line-height: 2.4;">곁에 있을 때 가장 나다워지는 사람을 만났습니다.<br>서로의 결을 닮아가는 사랑으로<br>함께 걸어갈 새날의 시작을 약속합니다.</p>
     </section>
 
     <div class="h-divider"></div>
 
     <section class="section" data-aos="fade-up">
         <span class="section-title">Location</span>
-        <h3 style="font-weight: 700; font-size: 1.2rem; margin-bottom: 5px;">메리빌리아 더프레스티지</h3>
+        <h3 style="font-weight: 700; font-size: 1.3rem; margin-bottom: 10px;">메리빌리아 더프레스티지</h3>
         <div class="address-box">
-            <span id="addr-text" style="color: #888; font-size: 0.85rem;">경기 수원시 권선구 세화로 116 (서둔동)</span>
+            <span id="addr-text" style="color: #666; font-size: 0.95rem;">경기 수원시 권선구 세화로 116</span>
             <button class="btn-copy-sm" onclick="copyToClipboard('addr-text')">복사</button>
         </div>
         <a href="https://naver.me/5apDP7nI" target="_blank" class="map-link-area" 
@@ -168,7 +123,7 @@
     </section>
 
     <div id="galleryViewer">
-        <span class="viewer-close" onclick="closeViewer()">&times;</span>
+        <span class="viewer-close" onclick="closeViewer()">×</span>
         <div class="viewer-content" id="viewerContent">
             <button class="viewer-nav v-prev" onclick="changeViewImg(-1)">&#10094;</button>
             <img src="" class="viewer-img" id="currentViewerImg">
@@ -179,9 +134,8 @@
 
     <div class="h-divider"></div>
 
-    <section class="section" data-aos="fade-up" style="padding: 60px 30px;">
+    <section class="section" data-aos="fade-up">
         <span class="section-title">Account</span>
-        <p style="font-size: 0.9rem; margin-bottom: 25px;">축복해주시는 소중한 마음 잊지 않고<br>예쁘게 잘 살겠습니다.</p>
         <button onclick="openModal()" class="btn-black" style="max-width: 300px; margin: 0 auto; display: block;">마음 전하실 곳</button>
     </section>
 
@@ -199,23 +153,21 @@
 
     <div id="accModal" class="modal">
         <div class="modal-content">
-            <span class="close-modal" onclick="closeModal()">&times;</span>
-            <h3 style="font-family: 'Montserrat'; font-weight: 300; letter-spacing: 5px; border-bottom: 1px solid #000; padding-bottom: 10px; margin-bottom: 30px;">마음 전하실 곳</h3>
+            <span class="close-modal" onclick="closeModal()">×</span>
+            <h3 style="font-weight: 700; border-bottom: 1px solid #000; padding-bottom: 10px; margin-bottom: 20px;">마음 전하실 곳</h3>
             <div style="text-align: left; padding: 10px 0 15px; border-bottom: 1px solid #eee;">
-                <p style="font-size: 0.8rem; color: #888; margin: 0;">신랑 류승건</p>
+                <p style="font-size: 0.85rem; color: #888; margin-bottom: 5px;">신랑 류승건</p>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span id="acc-groom">우리 1002-841-241285</span>
+                    <span id="acc-groom" style="font-size: 1rem;">우리 1002-841-241285</span>
                     <button class="btn-copy-sm" onclick="copyToClipboard('acc-groom')">복사</button>
                 </div>
-                <a href="https://qr.kakaopay.com/FNfa3PrZO" target="_blank" class="btn-kakaopay">카카오페이 송금</a>
             </div>
             <div style="text-align: left; padding: 15px 0 10px;">
-                <p style="font-size: 0.8rem; color: #888; margin: 0;">신부 이지연</p>
+                <p style="font-size: 0.85rem; color: #888; margin-bottom: 5px;">신부 이지연</p>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span id="acc-bride">새마을 9003197848841</span>
+                    <span id="acc-bride" style="font-size: 1rem;">새마을 9003197848841</span>
                     <button class="btn-copy-sm" onclick="copyToClipboard('acc-bride')">복사</button>
                 </div>
-                <a href="https://qr.kakaopay.com/Ej8bBn70Q" target="_blank" class="btn-kakaopay">카카오페이 송금</a>
             </div>
         </div>
     </div>
@@ -225,40 +177,9 @@
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
     
     <script>
-        // AOS 및 보안 초기화
-        window.onload = function() {
-            try { AOS.init({ duration: 1200, once: true }); } catch (e) {}
-        };
+        window.onload = function() { AOS.init({ duration: 1200, once: true }); };
 
-        // 메인 슬라이더 (무한 로프)
-        let heroIdx = 1; const totalHero = 3; let isHeroMoving = false;
-        const heroContainer = document.getElementById('heroSlider');
-        if(heroContainer) heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`;
-
-        function moveSlider(dir) {
-            if (isHeroMoving || !heroContainer) return;
-            isHeroMoving = true;
-            heroIdx += dir;
-            heroContainer.style.transition = 'transform 0.4s ease-out';
-            heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`;
-        }
-
-        if(heroContainer) {
-            heroContainer.addEventListener('transitionend', () => {
-                isHeroMoving = false;
-                if (heroIdx === 0) { heroContainer.style.transition = 'none'; heroIdx = totalHero; heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`; }
-                else if (heroIdx === totalHero + 1) { heroContainer.style.transition = 'none'; heroIdx = 1; heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`; }
-            });
-            let hStartX = 0;
-            heroContainer.addEventListener('touchstart', e => hStartX = e.touches[0].clientX, {passive: true});
-            heroContainer.addEventListener('touchend', e => {
-                const diffX = hStartX - e.changedTouches[0].clientX;
-                if (Math.abs(diffX) > 50) moveSlider(diffX > 0 ? 1 : -1);
-            });
-        }
-
-        /** 갤러리 로직 통합 **/
-        // [수정] 비연속적 파일명 대응 리스트
+        // 갤러리 파일명 배열 (스크린샷 기반 비연속 파일명 반영)
         const galleryFiles = [
             'p01', 'p02', 'p03', 'p04', 'p05', 'p06', 
             'p11', 'p12', 'p13', 'p14', 'p15', 'p16', 'p17', 'p18', 'p19', 'p20', 'p21', 
@@ -274,14 +195,14 @@
             galleryFiles.forEach((name, idx) => {
                 const item = document.createElement('div');
                 item.className = 'gallery-item';
-                // [해결 1] 'onclick' 이벤트를 올바르게 주입했습니다.
-                item.innerHTML = `<img src="./assets/p00/${name}.png" loading="lazy" onclick="openViewer(${idx})" onerror="this.src='https://via.placeholder.com/300?text=No+Image'">`;
+                // [수정] onclick 이벤트를 확실히 할당했습니다.
+                item.innerHTML = `<img src="./assets/p00/${name}.png" loading="lazy" onclick="openViewer(${idx})" onerror="this.src='https://via.placeholder.com/300?text=Error'">`;
                 grid.appendChild(item);
             });
         }
         initGallery();
 
-        // [해결 2] 더보기/접기 토글 기능
+        // 더보기 및 접기 기능
         function toggleGallery() {
             const wrap = document.getElementById('galleryWrap');
             const btn = document.getElementById('moreBtn');
@@ -295,7 +216,7 @@
             }
         }
 
-        // 확대 뷰어 로직 (터치 스와이프 포함)
+        // 확대 뷰어 로직
         function openViewer(idx) {
             gViewIdx = idx; updateViewer();
             document.getElementById('galleryViewer').style.display = 'flex';
@@ -314,56 +235,39 @@
             document.getElementById('currentViewerImg').src = `./assets/p00/${name}.png`;
             document.getElementById('viewerCount').innerText = `${gViewIdx + 1} / ${totalGalleryImages}`;
         }
-        let vStartX = 0;
-        document.getElementById('viewerContent').addEventListener('touchstart', e => vStartX = e.changedTouches[0].screenX, {passive: true});
-        document.getElementById('viewerContent').addEventListener('touchend', e => {
-            const diff = vStartX - e.changedTouches[0].screenX;
-            if (Math.abs(diff) > 50) changeViewImg(diff > 0 ? 1 : -1);
-        }, {passive: true});
 
-        /** 기타 유틸리티 (복사, 모달, 파이어베이스) **/
-        function copyToClipboard(id) { const text = document.getElementById(id).innerText; navigator.clipboard.writeText(text).then(() => alert("복사되었습니다.")); }
+        // 기타 유틸리티
+        function copyToClipboard(id) {
+            const text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text).then(() => alert("복사되었습니다."));
+        }
         function openModal() { document.getElementById('accModal').style.display = 'flex'; }
         function closeModal() { document.getElementById('accModal').style.display = 'none'; }
         function sanitize(str) { const temp = document.createElement('div'); temp.textContent = str; return temp.innerHTML; }
 
+        // 메인 슬라이더 로직
+        let heroIdx = 1;
+        const heroContainer = document.getElementById('heroSlider');
+        function moveSlider(dir) {
+            heroIdx += dir;
+            heroContainer.style.transition = 'transform 0.4s ease-out';
+            heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`;
+        }
+        heroContainer.addEventListener('transitionend', () => {
+            if (heroIdx === 0) { heroContainer.style.transition = 'none'; heroIdx = 3; heroContainer.style.transform = `translateX(-300%)`; }
+            if (heroIdx === 4) { heroContainer.style.transition = 'none'; heroIdx = 1; heroContainer.style.transform = `translateX(-100%)`; }
+        });
+
+        // 파이어베이스 (예시)
         try {
-            const firebaseConfig = { apiKey: "AIzaSyD1LmVHTLYnecokZV67_hCDcM289fl3oiw", authDomain: "sg-jy-233e2.firebaseapp.com", databaseURL: "https://sg-jy-233e2-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "sg-jy-233e2", storageBucket: "sg-jy-233e2.firebasestorage.app", messagingSenderId: "217599075354", appId: "1:217599075354:web:c227474b5efc4fd280dda3" };
+            const firebaseConfig = { apiKey: "...", databaseURL: "...", projectId: "...", appId: "..." };
             firebase.initializeApp(firebaseConfig);
             const database = firebase.database();
-            
-            // 디데이
-            function updateCountdown() {
-                const target = new Date('2026-08-15T12:00:00').getTime();
-                const now = new Date().getTime();
-                const diff = target - now;
-                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                if(document.getElementById('days')) {
-                    document.getElementById('days').innerText = d < 10 ? '0'+d : d;
-                    document.getElementById('hours').innerText = h < 10 ? '0'+h : h;
-                    document.getElementById('mins').innerText = m < 10 ? '0'+m : m;
-                }
-            }
-            setInterval(updateCountdown, 1000); updateCountdown();
-
-            // 방명록
             function saveGuestMessage() {
                 let name = document.getElementById('gb_name').value.trim();
                 let msg = document.getElementById('gb_msg').value.trim();
-                if (name && msg) { database.ref('guestbook').push({ name: sanitize(name), message: sanitize(msg), timestamp: Date.now() }).then(() => { document.getElementById('gb_name').value = ''; document.getElementById('gb_msg').value = ''; }); }
+                if (name && msg) { database.ref('guestbook').push({ name: sanitize(name), message: sanitize(msg), timestamp: Date.now() }).then(() => { location.reload(); }); }
             }
-            database.ref('guestbook').on('value', (snapshot) => {
-                const list = document.getElementById('gb-list'); if(!list) return;
-                list.innerHTML = '';
-                snapshot.forEach(child => {
-                    const data = child.val();
-                    const div = document.createElement('div'); div.className = 'guest-item';
-                    div.innerHTML = `<span class="guest-name">${data.name}</span><div class="guest-msg">${data.message}</div>`;
-                    list.prepend(div);
-                });
-            });
         } catch(e) {}
     </script>
 </body>
