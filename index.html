@@ -24,16 +24,28 @@
             height: 100vh; width: 100%; overflow: hidden; position: relative; background: #000;
         }
         .hero-container {
-            display: flex; height: 100%; width: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
+            display: flex; height: 100%; width: 100%; overflow-x: auto; 
+            scroll-snap-type: x mandatory; scroll-behavior: smooth;
         }
         .hero-container::-webkit-scrollbar { display: none; }
         .hero-item { min-width: 100%; height: 100%; scroll-snap-align: start; position: relative; }
         .hero-item img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) brightness(0.6); }
         
+        /* Slider Buttons (Web Only) */
+        .nav-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(255,255,255,0.2); border: none; color: white;
+            width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
+            display: none; align-items: center; justify-content: center; z-index: 10;
+        }
+        @media (min-width: 768px) { .nav-btn { display: flex; } }
+        .prev-btn { left: 20px; }
+        .next-btn { right: 20px; }
+
         .hero-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: white; text-align: center; pointer-events: none;
+            color: white; text-align: center; pointer-events: none; z-index: 5;
         }
         .hero-names { font-size: 2.2rem; font-weight: 200; letter-spacing: 8px; margin-bottom: 20px; }
         .hero-date { font-family: 'Montserrat', sans-serif; font-size: 0.9rem; letter-spacing: 5px; opacity: 0.8; }
@@ -51,15 +63,14 @@
         .count-num { font-family: 'Montserrat', sans-serif; font-size: 1.8rem; font-weight: 300; }
         .count-label { font-size: 0.65rem; color: #999; letter-spacing: 2px; }
 
-        /* Location Copy Button Style */
+        /* Address Box */
         .address-box { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 20px; }
         .btn-copy-sm { 
             border: 1px solid #000; background: none; padding: 2px 8px; font-size: 0.7rem; 
             cursor: pointer; font-family: inherit; transition: 0.3s;
         }
-        .btn-copy-sm:active { background: #000; color: #fff; }
 
-        /* Guestbook & Modal (기존 스타일 유지) */
+        /* Guestbook & Modal */
         .gb-card { background: white; padding: 30px 20px; border: 1px solid #eee; max-width: 450px; margin: 0 auto; }
         input, textarea { width: 100%; padding: 15px; border: 1px solid #eee; margin-bottom: 10px; font-family: inherit; font-size: 0.9rem; }
         .btn-black { background: var(--point-black); color: white; border: none; padding: 18px; width: 100%; cursor: pointer; letter-spacing: 2px; }
@@ -73,10 +84,14 @@
 
     <div class="hero-slider">
         <div class="hero-container" id="heroSlider">
-            <div class="hero-item"><img src="./assets/images/main.png" alt="1"></div>
-            <div class="hero-item"><img src="./assets/images/main2.png" alt="2"></div>
-            <div class="hero-item"><img src="./assets/images/main3.png" alt="3"></div>
+            <div class="hero-item"><img src="./assets/images/main1.png" alt="메인사진1"></div>
+            <div class="hero-item"><img src="./assets/images/main2.png" alt="메인사진2"></div>
+            <div class="hero-item"><img src="./assets/images/main3.png" alt="메인사진3"></div>
         </div>
+        
+        <button class="nav-btn prev-btn" onclick="moveSlider(-1)">&#10094;</button>
+        <button class="nav-btn next-btn" onclick="moveSlider(1)">&#10095;</button>
+
         <div class="hero-overlay">
             <div data-aos="fade-up" data-aos-duration="2000">
                 <h1 class="hero-names">RYU &amp; LEE</h1>
@@ -130,8 +145,8 @@
     <section class="section compact" data-aos="fade-up">
         <span class="section-title">Guestbook</span>
         <div class="gb-card">
-            <input type="text" id="name" placeholder="NAME">
-            <textarea id="message" rows="3" placeholder="MESSAGE"></textarea>
+            <input type="text" id="gb_name" placeholder="NAME">
+            <textarea id="gb_msg" rows="3" placeholder="MESSAGE"></textarea>
             <button onclick="saveMessage()" class="btn-black">SUBMIT</button>
             <div id="guestbook-list" style="margin-top: 20px;"></div>
         </div>
@@ -162,13 +177,20 @@
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
     <script>
-        // Copy Function
+        // 1. Slider Logic
+        function moveSlider(dir) {
+            const container = document.getElementById('heroSlider');
+            const width = container.offsetWidth;
+            container.scrollBy({ left: dir * width, behavior: 'smooth' });
+        }
+
+        // 2. Copy Function
         function copyToClipboard(id) {
             const text = document.getElementById(id).innerText;
             navigator.clipboard.writeText(text).then(() => alert("복사되었습니다."));
         }
 
-        // Firebase Config (Keep your original keys)
+        // 3. Firebase Config
         const firebaseConfig = {
             apiKey: "AIzaSyD1LmVHTLYnecokZV67_hCDcM289fl3oiw",
             authDomain: "sg-jy-233e2.firebaseapp.com",
@@ -181,15 +203,15 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        // Modal Logic
+        // 4. Modal
         function openModal() { document.getElementById('accountModal').style.display = 'flex'; }
         function closeModal() { document.getElementById('accountModal').style.display = 'none'; }
 
-        // Countdown & Guestbook 로직 생략 (기존 드린 코드와 동일)
+        // 5. Countdown
         function updateCountdown() {
-            const weddingDate = new Date('2026-08-15T12:00:00').getTime();
+            const target = new Date('2026-08-15T12:00:00').getTime();
             const now = new Date().getTime();
-            const diff = weddingDate - now;
+            const diff = target - now;
             const d = Math.floor(diff / (1000 * 60 * 60 * 24));
             const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
@@ -199,19 +221,20 @@
         }
         setInterval(updateCountdown, 1000); updateCountdown();
 
+        // 6. Guestbook
         function saveMessage() {
-            const name = document.getElementById('name').value;
-            const msg = document.getElementById('message').value;
+            const name = document.getElementById('gb_name').value;
+            const msg = document.getElementById('gb_msg').value;
             if (name.trim() && msg.trim()) {
                 database.ref('guestbook').push({ name, message: msg, timestamp: Date.now() })
-                .then(() => { document.getElementById('name').value = ''; document.getElementById('message').value = ''; });
+                .then(() => { document.getElementById('gb_name').value = ''; document.getElementById('gb_msg').value = ''; });
             }
         }
         database.ref('guestbook').on('value', (snapshot) => {
             const list = document.getElementById('guestbook-list'); list.innerHTML = '';
-            const items = []; snapshot.forEach((child) => { items.push(child.val()); });
-            items.reverse().forEach((data) => {
-                const div = document.createElement('div'); div.className = 'guest-item'; div.style.textAlign='left'; div.style.borderBottom='1px solid #f2f2f2'; div.style.padding='15px 0';
+            const items = []; snapshot.forEach(child => items.push(child.val()));
+            items.reverse().forEach(data => {
+                const div = document.createElement('div'); div.style.textAlign='left'; div.style.borderBottom='1px solid #f2f2f2'; div.style.padding='15px 0';
                 div.innerHTML = `<strong>${data.name}</strong><br><span style="font-size:0.9rem; color:#444;">${data.message}</span>`;
                 list.appendChild(div);
             });
