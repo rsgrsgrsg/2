@@ -5,181 +5,172 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>류승건 &amp; 이지연 결혼식 초대장</title>
     
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;700&family=Montserrat:wght@300;400&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;400;700&family=Montserrat:wght@100;300;400&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <script src="https://cdn.jsdelivr.net/npm/add-to-calendar-button@2" async defer></script>
 
     <style>
         :root {
-            --point-gold: #c5a368;
-            --soft-gold: #f4ede3;
-            --dark-text: #2c2c2c;
-            --light-text: #666;
-            --bg-offwhite: #fdfdfd;
-            --shadow: 0 10px 30px rgba(0,0,0,0.05);
+            --point-black: #000000;
+            --deep-gray: #333333;
+            --light-gray: #f2f2f2;
+            --border-color: #eeeeee;
+            --bg-white: #ffffff;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { 
             font-family: 'Noto Serif KR', serif; 
-            margin: 0; color: var(--dark-text); 
-            background: var(--bg-offwhite); 
-            line-height: 1.8; 
+            margin: 0; color: var(--point-black); 
+            background: var(--bg-white); 
+            line-height: 1.7; 
             word-break: keep-all;
         }
 
-        /* Hero Section */
+        /* 1. Hero Section */
         .hero {
             height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
                         url('./assets/images/main.png') center/cover no-repeat;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-align: center;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: white; text-align: center;
         }
-        .hero-names { font-size: 2.2rem; font-weight: 300; letter-spacing: 5px; margin-bottom: 20px; }
-        .hero-date { font-family: 'Montserrat', sans-serif; font-size: 1rem; letter-spacing: 4px; opacity: 0.9; }
+        .hero-names { font-size: 2.2rem; font-weight: 200; letter-spacing: 8px; margin-bottom: 20px; }
+        .hero-date { font-family: 'Montserrat', sans-serif; font-size: 0.9rem; letter-spacing: 5px; opacity: 0.8; }
 
-        /* Common Section */
-        .section { padding: 100px 30px; text-align: center; overflow: hidden; }
-        .section-title { 
-            font-family: 'Montserrat', sans-serif; 
-            font-size: 0.8rem; 
-            color: var(--point-gold); 
-            letter-spacing: 5px; 
-            text-transform: uppercase;
-            margin-bottom: 40px;
-            display: block;
-        }
+        /* 구분선 (Divider) */
+        .main-divider { width: 1px; height: 60px; background: var(--point-black); margin: 0 auto; }
 
-        /* Countdown */
-        .countdown-wrap { display: flex; justify-content: center; gap: 20px; margin: 40px 0; }
-        .count-item { display: flex; flex-direction: column; align-items: center; }
-        .count-num { font-family: 'Montserrat', sans-serif; font-size: 1.5rem; color: var(--point-gold); font-weight: 400; }
-        .count-label { font-size: 0.7rem; color: #999; margin-top: 5px; }
-
-        /* Guestbook UI */
-        .gb-card {
-            background: white;
-            padding: 40px 25px;
-            border-radius: 20px;
-            box-shadow: var(--shadow);
-            max-width: 450px;
-            margin: 0 auto;
-        }
-        .input-group { margin-bottom: 15px; text-align: left; }
-        input, textarea {
-            width: 100%;
-            padding: 15px;
-            border: 1px solid #eee;
-            border-radius: 12px;
-            font-family: 'Noto Serif KR', serif;
-            font-size: 0.9rem;
-            background: #fafafa;
-            transition: all 0.3s;
-        }
-        input:focus, textarea:focus { outline: none; border-color: var(--point-gold); background: white; }
+        /* 2. Section Layout */
+        .section { padding: 80px 30px; text-align: center; }
+        .section.compact { padding: 40px 30px; } /* 간격 절반 조정용 */
         
-        .btn-gold {
-            background: var(--point-gold);
-            color: white;
-            border: none;
-            padding: 18px;
-            border-radius: 12px;
-            width: 100%;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: transform 0.2s, opacity 0.2s;
-            box-shadow: 0 5px 15px rgba(197, 163, 104, 0.3);
+        .section-title { 
+            font-family: 'Montserrat', sans-serif; font-size: 0.75rem; 
+            color: var(--point-black); letter-spacing: 6px; text-transform: uppercase;
+            margin-bottom: 30px; display: block; font-weight: 400;
         }
-        .btn-gold:active { transform: scale(0.98); opacity: 0.9; }
+
+        /* 3. Photo Gallery (Swipe + Buttons) */
+        .gallery-wrapper { position: relative; max-width: 500px; margin: 0 auto; overflow: hidden; }
+        .gallery-container {
+            display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+            scroll-behavior: smooth; -webkit-overflow-scrolling: touch;
+        }
+        .gallery-container::-webkit-scrollbar { display: none; }
+        .gallery-item { 
+            min-width: 100%; scroll-snap-align: start; 
+            padding: 0 5px; box-sizing: border-box;
+        }
+        .gallery-item img { width: 100%; height: auto; border-radius: 0px; object-fit: cover; }
+
+        /* Gallery Buttons (Desktop Only) */
+        .nav-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(255,255,255,0.8); border: none; width: 40px; height: 40px;
+            cursor: pointer; display: none; align-items: center; justify-content: center; font-size: 1.2rem;
+        }
+        @media (min-width: 768px) { .nav-btn { display: flex; } }
+        .prev-btn { left: 10px; }
+        .next-btn { right: 10px; }
+
+        /* 4. Countdown */
+        .countdown-wrap { display: flex; justify-content: center; gap: 30px; margin: 30px 0; }
+        .count-num { font-family: 'Montserrat', sans-serif; font-size: 1.8rem; color: var(--point-black); font-weight: 300; }
+        .count-label { font-size: 0.65rem; color: #999; letter-spacing: 2px; }
+
+        /* 5. Guestbook & UI Elements */
+        .gb-card { 
+            background: white; padding: 30px 20px; border: 1px solid var(--border-color);
+            max-width: 450px; margin: 0 auto; 
+        }
+        input, textarea {
+            width: 100%; padding: 15px; border: 1px solid var(--border-color);
+            margin-bottom: 10px; font-family: inherit; font-size: 0.9rem; border-radius: 0;
+        }
+        .btn-black {
+            background: var(--point-black); color: white; border: none;
+            padding: 18px; width: 100%; font-size: 0.9rem; letter-spacing: 2px;
+            cursor: pointer; transition: 0.3s;
+        }
+        .btn-black:active { background: #333; }
 
         .guest-item {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            margin-top: 20px;
-            text-align: left;
-            box-shadow: var(--shadow);
-            border-left: 4px solid var(--point-gold);
-            animation: fadeIn 0.5s ease-out;
+            border-bottom: 1px solid var(--border-color); padding: 20px 0;
+            text-align: left; animation: fadeIn 0.5s ease-out;
         }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .guest-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 5px; }
+        .guest-msg { font-size: 0.9rem; color: var(--deep-gray); }
 
-        /* Gallery Placeholder */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-top: 20px;
-        }
-        .gallery-img { width: 100%; aspect-ratio: 1/1; background: #eee; border-radius: 8px; object-fit: cover; }
-
-        /* RSVP / Account */
-        .info-box { background: var(--soft-gold); padding: 40px 20px; border-radius: 20px; margin: 20px 0; }
+        /* Custom Add-to-calendar Color Override */
+        add-to-calendar-button { --btn-background: #000 !important; --btn-text: #fff !important; }
     </style>
 </head>
 <body>
 
     <section class="hero">
-        <div data-aos="fade-down" data-aos-duration="1500">
-            <h1 class="hero-names">류승건 &amp; 이지연</h1>
-            <p class="hero-date">2026 . 08 . 15 . SAT . 12:00 PM</p>
+        <div data-aos="fade-up" data-aos-duration="2000">
+            <h1 class="hero-names">RYU &amp; LEE</h1>
+            <p class="hero-date">2026. 08. 15. SAT. 12:00 PM</p>
         </div>
     </section>
+
+    <div class="main-divider" data-aos="fade-up"></div>
 
     <section class="section" data-aos="fade-up">
         <span class="section-title">Invitation</span>
-        <p style="font-size: 1.1rem; line-height: 2.2;">
-            곁에 있을 때 가장 나다워지는 사람을 만났습니다.<br>
-            서로의 결을 닮아가는 사랑으로<br>
-            함께 걸어갈 새날의 시작을 약속합니다.
+        <p style="font-size: 1rem; line-height: 2.4; font-weight: 400;">
+            검은 머리 파뿌리 될 때까지라는<br>
+            오래된 약속의 의미를 되새기며,<br>
+            두 사람이 하나 되어 첫발을 내딛습니다.
         </p>
         
         <div class="countdown-wrap" id="countdown">
-            <div class="count-item"><span class="count-num" id="days">00</span><span class="count-label">DAYS</span></div>
-            <div class="count-item"><span class="count-num" id="hours">00</span><span class="count-label">HOURS</span></div>
-            <div class="count-item"><span class="count-num" id="mins">00</span><span class="count-label">MINS</span></div>
+            <div class="count-item"><span class="count-num" id="days">00</span><br><span class="count-label">DAYS</span></div>
+            <div class="count-item"><span class="count-num" id="hours">00</span><br><span class="count-label">HOURS</span></div>
+            <div class="count-item"><span class="count-num" id="mins">00</span><br><span class="count-label">MINS</span></div>
         </div>
     </section>
 
-    <section class="section" style="background-color: #f9f9f9;">
-        <span class="section-title" data-aos="fade-up">Location</span>
-        <div data-aos="zoom-in">
-            <h3 style="font-weight: 400;">수원 메리빌리아 가든홀</h3>
-            <p style="color: var(--light-text); font-size: 0.9rem;">경기도 수원시 어느구 어느길 123</p>
-            
-            <div style="margin: 40px 0;">
-                <add-to-calendar-button
-                    name="류승건 &amp; 이지연 결혼식"
-                    startDate="2026-08-15"
-                    startTime="12:00"
-                    timeZone="Asia/Seoul"
-                    location="수원 메리빌리아 가든홀"
-                    options="'Apple','Google','Samsung'"
-                    label="구글/애플 캘린더 추가"
-                    lightMode="bodyScheme"
-                ></add-to-calendar-button>
+    <section class="section compact" style="background: #fafafa;">
+        <span class="section-title">Gallery</span>
+        <div class="gallery-wrapper" data-aos="fade-up">
+            <div class="gallery-container" id="slider">
+                <div class="gallery-item"><img src="./assets/images/gallery1.png" alt="Photo 1"></div>
+                <div class="gallery-item"><img src="./assets/images/gallery2.png" alt="Photo 2"></div>
+                <div class="gallery-item"><img src="./assets/images/gallery3.png" alt="Photo 3"></div>
             </div>
+            <button class="nav-btn prev-btn" onclick="scrollGallery(-1)">&#10094;</button>
+            <button class="nav-btn next-btn" onclick="scrollGallery(1)">&#10095;</button>
         </div>
     </section>
 
-    <section class="section">
-        <span class="section-title" data-aos="fade-up">Guestbook</span>
+    <section class="section compact">
+        <span class="section-title">Location</span>
+        <div data-aos="fade-up">
+            <h3 style="font-weight: 700; font-size: 1.2rem;">수원 메리빌리아 가든홀</h3>
+            <p style="color: #888; font-size: 0.85rem; margin-bottom: 30px;">경기도 수원시 어느구 어느길 123</p>
+            
+            <add-to-calendar-button
+                name="류승건 &amp; 이지연 결혼식"
+                startDate="2026-08-15"
+                startTime="12:00"
+                timeZone="Asia/Seoul"
+                options="'Apple','Google'"
+                label="CALENDAR"
+                lightMode="bodyScheme"
+            ></add-to-calendar-button>
+        </div>
+    </section>
+
+    <section class="section compact" style="background-color: #fafafa;">
+        <span class="section-title">Guestbook</span>
         <div class="gb-card" data-aos="fade-up">
-            <div class="input-group">
-                <input type="text" id="name" placeholder="성함을 입력해주세요">
-            </div>
-            <div class="input-group">
-                <textarea id="message" rows="4" placeholder="두 사람을 위한 축복의 한마디"></textarea>
-            </div>
-            <button onclick="saveMessage()" class="btn-gold">메시지 남기기</button>
+            <input type="text" id="name" placeholder="NAME">
+            <textarea id="message" rows="3" placeholder="MESSAGE"></textarea>
+            <button onclick="saveMessage()" class="btn-black">SUBMIT</button>
             
-            <div id="guestbook-list" style="margin-top: 40px;">
+            <div id="guestbook-list" style="margin-top: 20px;">
                 </div>
         </div>
     </section>
@@ -188,7 +179,14 @@
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
     
     <script>
-        // Firebase Config
+        // 1. Gallery Scroll Logic
+        function scrollGallery(direction) {
+            const slider = document.getElementById('slider');
+            const itemWidth = slider.querySelector('.gallery-item').offsetWidth;
+            slider.scrollBy({ left: direction * itemWidth, behavior: 'smooth' });
+        }
+
+        // 2. Firebase Setting
         const firebaseConfig = {
             apiKey: "AIzaSyD1LmVHTLYnecokZV67_hCDcM289fl3oiw",
             authDomain: "sg-jy-233e2.firebaseapp.com",
@@ -201,42 +199,30 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        // Countdown Logic
+        // 3. Countdown
         function updateCountdown() {
             const weddingDate = new Date('2026-08-15T12:00:00').getTime();
             const now = new Date().getTime();
             const diff = weddingDate - now;
-
             const d = Math.floor(diff / (1000 * 60 * 60 * 24));
             const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-
             document.getElementById('days').innerText = d < 10 ? '0'+d : d;
             document.getElementById('hours').innerText = h < 10 ? '0'+h : h;
             document.getElementById('mins').innerText = m < 10 ? '0'+m : m;
         }
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
+        setInterval(updateCountdown, 1000); updateCountdown();
 
-        // Guestbook Save
+        // 4. Guestbook
         function saveMessage() {
             const name = document.getElementById('name').value;
             const msg = document.getElementById('message').value;
             if (name.trim() && msg.trim()) {
-                database.ref('guestbook').push({
-                    name: name,
-                    message: msg,
-                    timestamp: Date.now()
-                }).then(() => {
-                    document.getElementById('name').value = '';
-                    document.getElementById('message').value = '';
-                });
-            } else {
-                alert("이름과 메시지를 모두 입력해주세요.");
+                database.ref('guestbook').push({ name, message: msg, timestamp: Date.now() })
+                .then(() => { document.getElementById('name').value = ''; document.getElementById('message').value = ''; });
             }
         }
 
-        // Guestbook Load (Reverse Order)
         database.ref('guestbook').on('value', (snapshot) => {
             const list = document.getElementById('guestbook-list');
             list.innerHTML = '';
@@ -245,20 +231,12 @@
             items.reverse().forEach((data) => {
                 const div = document.createElement('div');
                 div.className = 'guest-item';
-                div.innerHTML = `<div style="font-weight:700; color:var(--point-gold); margin-bottom:8px;">${data.name}</div>
-                                 <div style="font-size:0.95rem; color:#444; line-height:1.6;">${data.message}</div>`;
+                div.innerHTML = `<div class="guest-name">${data.name}</div><div class="guest-msg">${data.message}</div>`;
                 list.appendChild(div);
             });
         });
     </script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <script>
-        AOS.init({
-            duration: 1200,
-            once: true,
-            easing: 'ease-in-out'
-        });
-    </script>
+    <script>AOS.init({ duration: 1000, once: true });</script>
 </body>
 </html>
