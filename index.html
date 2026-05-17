@@ -19,7 +19,7 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Noto Serif KR', serif; margin: 0; color: var(--point-black); background: var(--bg-white); line-height: 1.8; word-break: keep-all; }
 
-        /* [핵심] AOS 미작동 시 내용이 안 보이는 문제 방지 안전장치 */
+        /* AOS 로딩 에러 방지 안전장치 */
         [data-aos] { opacity: 1 !important; transform: translate(0) scale(1) !important; transition: none !important; }
         html.aos-init [data-aos] { opacity: 0; }
         html.aos-init .aos-animate { opacity: 1 !important; }
@@ -54,7 +54,7 @@
         .section { padding: 80px 30px; text-align: center; }
         .section-title { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--point-black); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 30px; display: block; }
 
-        /* Gallery */
+        /* Gallery Grid */
         .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 0 10px; }
         .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer; background: #f0f0f0; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
@@ -75,7 +75,17 @@
         .address-box { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; }
         .btn-copy-sm { border: 1px solid #000; background: none; padding: 2px 8px; font-size: 0.7rem; cursor: pointer; font-family: inherit; }
 
-        .map-link-area { width: 100%; display: block; margin: 20px auto; border: 1px solid #eee; background-color: #f4f4f4; background-size: cover; background-position: center; }
+        /* 지도 영역: 100% 꽉 차게 수정 */
+        .map-link-area { 
+            width: 100%; 
+            display: block; 
+            margin: 20px auto; 
+            border: 1px solid #eee; 
+            background-color: #f4f4f4; 
+            background-size: cover; 
+            background-position: center; 
+            background-repeat: no-repeat;
+        }
 
         .gb-card { background: white; padding: 30px 20px; border: 1px solid #eee; max-width: 450px; margin: 0 auto; }
         input, textarea { width: 100%; padding: 15px; border: 1px solid #eee; margin-bottom: 10px; font-family: inherit; }
@@ -156,12 +166,12 @@
         </div>
 
         <a href="https://naver.me/5apDP7nI" target="_blank" class="map-link-area" 
-           style="background-image: url('./assets/map_preview.png'); width: 50%; aspect-ratio: 900 / 650; height: auto;">
+           style="background-image: url('./assets/map_preview.png'); width: 100%; aspect-ratio: 900 / 650; height: auto;">
         </a>
 
         <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
-            <a href="https://naver.me/5apDP7nI" target="_blank" style="flex: 1; padding: 10px; border: 1px solid #ddd; font-size: 0.8rem; text-decoration: none; color: #333; background: #fff; text-align: center;">네이버 지도</a>
-            <a href="https://kko.to/EIt4OnhVm4" target="_blank" style="flex: 1; padding: 10px; border: 1px solid #ddd; font-size: 0.8rem; text-decoration: none; color: #333; background: #fff; text-align: center;">카카오내비</a>
+            <a href="https://naver.me/5apDP7nI" target="_blank" style="flex: 1; padding: 12px; border: 1px solid #ddd; font-size: 0.85rem; text-decoration: none; color: #333; background: #fff; text-align: center;">네이버 지도</a>
+            <a href="https://kko.to/EIt4OnhVm4" target="_blank" style="flex: 1; padding: 12px; border: 1px solid #ddd; font-size: 0.85rem; text-decoration: none; color: #333; background: #fff; text-align: center;">카카오내비</a>
         </div>
     </section>
 
@@ -171,7 +181,7 @@
         <span class="section-title">Guestbook</span>
         <div class="gb-card">
             <input type="text" id="gb_name" placeholder="성함">
-            <textarea id="gb_msg" rows="3" placeholder="축하 메시지"></textarea>
+            <textarea id="gb_msg" rows="3" placeholder="축하 메시지를 남겨주세요"></textarea>
             <button onclick="saveGuestMessage()" class="btn-black">메시지 남기기</button>
             <div id="gb-list" style="margin-top: 20px;"></div>
         </div>
@@ -207,18 +217,14 @@
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
     
     <script>
-        // 1. AOS 초기화 및 안전장치
+        // 1. AOS 초기화 안전장치
         window.onload = function() {
-            try {
-                AOS.init({ duration: 1200, once: true });
-            } catch (e) {
-                console.error("AOS Init Failed:", e);
-                // AOS 실패 시 모든 요소 강제 표시
+            try { AOS.init({ duration: 1200, once: true }); } catch (e) {
                 document.querySelectorAll('[data-aos]').forEach(el => el.classList.add('aos-animate'));
             }
         };
 
-        // 2. 메인 슬라이더 (무한 로프)
+        // 2. 메인 슬라이더 (무한)
         let heroIdx = 1;
         const totalHero = 3;
         let isHeroMoving = false;
@@ -244,7 +250,6 @@
                     heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`;
                 }
             });
-
             let hStartX = 0;
             heroContainer.addEventListener('touchstart', e => hStartX = e.touches[0].clientX, {passive: true});
             heroContainer.addEventListener('touchend', e => {
@@ -253,10 +258,9 @@
             });
         }
 
-        // 3. 갤러리 로직 (p01 ~ p09)
+        // 3. 갤러리 (p01 ~ p09)
         const totalGalleryImages = 9; 
         let gViewIdx = 0;
-
         function initGallery() {
             const grid = document.getElementById('galleryGrid');
             if(!grid) return;
@@ -289,7 +293,7 @@
             document.getElementById('viewerCount').innerText = `${gViewIdx + 1} / ${totalGalleryImages}`;
         }
 
-        // 4. 유틸리티 (복사, 모달, 디데이, Firebase)
+        // 4. 유틸리티
         function copyToClipboard(id) { 
             const text = document.getElementById(id).innerText; 
             navigator.clipboard.writeText(text).then(() => alert("복사되었습니다.")); 
@@ -301,7 +305,6 @@
             const firebaseConfig = { apiKey: "AIzaSyD1LmVHTLYnecokZV67_hCDcM289fl3oiw", authDomain: "sg-jy-233e2.firebaseapp.com", databaseURL: "https://sg-jy-233e2-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "sg-jy-233e2", storageBucket: "sg-jy-233e2.firebasestorage.app", messagingSenderId: "217599075354", appId: "1:217599075354:web:c227474b5efc4fd280dda3" };
             firebase.initializeApp(firebaseConfig);
             const database = firebase.database();
-
             function updateCountdown() {
                 const target = new Date('2026-08-15T12:00:00').getTime();
                 const now = new Date().getTime();
@@ -316,7 +319,6 @@
                 }
             }
             setInterval(updateCountdown, 1000); updateCountdown();
-
             function saveGuestMessage() {
                 const name = document.getElementById('gb_name').value.trim();
                 const msg = document.getElementById('gb_msg').value.trim();
