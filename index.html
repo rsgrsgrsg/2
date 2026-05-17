@@ -1,14 +1,13 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-    <title>류승건 & 이지연 결혼식 초대장</title>
+    <title>류승건 &amp; 이지연 결혼식 초대장</title>
     
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-    <script src="https://kit.fontawesome.com/your-fontawesome-key.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/add-to-calendar-button@2" async defer></script>
     
     <style>
@@ -18,7 +17,6 @@
         
         .hero { 
             height: 100vh; 
-            /* 이미지 경로를 ./assets/images/main.png로 설정했습니다 */
             background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), 
                         url('./assets/images/main.png') center/cover no-repeat; 
             display: flex; 
@@ -29,11 +27,12 @@
             text-shadow: 0 2px 10px rgba(0,0,0,0.5); 
         }
         
-        .btn-gold { background: var(--main-gold); color: white; border: none; padding: 12px 30px; border-radius: 5px; cursor: pointer; text-decoration: none; display: inline-block; margin: 10px; }
-        .kakao-pay { background: #fee500; color: #3c1e1e; font-weight: bold; border-radius: 8px; padding: 15px; display: inline-flex; align-items: center; text-decoration: none; }
-        #guestbook { background: var(--bg-gray); border-radius: 15px; padding: 20px; margin-top: 30px; }
+        .btn-gold { background: var(--main-gold); color: white; border: none; padding: 12px 30px; border-radius: 5px; cursor: pointer; text-decoration: none; display: inline-block; margin: 10px; font-family: inherit; }
+        .kakao-pay { background: #fee500; color: #3c1e1e; font-weight: bold; border-radius: 8px; padding: 15px; display: block; text-align: center; text-decoration: none; margin-top: 10px; }
+        #guestbook { background: var(--bg-gray); border-radius: 15px; padding: 20px; margin-top: 30px; max-width: 450px; margin-left: auto; margin-right: auto; }
+        .guest-item { background: white; padding: 15px; border-radius: 10px; margin-bottom: 15px; text-align: left; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         
-        /* 계좌 복사 기능을 위한 스타일 */
+        input, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ddd; box-sizing: border-box; font-family: inherit; }
         button:active { opacity: 0.7; }
     </style>
 </head>
@@ -41,7 +40,7 @@
 
     <section class="hero">
         <div data-aos="fade-up">
-            <h1 style="font-size: 2.5rem; margin-bottom: 10px;">류승건 & 이지연</h1>
+            <h1 style="font-size: 2.5rem; margin-bottom: 10px;">류승건 &amp; 이지연</h1>
             <p style="font-size: 1.2rem; letter-spacing: 3px;">2026. 08. 15. SAT. 12:00 PM</p>
         </div>
     </section>
@@ -54,18 +53,18 @@
 
     <section class="section" style="background: var(--bg-gray);">
         <div data-aos="fade-right">
-            <h3>Date & Venue</h3>
+            <h3>Date &amp; Venue</h3>
             <p>2026년 8월 15일 토요일 오후 12시</p>
             <p>수원 메리빌리아 가든홀</p>
             
             <add-to-calendar-button
-                name="류승건 & 이지연 결혼식"
+                name="류승건 &amp; 이지연 결혼식"
                 startDate="2026-08-15"
                 startTime="12:00"
                 endTime="14:00"
                 timeZone="Asia/Seoul"
                 location="수원 메리빌리아 가든홀"
-                options="'Apple','Google','Samsung','Outlook.com'"
+                options="Apple,Google,Samsung,Outlook.com"
                 label="캘린더에 일정 추가"
                 lightMode="bodyScheme"
             ></add-to-calendar-button>
@@ -74,36 +73,28 @@
 
     <section class="section" data-aos="fade-up">
         <h3>마음 전하실 곳</h3>
-        <p>참석이 어려우신 분들을 위해<br>송금 페이지를 마련했습니다.</p>
-
         <div style="max-width: 400px; margin: 0 auto; text-align: left;">
-            
             <details style="background: #fdfdfd; border: 1px solid #eee; border-radius: 10px; margin-bottom: 10px;">
-                <summary style="padding: 15px; cursor: pointer; font-weight: bold; color: var(--main-gold); outline: none;">
-                    신랑측 계좌번호 확인하기
-                </summary>
+                <summary style="padding: 15px; cursor: pointer; font-weight: bold; color: var(--main-gold);">신랑측 계좌번호</summary>
                 <div style="padding: 15px; border-top: 1px solid #eee; background: #fff;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
                         <span>우리은행 <strong id="acc-groom">1002-xxx-xxxxxx</strong></span>
                         <button onclick="copyAccount('acc-groom')" style="padding: 5px 10px; font-size: 0.8rem; border: 1px solid var(--main-gold); background: none; color: var(--main-gold); border-radius: 4px; cursor: pointer;">복사</button>
                     </div>
-                    <a href="kakaotalk://kakaopay/money/to/qr?qr_code=본인링크" class="kakao-pay" style="display: block; text-align: center; font-size: 0.9rem;">카카오페이 송금</a>
+                    <a href="kakaotalk://kakaopay/money/to/qr?qr_code=본인링크" class="kakao-pay">카카오페이 송금</a>
                 </div>
             </details>
 
             <details style="background: #fdfdfd; border: 1px solid #eee; border-radius: 10px;">
-                <summary style="padding: 15px; cursor: pointer; font-weight: bold; color: var(--main-gold); outline: none;">
-                    신부측 계좌번호 확인하기
-                </summary>
+                <summary style="padding: 15px; cursor: pointer; font-weight: bold; color: var(--main-gold);">신부측 계좌번호</summary>
                 <div style="padding: 15px; border-top: 1px solid #eee; background: #fff;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
                         <span>카카오뱅크 <strong id="acc-bride">3333-xx-xxxxxxx</strong></span>
                         <button onclick="copyAccount('acc-bride')" style="padding: 5px 10px; font-size: 0.8rem; border: 1px solid var(--main-gold); background: none; color: var(--main-gold); border-radius: 4px; cursor: pointer;">복사</button>
                     </div>
-                    <a href="https://toss.im/_m/아이디" style="display: block; text-align: center; background: #0050ff; color: white; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem;">토스로 송금하기</a>
+                    <a href="https://toss.im/_m/아이디" style="display: block; text-align: center; background: #0050ff; color: white; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 10px;">토스로 송금하기</a>
                 </div>
             </details>
-
         </div>
     </section>
 
@@ -111,26 +102,26 @@
         <div data-aos="fade-up">
             <h3>방명록</h3>
             <div id="guestbook">
-                <input type="text" id="name" placeholder="이름" style="width: 80%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ddd;"><br>
-                <textarea id="message" placeholder="축하 메시지를 남겨주세요" style="width: 80%; padding: 10px; height: 100px; border-radius: 5px; border: 1px solid #ddd;"></textarea><br>
-                <button onclick="saveMessage()" class="btn-gold">메시지 남기기</button>
-                <div id="guestbook-list" style="margin-top: 20px; text-align: left;"></div>
+                <input type="text" id="name" placeholder="이름">
+                <textarea id="message" placeholder="축하 메시지를 남겨주세요" rows="4"></textarea>
+                <button onclick="saveMessage()" class="btn-gold" style="width: 100%; margin: 0;">메시지 남기기</button>
+                <div id="guestbook-list" style="margin-top: 30px;">
+                    </div>
             </div>
         </div>
     </section>
 
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
+    
     <script>
-        // 계좌 복사 함수
+        // 계좌 복사
         function copyAccount(id) {
             const text = document.getElementById(id).innerText;
-            navigator.clipboard.writeText(text).then(() => {
-                alert("계좌번호가 복사되었습니다.");
-            });
+            navigator.clipboard.writeText(text).then(() => alert("계좌번호가 복사되었습니다."));
         }
 
-        // [승건님 설정 구역] 파이어베이스 콘솔에서 발급받은 키를 아래에 넣으세요
+        // 파이어베이스 설정
         const firebaseConfig = {
             apiKey: "AIzaSyD1LmVHTLYnecokZV67_hCDcM289fl3oiw",
             authDomain: "sg-jy-233e2.firebaseapp.com",
@@ -144,28 +135,52 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
+        // 메시지 저장
         function saveMessage() {
-            const name = document.getElementById('name').value;
-            const message = document.getElementById('message').value;
-            if(name && message) {
-                database.ref('guestbook').push({ name, message, timestamp: Date.now() });
-                document.getElementById('name').value = '';
-                document.getElementById('message').value = '';
+            const nameInput = document.getElementById('name');
+            const messageInput = document.getElementById('message');
+            
+            if(nameInput.value.trim() && messageInput.value.trim()) {
+                database.ref('guestbook').push({
+                    name: nameInput.value,
+                    message: messageInput.value,
+                    timestamp: Date.now()
+                }).then(() => {
+                    nameInput.value = '';
+                    messageInput.value = '';
+                }).catch((error) => {
+                    alert("저장에 실패했습니다: " + error.message);
+                });
+            } else {
+                alert("이름과 메시지를 모두 입력해주세요.");
             }
         }
 
+        // 메시지 실시간 읽기 및 최신순 출력
         database.ref('guestbook').on('value', (snapshot) => {
             const list = document.getElementById('guestbook-list');
             list.innerHTML = '';
+            
+            const messages = [];
             snapshot.forEach((child) => {
-                const data = child.val();
-                list.innerHTML += `<div style="background:white; padding:15px; border-radius:10px; margin-bottom:10px; box-shadow:0 2px 5px rgba(0,0,0,0.05);">
-                    <strong>${data.name}</strong><br>${data.message}</div>`;
+                messages.push(child.val());
             });
+
+            // 최신순 정렬
+            messages.reverse().forEach((data) => {
+                const item = document.createElement('div');
+                item.className = 'guest-item';
+                item.innerHTML = `<strong>${data.name}</strong><br><div style="margin-top:5px; white-space:pre-wrap;">${data.message}</div>`;
+                list.appendChild(item);
+            });
+
+            if(messages.length === 0) {
+                list.innerHTML = '<p style="color:#999;">첫 번째 축하 메시지를 남겨주세요!</p>';
+            }
         });
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <script>AOS.init();</script>
+    <script>AOS.init({ duration: 1000 });</script>
 </body>
 </html>
