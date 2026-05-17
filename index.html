@@ -4,9 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-    <meta name="googlebot" content="noindex, nofollow">
-    <meta name="naverbot" content="noindex, nofollow">
-    
     <title>류승건 & 이지연 결혼식 초대장</title>
     
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;400;700&family=Montserrat:wght@100;300;400&display=swap">
@@ -14,27 +11,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        :root {
-            --point-black: #000000;
-            --point-color: #D1A7A7; /* [해결 3] 따뜻한 Dusty Rose 색상 */
-            --deep-gray: #333333;
-            --bg-white: #ffffff;
+        :root { 
+            --point-black: #000000; 
+            --point-color: #D1A7A7; /* Dusty Rose 색상 */
+            --deep-gray: #333333; 
+            --bg-white: #ffffff; 
         }
 
-        /* [보안] 드래그 및 선택 금지 */
-        * { 
-            box-sizing: border-box; 
-            -webkit-tap-highlight-color: transparent;
-            -webkit-user-select: none; 
-            user-select: none;
-        }
-
-        /* 입력창 및 복사 영역 예외 허용 */
-        input, textarea, [id*="acc-"], [id*="addr-"] { 
-            -webkit-user-select: text; 
-            user-select: text; 
-        }
-
+        /* 보안 및 기본 설정 */
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; }
+        input, textarea, [id*="acc-"], [id*="addr-"] { -webkit-user-select: text; user-select: text; }
         body { font-family: 'Noto Serif KR', serif; margin: 0; color: var(--point-black); background: var(--bg-white); line-height: 1.8; word-break: keep-all; }
 
         /* AOS 안전장치 */
@@ -42,11 +28,23 @@
         html.aos-init [data-aos] { opacity: 0; }
         html.aos-init .aos-animate { opacity: 1 !important; }
 
-        .h-divider { width: 100%; height: 1px; background-color: var(--point-black); margin: 0; }
         .section { padding: 80px 30px; text-align: center; }
         .section-title { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--point-black); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 30px; display: block; }
+        .h-divider { width: 100%; height: 1px; background-color: var(--point-black); margin: 0; }
 
-        /* 1. Hero Slider */
+        /* [해결 3] BGM 떠있는 버튼 스타일 */
+        .bgm-btn {
+            position: fixed; top: 15px; right: 15px; z-index: 9990;
+            width: 42px; height: 42px; background: rgba(255, 255, 255, 0.85);
+            border: 1px solid #ddd; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; color: var(--point-color); font-size: 1.1rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1); outline: none;
+        }
+        .bgm-btn.playing i.fa-music { animation: spin 3s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* 메인 슬라이더 */
         .hero-slider { height: 100vh; width: 100%; overflow: hidden; position: relative; background: #fff; }
         .hero-container { display: flex; height: 100%; width: 100%; will-change: transform; }
         .hero-item { min-width: 100%; height: 100%; position: relative; }
@@ -57,23 +55,28 @@
         .hero-names { font-size: 2.2rem; font-weight: 400; letter-spacing: 8px; margin-bottom: 10px; }
         .hero-date { font-size: 1.1rem; letter-spacing: 2px; opacity: 0.9; font-weight: 400; }
 
-        /* 2. D-Day */
+        /* 디데이 & 위치 */
         .countdown-wrap { display: flex; justify-content: center; gap: 30px; margin: 30px 0; }
         .count-num { font-family: 'Montserrat', sans-serif; font-size: 1.8rem; font-weight: 300; }
         .count-label { font-size: 0.65rem; color: #999; letter-spacing: 2px; }
-
-        /* 3. Location */
         .address-box { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; }
         .btn-copy-sm { border: 1px solid #000; background: none; padding: 2px 8px; font-size: 0.7rem; cursor: pointer; font-family: inherit; }
-        .map-link-area { width: 100%; display: block; margin: 20px auto; border: 1px solid #eee; background-color: #f4f4f4; background-size: cover; background-position: center; background-repeat: no-repeat; }
+        .map-link-area { width: 100%; display: block; margin: 20px auto; border: 1px solid #eee; background-color: #f4f4f4; background-size: cover; background-position: center; }
 
-        /* 4. Gallery Grid & 확대 모달 */
-        .gallery-wrap { position: relative; }
+        /* [해결 1] 갤러리 펼치기/접기 완벽 적용 */
+        .gallery-wrap { position: relative; overflow: hidden; max-height: 5000px; transition: max-height 0.8s ease-in-out; }
+        .gallery-wrap.limited { max-height: 330px; } /* 처음엔 약 3줄 분량만 표시 */
+        /* 안 펼쳤을 때 아래쪽이 흐려지는 효과 */
+        .gallery-wrap.limited::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 60px;
+            background: linear-gradient(to bottom, transparent, var(--bg-white)); pointer-events: none;
+        }
         .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 0 10px; }
         .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer; background: #f0f0f0; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
-        
-        /* [해결 1] 확대 뷰어 모달 스타일 */
+        .btn-more { margin: 20px auto; padding: 12px 30px; border: 1px solid #000; background: #fff; cursor: pointer; font-family: inherit; font-size: 0.85rem; display: block; }
+
+        /* 확대 뷰어 모달 */
         #galleryViewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10001; align-items: center; justify-content: center; }
         .viewer-content { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
         .viewer-img { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
@@ -82,29 +85,28 @@
         .v-prev { left: 10px; } .v-next { right: 10px; }
         .viewer-count { position: absolute; bottom: 40px; color: #fff; font-size: 0.85rem; letter-spacing: 2px; }
 
-        /* 5. Account & Guestbook */
+        /* 마음 전하실 곳 & 방명록 (Dusty Rose 적용 완료) */
+        .btn-point { background: var(--point-color); color: white; border: none; padding: 18px; width: 100%; cursor: pointer; letter-spacing: 2px; font-weight: 700; font-family: inherit; font-size: 0.9rem; }
         .gb-card { background: white; padding: 30px 20px; border: 1px solid #eee; max-width: 450px; margin: 0 auto; }
         input, textarea { width: 100%; padding: 15px; border: 1px solid #eee; margin-bottom: 10px; font-family: inherit; font-size: 0.9rem; border-radius: 0; outline: none; }
-        
-        /* [해결 3] 포인트 버튼 색상 변경 */
-        .btn-point { background: var(--point-color); color: white; border: none; padding: 18px; width: 100%; cursor: pointer; letter-spacing: 2px; font-weight: 700; font-family: inherit; font-size: 0.9rem; }
-        
         #gb-list { margin-top: 20px; max-height: 400px; overflow-y: auto; border-top: 1px solid #f2f2f2; padding-right: 5px; }
         #gb-list::-webkit-scrollbar { width: 3px; }
         #gb-list::-webkit-scrollbar-thumb { background: #ddd; }
         .guest-item { border-bottom: 1px solid #f2f2f2; padding: 20px 0; text-align: left; }
         .guest-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 5px; display: block; }
         .guest-msg { font-size: 0.85rem; color: var(--deep-gray); line-height: 1.6; }
-
         .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
         .modal-content { background: white; padding: 40px 25px; width: 90%; max-width: 400px; text-align: center; position: relative; }
         .close-modal { position: absolute; right: 15px; top: 15px; font-size: 1.5rem; cursor: pointer; color: #999; }
-        
-        /* 카카오페이 버튼 스타일 복원 */
         .btn-kakaopay { display: flex; align-items: center; justify-content: center; gap: 8px; background: #FEE500; color: #191919; text-align: center; padding: 12px; font-size: 0.85rem; font-weight: 700; text-decoration: none; border-radius: 6px; margin-top: 10px; }
     </style>
 </head>
 <body oncontextmenu="return false">
+
+    <audio id="bgm" src="./assets/bgm.mp3" loop></audio>
+    <button id="bgmBtn" class="bgm-btn" onclick="toggleBgm()">
+        <i class="fas fa-music"></i>
+    </button>
 
     <div class="hero-slider">
         <div class="hero-container" id="heroSlider">
@@ -162,9 +164,12 @@
 
     <div class="h-divider"></div>
 
-    <section class="section" data-aos="fade-up">
+    <section class="section" data-aos="fade-up" id="gallerySection">
         <span class="section-title">Gallery</span>
-        <div class="gallery-grid" id="galleryGrid"></div>
+        <div class="gallery-wrap limited" id="galleryWrap">
+            <div class="gallery-grid" id="galleryGrid"></div>
+        </div>
+        <button id="moreBtn" class="btn-more" onclick="toggleGallery()">더보기 ▽</button>
     </section>
 
     <div id="galleryViewer">
@@ -208,8 +213,7 @@
                     <button class="btn-copy-sm" onclick="copyToClipboard('acc-groom')">복사</button>
                 </div>
                 <a href="https://qr.kakaopay.com/FNfa3PrZO" target="_blank" class="btn-kakaopay">
-                    <img src="https://developers.kakao.com/tool/resource/static/img/button/pay/payment_icon_yellow_small.png" alt="카카오페이" style="height: 18px;">
-                    카카오페이 송금
+                    <img src="https://developers.kakao.com/tool/resource/static/img/button/pay/payment_icon_yellow_small.png" alt="카카오페이" style="height: 18px;"> 카카오페이 송금
                 </a>
             </div>
             <div style="text-align: left; padding: 15px 0 10px;">
@@ -219,8 +223,7 @@
                     <button class="btn-copy-sm" onclick="copyToClipboard('acc-bride')">복사</button>
                 </div>
                 <a href="https://qr.kakaopay.com/Ej8bBn70Q" target="_blank" class="btn-kakaopay">
-                    <img src="https://developers.kakao.com/tool/resource/static/img/button/pay/payment_icon_yellow_small.png" alt="카카오페이" style="height: 18px;">
-                    카카오페이 송금
+                    <img src="https://developers.kakao.com/tool/resource/static/img/button/pay/payment_icon_yellow_small.png" alt="카카오페이" style="height: 18px;"> 카카오페이 송금
                 </a>
             </div>
         </div>
@@ -231,13 +234,41 @@
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
     
     <script>
-        // AOS 및 보안 초기화
+        // AOS 초기화
         window.onload = function() {
             try { AOS.init({ duration: 1200, once: true }); } 
             catch (e) { document.querySelectorAll('[data-aos]').forEach(el => el.classList.add('aos-animate')); }
         };
 
-        // 메인 슬라이더 (무한 로프 복원)
+        // [해결 3] BGM(배경음악) 재생 로직
+        const bgm = document.getElementById('bgm');
+        const bgmBtn = document.getElementById('bgmBtn');
+        let isBgmPlaying = false;
+
+        function toggleBgm() {
+            if (isBgmPlaying) {
+                bgm.pause();
+                bgmBtn.classList.remove('playing');
+            } else {
+                bgm.play().catch(e => console.log('BGM Autoplay prevented'));
+                bgmBtn.classList.add('playing');
+            }
+            isBgmPlaying = !isBgmPlaying;
+        }
+
+        // 브라우저 정책상, 하객이 화면을 처음 터치(클릭)할 때 자동으로 음악이 재생되도록 합니다.
+        document.body.addEventListener('touchstart', function playOnFirstTouch() {
+            if(!isBgmPlaying) toggleBgm();
+            document.body.removeEventListener('touchstart', playOnFirstTouch);
+        }, { once: true });
+        
+        document.body.addEventListener('click', function playOnFirstClick() {
+            if(!isBgmPlaying) toggleBgm();
+            document.body.removeEventListener('click', playOnFirstClick);
+        }, { once: true });
+
+
+        // 메인 슬라이더 로직
         let heroIdx = 1; const totalHero = 3; let isHeroMoving = false;
         const heroContainer = document.getElementById('heroSlider');
         if(heroContainer) heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`;
@@ -249,7 +280,6 @@
             heroContainer.style.transition = 'transform 0.4s ease-out';
             heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`;
         }
-
         if(heroContainer) {
             heroContainer.addEventListener('transitionend', () => {
                 isHeroMoving = false;
@@ -264,8 +294,7 @@
             });
         }
 
-        /** [해결 1] 갤러리 로직 (비연속 파일명 및 확대 기능 통합) **/
-        // 실제 assets/p00 폴더에 있는 파일 이름 목록을 배열로 직접 지정합니다.
+        // [해결 2] 갤러리 로직 (클릭 이벤트를 div로 옮겨 확대 기능 완벽 구현)
         const galleryFiles = [
             'p01', 'p02', 'p03', 'p04', 'p05', 'p06', 
             'p11', 'p12', 'p13', 'p14', 'p15', 'p16', 'p17', 'p18', 'p19', 'p20', 'p21', 
@@ -281,12 +310,27 @@
             galleryFiles.forEach((name, idx) => {
                 const item = document.createElement('div');
                 item.className = 'gallery-item';
-                // onerror 처리를 추가하여 이미지가 없을 경우 대체 이미지를 띄웁니다.
-                item.innerHTML = `<img src="./assets/p00/${name}.png" loading="lazy" onclick="openViewer(${idx})" onerror="this.src='https://via.placeholder.com/300?text=Error'">`;
+                // 중요: onclick을 div 태그에 부여하여 pointer-events:none 우회
+                item.setAttribute('onclick', `openViewer(${idx})`);
+                item.innerHTML = `<img src="./assets/p00/${name}.png" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Error'">`;
                 grid.appendChild(item);
             });
         }
         initGallery();
+
+        // [해결 1] 갤러리 더보기/접기 토글
+        function toggleGallery() {
+            const wrap = document.getElementById('galleryWrap');
+            const btn = document.getElementById('moreBtn');
+            if (wrap.classList.contains('limited')) {
+                wrap.classList.remove('limited');
+                btn.innerText = '접기 △';
+            } else {
+                wrap.classList.add('limited');
+                btn.innerText = '더보기 ▽';
+                document.getElementById('gallerySection').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
 
         // 확대 뷰어 로직 (터치 스와이프 포함)
         function openViewer(idx) {
@@ -307,6 +351,7 @@
             document.getElementById('currentViewerImg').src = `./assets/p00/${name}.png`;
             document.getElementById('viewerCount').innerText = `${gViewIdx + 1} / ${totalGalleryImages}`;
         }
+        
         let vStartX = 0;
         document.getElementById('viewerContent').addEventListener('touchstart', e => vStartX = e.changedTouches[0].screenX, {passive: true});
         document.getElementById('viewerContent').addEventListener('touchend', e => {
@@ -314,7 +359,7 @@
             if (Math.abs(diff) > 50) changeViewImg(diff > 0 ? 1 : -1);
         }, {passive: true});
 
-        /** 기타 유틸리티 및 파이어베이스 로직 복원 **/
+        // 유틸리티 및 파이어베이스
         function copyToClipboard(id) { const text = document.getElementById(id).innerText; navigator.clipboard.writeText(text).then(() => alert("복사되었습니다.")); }
         function openModal() { document.getElementById('accModal').style.display = 'flex'; }
         function closeModal() { document.getElementById('accModal').style.display = 'none'; }
@@ -325,7 +370,6 @@
             firebase.initializeApp(firebaseConfig);
             const database = firebase.database();
             
-            // 디데이 카운트다운 복원
             function updateCountdown() {
                 const target = new Date('2026-08-15T12:00:00').getTime();
                 const now = new Date().getTime();
@@ -341,7 +385,6 @@
             }
             setInterval(updateCountdown, 1000); updateCountdown();
 
-            // 방명록 저장 및 리스트 복원
             function saveGuestMessage() {
                 let name = document.getElementById('gb_name').value.trim();
                 let msg = document.getElementById('gb_msg').value.trim();
