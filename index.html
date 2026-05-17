@@ -7,8 +7,7 @@
     
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;400;700&family=Montserrat:wght@100;300;400&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-    <script src="https://cdn.jsdelivr.net/npm/add-to-calendar-button@2" async defer></script>
-
+    
     <style>
         :root {
             --point-black: #000000;
@@ -19,91 +18,56 @@
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { 
-            font-family: 'Noto Serif KR', serif; 
-            margin: 0; color: var(--point-black); 
-            background: var(--bg-white); 
-            line-height: 1.7; 
-            word-break: keep-all;
-        }
+        body { font-family: 'Noto Serif KR', serif; margin: 0; color: var(--point-black); background: var(--bg-white); line-height: 1.7; word-break: keep-all; }
 
-        /* 1. Hero Section */
+        /* 1. Hero */
         .hero {
             height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
-                        url('./assets/images/main.png') center/cover no-repeat;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: white; text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('./assets/images/main.png') center/cover no-repeat;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center;
         }
         .hero-names { font-size: 2.2rem; font-weight: 200; letter-spacing: 8px; margin-bottom: 20px; }
         .hero-date { font-family: 'Montserrat', sans-serif; font-size: 0.9rem; letter-spacing: 5px; opacity: 0.8; }
-
-        /* 구분선 (Divider) */
         .main-divider { width: 1px; height: 60px; background: var(--point-black); margin: 0 auto; }
 
-        /* 2. Section Layout */
+        /* 2. Layout */
         .section { padding: 80px 30px; text-align: center; }
-        .section.compact { padding: 40px 30px; } /* 간격 절반 조정용 */
-        
-        .section-title { 
-            font-family: 'Montserrat', sans-serif; font-size: 0.75rem; 
-            color: var(--point-black); letter-spacing: 6px; text-transform: uppercase;
-            margin-bottom: 30px; display: block; font-weight: 400;
-        }
+        .section.compact { padding: 40px 30px; } 
+        .section-title { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--point-black); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 30px; display: block; }
 
-        /* 3. Photo Gallery (Swipe + Buttons) */
+        /* 3. Gallery (Swipe) */
         .gallery-wrapper { position: relative; max-width: 500px; margin: 0 auto; overflow: hidden; }
-        .gallery-container {
-            display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
-            scroll-behavior: smooth; -webkit-overflow-scrolling: touch;
-        }
+        .gallery-container { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; }
         .gallery-container::-webkit-scrollbar { display: none; }
-        .gallery-item { 
-            min-width: 100%; scroll-snap-align: start; 
-            padding: 0 5px; box-sizing: border-box;
-        }
-        .gallery-item img { width: 100%; height: auto; border-radius: 0px; object-fit: cover; }
+        .gallery-item { min-width: 100%; scroll-snap-align: start; padding: 0 5px; }
+        .gallery-item img { width: 100%; height: auto; object-fit: cover; }
 
-        /* Gallery Buttons (Desktop Only) */
-        .nav-btn {
-            position: absolute; top: 50%; transform: translateY(-50%);
-            background: rgba(255,255,255,0.8); border: none; width: 40px; height: 40px;
-            cursor: pointer; display: none; align-items: center; justify-content: center; font-size: 1.2rem;
-        }
-        @media (min-width: 768px) { .nav-btn { display: flex; } }
-        .prev-btn { left: 10px; }
-        .next-btn { right: 10px; }
+        /* 4. Map Area */
+        .map-container { width: 100%; height: 250px; background: #eee; margin-top: 20px; position: relative; border: 1px solid var(--border-color); }
+        /* 네이버 지도 API 혹은 공유 코드를 아래 div 안에 넣으시면 됩니다 */
+        .map-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #999; font-size: 0.8rem; }
 
-        /* 4. Countdown */
+        /* 5. Countdown */
         .countdown-wrap { display: flex; justify-content: center; gap: 30px; margin: 30px 0; }
-        .count-num { font-family: 'Montserrat', sans-serif; font-size: 1.8rem; color: var(--point-black); font-weight: 300; }
+        .count-num { font-family: 'Montserrat', sans-serif; font-size: 1.8rem; font-weight: 300; }
         .count-label { font-size: 0.65rem; color: #999; letter-spacing: 2px; }
 
-        /* 5. Guestbook & UI Elements */
-        .gb-card { 
-            background: white; padding: 30px 20px; border: 1px solid var(--border-color);
-            max-width: 450px; margin: 0 auto; 
-        }
-        input, textarea {
-            width: 100%; padding: 15px; border: 1px solid var(--border-color);
-            margin-bottom: 10px; font-family: inherit; font-size: 0.9rem; border-radius: 0;
-        }
-        .btn-black {
-            background: var(--point-black); color: white; border: none;
-            padding: 18px; width: 100%; font-size: 0.9rem; letter-spacing: 2px;
-            cursor: pointer; transition: 0.3s;
-        }
-        .btn-black:active { background: #333; }
+        /* 6. Guestbook */
+        .gb-card { background: white; padding: 30px 20px; border: 1px solid var(--border-color); max-width: 450px; margin: 0 auto; }
+        input, textarea { width: 100%; padding: 15px; border: 1px solid var(--border-color); margin-bottom: 10px; font-family: inherit; font-size: 0.9rem; border-radius: 0; }
+        .btn-black { background: var(--point-black); color: white; border: none; padding: 18px; width: 100%; font-size: 0.9rem; letter-spacing: 2px; cursor: pointer; }
 
-        .guest-item {
-            border-bottom: 1px solid var(--border-color); padding: 20px 0;
-            text-align: left; animation: fadeIn 0.5s ease-out;
-        }
-        .guest-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 5px; }
-        .guest-msg { font-size: 0.9rem; color: var(--deep-gray); }
-
-        /* Custom Add-to-calendar Color Override */
-        add-to-calendar-button { --btn-background: #000 !important; --btn-text: #fff !important; }
+        /* 7. Modal (Account Popup) */
+        .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
+        .modal-content { background-color: white; padding: 40px 25px; width: 90%; max-width: 400px; text-align: center; position: relative; animation: modalFade 0.3s; }
+        @keyframes modalFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .close-modal { position: absolute; right: 15px; top: 15px; font-size: 1.5rem; cursor: pointer; color: #999; }
+        
+        .acc-row { border-bottom: 1px solid #eee; padding: 20px 0; text-align: left; }
+        .acc-row:last-child { border: none; }
+        .acc-title { font-size: 0.8rem; color: #888; margin-bottom: 5px; }
+        .acc-info { display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem; }
+        .btn-copy { border: 1px solid #000; background: none; padding: 4px 10px; font-size: 0.75rem; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -114,15 +78,14 @@
             <p class="hero-date">2026. 08. 15. SAT. 12:00 PM</p>
         </div>
     </section>
-
     <div class="main-divider" data-aos="fade-up"></div>
 
-    <section class="section" data-aos="fade-up">
+<section class="section" data-aos="fade-up">
         <span class="section-title">Invitation</span>
         <p style="font-size: 1rem; line-height: 2.4; font-weight: 400;">
-            검은 머리 파뿌리 될 때까지라는<br>
-            오래된 약속의 의미를 되새기며,<br>
-            두 사람이 하나 되어 첫발을 내딛습니다.
+            곁에 있을 때 가장 나다워지는 사람을 만났습니다.<br>
+            서로의 결을 닮아가는 사랑으로<br>
+            함께 걸어갈 새날의 시작을 약속합니다.
         </p>
         
         <div class="countdown-wrap" id="countdown">
@@ -132,34 +95,21 @@
         </div>
     </section>
 
-    <section class="section compact" style="background: #fafafa;">
-        <span class="section-title">Gallery</span>
-        <div class="gallery-wrapper" data-aos="fade-up">
-            <div class="gallery-container" id="slider">
-                <div class="gallery-item"><img src="./assets/images/gallery1.png" alt="Photo 1"></div>
-                <div class="gallery-item"><img src="./assets/images/gallery2.png" alt="Photo 2"></div>
-                <div class="gallery-item"><img src="./assets/images/gallery3.png" alt="Photo 3"></div>
-            </div>
-            <button class="nav-btn prev-btn" onclick="scrollGallery(-1)">&#10094;</button>
-            <button class="nav-btn next-btn" onclick="scrollGallery(1)">&#10095;</button>
-        </div>
-    </section>
-
     <section class="section compact">
         <span class="section-title">Location</span>
         <div data-aos="fade-up">
-            <h3 style="font-weight: 700; font-size: 1.2rem;">수원 메리빌리아 가든홀</h3>
-            <p style="color: #888; font-size: 0.85rem; margin-bottom: 30px;">경기도 수원시 어느구 어느길 123</p>
+            <h3 style="font-weight: 700;">수원 메리빌리아 가든홀</h3>
+            <p style="color: #888; font-size: 0.85rem;">경기도 수원시 어느구 어느길 123</p>
             
-            <add-to-calendar-button
-                name="류승건 &amp; 이지연 결혼식"
-                startDate="2026-08-15"
-                startTime="12:00"
-                timeZone="Asia/Seoul"
-                options="'Apple','Google'"
-                label="CALENDAR"
-                lightMode="bodyScheme"
-            ></add-to-calendar-button>
+            <div class="map-container">
+                <div class="map-placeholder">
+                    <p>네이버 지도가 들어갈 공간입니다.</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 20px;">
+                <a href="https://map.naver.com/v5/search/수원메리빌리아" target="_blank" style="text-decoration: none; color: #000; font-size: 0.8rem; border-bottom: 1px solid #000; padding-bottom: 2px;">네이버 지도로 길 찾기</a>
+            </div>
         </div>
     </section>
 
@@ -169,24 +119,42 @@
             <input type="text" id="name" placeholder="NAME">
             <textarea id="message" rows="3" placeholder="MESSAGE"></textarea>
             <button onclick="saveMessage()" class="btn-black">SUBMIT</button>
-            
-            <div id="guestbook-list" style="margin-top: 20px;">
-                </div>
+            <div id="guestbook-list" style="margin-top: 20px;"></div>
         </div>
     </section>
+
+    <section class="section compact">
+        <button onclick="openModal()" class="btn-black" style="max-width: 300px; background: none; color: #000; border: 1px solid #000;">마음 전하실 곳</button>
+    </section>
+
+    <div id="accountModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h3 style="font-weight: 400; margin-bottom: 30px; letter-spacing: 2px;">ACCOUNT</h3>
+            
+            <div class="acc-row">
+                <div class="acc-title">신랑 류승건</div>
+                <div class="acc-info">
+                    <span>우리 <strong id="groom-acc">1002-xxx-xxxxxx</strong></span>
+                    <button class="btn-copy" onclick="copyText('groom-acc')">복사</button>
+                </div>
+            </div>
+            
+            <div class="acc-row">
+                <div class="acc-title">신부 이지연</div>
+                <div class="acc-info">
+                    <span>카뱅 <strong id="bride-acc">3333-xx-xxxxxxx</strong></span>
+                    <button class="btn-copy" onclick="copyText('bride-acc')">복사</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
     
     <script>
-        // 1. Gallery Scroll Logic
-        function scrollGallery(direction) {
-            const slider = document.getElementById('slider');
-            const itemWidth = slider.querySelector('.gallery-item').offsetWidth;
-            slider.scrollBy({ left: direction * itemWidth, behavior: 'smooth' });
-        }
-
-        // 2. Firebase Setting
+        // Firebase & Countdown (기존과 동일)
         const firebaseConfig = {
             apiKey: "AIzaSyD1LmVHTLYnecokZV67_hCDcM289fl3oiw",
             authDomain: "sg-jy-233e2.firebaseapp.com",
@@ -199,7 +167,18 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        // 3. Countdown
+        // Modal Logic
+        function openModal() { document.getElementById('accountModal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('accountModal').style.display = 'none'; }
+        window.onclick = function(event) { if (event.target == document.getElementById('accountModal')) closeModal(); }
+
+        // Copy Logic
+        function copyText(id) {
+            const text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text).then(() => alert("계좌번호가 복사되었습니다."));
+        }
+
+        // Countdown & Guestbook 로직 생략 (기존 드린 코드와 동일하게 작동)
         function updateCountdown() {
             const weddingDate = new Date('2026-08-15T12:00:00').getTime();
             const now = new Date().getTime();
@@ -213,7 +192,6 @@
         }
         setInterval(updateCountdown, 1000); updateCountdown();
 
-        // 4. Guestbook
         function saveMessage() {
             const name = document.getElementById('name').value;
             const msg = document.getElementById('message').value;
@@ -222,16 +200,12 @@
                 .then(() => { document.getElementById('name').value = ''; document.getElementById('message').value = ''; });
             }
         }
-
         database.ref('guestbook').on('value', (snapshot) => {
-            const list = document.getElementById('guestbook-list');
-            list.innerHTML = '';
-            const items = [];
-            snapshot.forEach((child) => { items.push(child.val()); });
+            const list = document.getElementById('guestbook-list'); list.innerHTML = '';
+            const items = []; snapshot.forEach((child) => { items.push(child.val()); });
             items.reverse().forEach((data) => {
-                const div = document.createElement('div');
-                div.className = 'guest-item';
-                div.innerHTML = `<div class="guest-name">${data.name}</div><div class="guest-msg">${data.message}</div>`;
+                const div = document.createElement('div'); div.style.textAlign='left'; div.style.marginBottom='15px'; div.style.borderBottom='1px solid #eee'; div.style.paddingBottom='10px';
+                div.innerHTML = `<strong>${data.name}</strong><br><span style="font-size:0.9rem;">${data.message}</span>`;
                 list.appendChild(div);
             });
         });
@@ -239,4 +213,4 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>AOS.init({ duration: 1000, once: true });</script>
 </body>
-</html>
+</html>ㄴ
