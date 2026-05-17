@@ -4,23 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-    
     <title>류승건 &amp; 이지연 결혼식 초대장</title>
     
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;400;700&family=Montserrat:wght@100;300;400&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     
     <style>
-        :root {
-            --point-black: #000000;
-            --deep-gray: #333333;
-            --bg-white: #ffffff;
-        }
-
-        /* [보안] 드래그 금지 */
+        :root { --point-black: #000000; --deep-gray: #333333; --bg-white: #ffffff; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; }
         input, textarea, [id*="acc-"], [id*="addr-"] { -webkit-user-select: text; user-select: text; }
-
         body { font-family: 'Noto Serif KR', serif; margin: 0; color: var(--point-black); background: var(--bg-white); line-height: 1.8; word-break: keep-all; }
 
         /* AOS 안전장치 */
@@ -28,9 +20,9 @@
         html.aos-init [data-aos] { opacity: 0; }
         html.aos-init .aos-animate { opacity: 1 !important; }
 
-        .h-divider { width: 100%; height: 1px; background-color: var(--point-black); margin: 0; }
         .section { padding: 80px 30px; text-align: center; }
         .section-title { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--point-black); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 30px; display: block; }
+        .h-divider { width: 100%; height: 1px; background-color: var(--point-black); margin: 0; }
 
         /* 메인 슬라이더 */
         .hero-slider { height: 100vh; width: 100%; overflow: hidden; position: relative; background: #fff; }
@@ -40,20 +32,16 @@
         .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.15); border: none; color: white; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; }
         .prev-btn { left: 10px; } .next-btn { right: 10px; }
 
-        /* 갤러리 그리드 및 더보기 */
-        .gallery-wrap { position: relative; }
+        /* 갤러리 그리드 및 토글 */
+        .gallery-wrap { position: relative; transition: max-height 0.5s ease-in-out; overflow: hidden; }
         .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 0 10px; }
-        .gallery-grid.limited { max-height: 450px; overflow: hidden; } /* 약 3줄만 표시 */
+        .gallery-wrap.limited { max-height: 450px; } /* 초기 약 3줄만 표시 */
         .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer; background: #f0f0f0; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
-        
         .btn-more { margin: 20px auto; padding: 12px 30px; border: 1px solid #000; background: #fff; cursor: pointer; font-family: inherit; font-size: 0.85rem; display: block; }
 
-        /* 확대 뷰어 모달 스타일 */
-        #galleryViewer { 
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: #000; z-index: 10001; align-items: center; justify-content: center; 
-        }
+        /* 확대 뷰어 모달 */
+        #galleryViewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10001; align-items: center; justify-content: center; }
         .viewer-content { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
         .viewer-img { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
         .viewer-close { position: absolute; top: 20px; right: 20px; color: #fff; font-size: 2.5rem; cursor: pointer; z-index: 10002; }
@@ -61,13 +49,9 @@
         .v-prev { left: 10px; } .v-next { right: 10px; }
         .viewer-count { position: absolute; bottom: 40px; color: #fff; font-size: 0.85rem; letter-spacing: 2px; }
 
-        /* 지도 */
+        /* 지도 및 기타 */
         .map-link-area { width: 100%; display: block; margin: 20px auto; border: 1px solid #eee; background-size: cover; background-position: center; }
-
-        /* 계좌 및 방명록 */
         .btn-black { background: var(--point-black); color: white; border: none; padding: 18px; width: 100%; cursor: pointer; font-family: inherit; font-weight: 700; }
-        .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
-        .modal-content { background: white; padding: 40px 25px; width: 90%; max-width: 400px; text-align: center; position: relative; }
     </style>
 </head>
 <body oncontextmenu="return false">
@@ -86,6 +70,8 @@
 
     <section class="section" data-aos="fade-up">
         <span class="section-title">Location</span>
+        <h3 style="font-weight: 700; font-size: 1.2rem;">메리빌리아 더프레스티지</h3>
+        <p style="color: #888; font-size: 0.85rem;">경기 수원시 권선구 세화로 116 (서둔동)</p>
         <a href="https://naver.me/5apDP7nI" target="_blank" class="map-link-area" 
            style="background-image: url('./assets/map_preview.png'); width: 100%; aspect-ratio: 900 / 650; height: auto;">
         </a>
@@ -93,12 +79,12 @@
 
     <div class="h-divider"></div>
 
-    <section class="section" data-aos="fade-up">
+    <section class="section" data-aos="fade-up" id="gallerySection">
         <span class="section-title">Gallery</span>
-        <div class="gallery-wrap">
-            <div class="gallery-grid limited" id="galleryGrid"></div>
+        <div class="gallery-wrap limited" id="galleryWrap">
+            <div class="gallery-grid" id="galleryGrid"></div>
         </div>
-        <button id="moreBtn" class="btn-more" onclick="showAllPhotos()">더보기 ▽</button>
+        <button id="moreBtn" class="btn-more" onclick="toggleGallery()">더보기 ▽</button>
     </section>
 
     <div id="galleryViewer">
@@ -115,7 +101,7 @@
     <script>
         window.onload = function() { AOS.init({ duration: 1200, once: true }); };
 
-        // 갤러리 파일 목록 (비연속 이름 반영)
+        // [수정] 스크린샷에서 확인된 실제 파일명 목록 (p07, p08 등 제외)
         const galleryFiles = [
             'p01', 'p02', 'p03', 'p04', 'p05', 'p06', 
             'p11', 'p12', 'p13', 'p14', 'p15', 'p16', 'p17', 'p18', 'p19', 'p20', 'p21', 
@@ -125,22 +111,30 @@
         const totalGalleryImages = galleryFiles.length;
         let gViewIdx = 0;
 
-        // 갤러리 초기화
         function initGallery() {
             const grid = document.getElementById('galleryGrid');
             galleryFiles.forEach((name, idx) => {
                 const item = document.createElement('div');
                 item.className = 'gallery-item';
-                item.innerHTML = `<img src="./assets/p00/${name}.png" loading="lazy" onclick="openViewer(${idx})">`;
+                item.innerHTML = `<img src="./assets/p00/${name}.png" loading="lazy" onclick="openViewer(${idx})" onerror="this.parentElement.style.display='none'">`;
                 grid.appendChild(item);
             });
         }
         initGallery();
 
-        // 더보기 버튼 로직
-        function showAllPhotos() {
-            document.getElementById('galleryGrid').classList.remove('limited');
-            document.getElementById('moreBtn').style.display = 'none';
+        // 더보기/접기 토글 로직
+        function toggleGallery() {
+            const wrap = document.getElementById('galleryWrap');
+            const btn = document.getElementById('moreBtn');
+            if (wrap.classList.contains('limited')) {
+                wrap.classList.remove('limited');
+                btn.innerText = '접기 △';
+            } else {
+                wrap.classList.add('limited');
+                btn.innerText = '더보기 ▽';
+                // 접었을 때 갤러리 상단으로 스크롤 이동
+                document.getElementById('gallerySection').scrollIntoView({ behavior: 'smooth' });
+            }
         }
 
         // 확대 뷰어 로직
@@ -148,26 +142,23 @@
             gViewIdx = idx;
             updateViewer();
             document.getElementById('galleryViewer').style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // 스크롤 방지
+            document.body.style.overflow = 'hidden';
         }
-
         function closeViewer() {
             document.getElementById('galleryViewer').style.display = 'none';
             document.body.style.overflow = 'auto';
         }
-
         function changeViewImg(dir) {
             gViewIdx = (gViewIdx + dir + totalGalleryImages) % totalGalleryImages;
             updateViewer();
         }
-
         function updateViewer() {
             const name = galleryFiles[gViewIdx];
             document.getElementById('currentViewerImg').src = `./assets/p00/${name}.png`;
             document.getElementById('viewerCount').innerText = `${gViewIdx + 1} / ${totalGalleryImages}`;
         }
 
-        // 슬라이더 및 기타 유틸리티 (기존 로직 유지)
+        // 무한 슬라이더
         let heroIdx = 1;
         const heroContainer = document.getElementById('heroSlider');
         function moveSlider(dir) {
@@ -175,7 +166,10 @@
             heroContainer.style.transition = 'transform 0.4s ease-out';
             heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`;
         }
-        // ... (이후 무한 슬라이더 처리 및 복사 로직 등 추가)
+        heroContainer.addEventListener('transitionend', () => {
+            if (heroIdx === 0) { heroContainer.style.transition = 'none'; heroIdx = 3; heroContainer.style.transform = `translateX(-300%)`; }
+            if (heroIdx === 4) { heroContainer.style.transition = 'none'; heroIdx = 1; heroContainer.style.transform = `translateX(-100%)`; }
+        });
     </script>
 </body>
 </html>
