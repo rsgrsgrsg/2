@@ -19,58 +19,65 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Noto Serif KR', serif; margin: 0; color: var(--point-black); background: var(--bg-white); line-height: 1.8; word-break: keep-all; }
 
-        /* 1. Hero Slider (Color Original) */
+        /* 1. Hero Slider (Infinite loop ready) */
         .hero-slider { height: 100vh; width: 100%; overflow: hidden; position: relative; background: #fff; }
-        .hero-container { display: flex; height: 100%; width: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; }
+        .hero-container { 
+            display: flex; height: 100%; width: 100%; overflow-x: auto; 
+            scroll-snap-type: x mandatory; scroll-behavior: smooth;
+        }
         .hero-container::-webkit-scrollbar { display: none; }
         .hero-item { min-width: 100%; height: 100%; scroll-snap-align: start; position: relative; }
-        .hero-item img { width: 100%; height: 100%; object-fit: cover; /* 흑백 필터 제거 */ }
+        .hero-item img { width: 100%; height: 100%; object-fit: cover; }
         
         .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.2); border: none; color: white; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: none; align-items: center; justify-content: center; z-index: 10; }
         @media (min-width: 768px) { .nav-btn { display: flex; } }
         .prev-btn { left: 20px; } .next-btn { right: 20px; }
 
-        /* 날짜 및 이름 위치를 하단으로 조정 */
         .hero-overlay { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             display: flex; flex-direction: column; align-items: center; 
-            justify-content: flex-end; /* 하단 배치 */
-            padding-bottom: 60px; /* 바닥에서 띄움 */
+            justify-content: flex-end; padding-bottom: 60px;
             color: white; text-align: center; pointer-events: none; z-index: 5;
-            text-shadow: 0 0 10px rgba(0,0,0,0.5); /* 글자 가독성 보정 */
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
         }
         .hero-names { font-size: 2.2rem; font-weight: 400; letter-spacing: 8px; margin-bottom: 10px; }
         .hero-date { font-size: 1.1rem; letter-spacing: 2px; opacity: 0.9; font-weight: 400; }
 
-        /* 가로 구분선 */
         .h-divider { width: 100%; height: 1px; background-color: var(--point-black); margin: 0; }
 
-        /* Section Layout */
         .section { padding: 80px 30px; text-align: center; }
         .section.compact { padding: 40px 30px; } 
         .section-title { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--point-black); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 30px; display: block; }
 
-        /* Countdown */
         .countdown-wrap { display: flex; justify-content: center; gap: 30px; margin: 30px 0; }
         .count-num { font-family: 'Montserrat', sans-serif; font-size: 1.8rem; font-weight: 300; }
         .count-label { font-size: 0.65rem; color: #999; letter-spacing: 2px; }
 
-        /* Address Box */
         .address-box { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; }
         .btn-copy-sm { border: 1px solid #000; background: none; padding: 2px 8px; font-size: 0.7rem; cursor: pointer; transition: 0.3s; font-family: inherit; }
         .btn-copy-sm:active { background: #000; color: #fff; }
 
-        /* Map UI */
-        .map-link-area { width: 100%; height: 250px; border: 1px solid #eee; margin: 20px 0; display: block; overflow: hidden; position: relative; text-decoration: none; }
-        .map-link-area img { width: 100%; height: 100%; object-fit: cover; }
-        .map-overlay-text { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.03); display: flex; align-items: center; justify-content: center; color: #555; font-size: 0.8rem; }
+        .map-link-area { 
+            width: 100%; height: 250px; border: 1px solid #eee; margin: 20px 0; 
+            display: block; overflow: hidden; position: relative; text-decoration: none;
+            background: #f4f4f4;
+        }
+        .map-overlay-text { position: absolute; bottom: 15px; width: 100%; text-align: center; color: #555; font-size: 0.75rem; font-weight: 400; }
 
-        /* Guestbook */
         .gb-card { background: white; padding: 30px 20px; border: 1px solid #eee; max-width: 450px; margin: 0 auto; }
         input, textarea { width: 100%; padding: 15px; border: 1px solid #eee; margin-bottom: 10px; font-family: inherit; font-size: 0.9rem; }
-        .btn-black { background: var(--point-black); color: white; border: none; padding: 18px; width: 100%; cursor: pointer; letter-spacing: 2px; font-weight: 700; }
         
-        /* Modal */
+        /* 버튼 스타일 통일 */
+        .btn-black { 
+            background: var(--point-black); color: white; border: none; 
+            padding: 18px; width: 100%; cursor: pointer; letter-spacing: 2px; 
+            font-weight: 700; font-family: inherit; font-size: 0.9rem;
+        }
+        
+        .guest-item { border-bottom: 1px solid #f2f2f2; padding: 20px 0; text-align: left; }
+        .guest-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 5px; }
+        .guest-msg { font-size: 0.9rem; color: var(--deep-gray); }
+
         .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
         .modal-content { background: white; padding: 40px 25px; width: 90%; max-width: 400px; text-align: center; position: relative; }
         .close-modal { position: absolute; right: 15px; top: 15px; font-size: 1.5rem; cursor: pointer; color: #999; }
@@ -123,13 +130,12 @@
         </div>
 
         <a href="https://naver.me/5apDP7nI" target="_blank" class="map-link-area">
-            <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTAzMTdfMTQ4%2FMDAxNjE1OTY0OTU3MTU1.2S_eC6B_m4S_H7D2H_e5vYvWq9zY2&type=f540_300" alt="지도미리보기">
-            <div class="map-overlay-text">지도를 클릭하시면 네이버 지도로 연결됩니다.</div>
+            <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; flex-direction:column; background:#eee;">
+                 <i class="fas fa-map-marked-alt" style="font-size: 2rem; color: #999; margin-bottom:10px;"></i>
+                 <span style="color:#777;">네이버 지도로 위치 확인하기</span>
+            </div>
+            <div class="map-overlay-text">클릭하시면 지도로 연결됩니다.</div>
         </a>
-
-        <div style="margin-top: 10px;">
-            <a href="https://naver.me/5apDP7nI" target="_blank" style="text-decoration: none; color: #000; font-size: 0.8rem; border: 1px solid #000; padding: 10px 20px; display: inline-block;">네이버 지도로 길 찾기</a>
-        </div>
 
         <div style="margin-top: 30px;">
             <script src="https://cdn.jsdelivr.net/npm/add-to-calendar-button@2" async defer></script>
@@ -144,16 +150,16 @@
         <div class="gb-card">
             <input type="text" id="gb_name" placeholder="성함">
             <textarea id="gb_msg" rows="3" placeholder="축하 메시지를 남겨주세요"></textarea>
-            <button onclick="saveGuestMessage()" class="btn-black">SUBMIT</button>
+            <button onclick="saveGuestMessage()" class="btn-black">축하 메시지 남기기</button>
             <div id="gb-list" style="margin-top: 20px;"></div>
         </div>
-        <button onclick="openModal()" class="btn-black" style="max-width: 300px; background:none; border:1px solid #000; padding:15px 40px; cursor:pointer; margin-top: 40px;">마음 전하실 곳</button>
+        <button onclick="openModal()" class="btn-black" style="max-width: 300px; margin: 40px auto 0; display: block;">마음 전하실 곳</button>
     </section>
 
     <div id="accModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal()">&times;</span>
-            <h3 style="font-family: 'Montserrat'; font-weight: 300; letter-spacing: 5px; border-bottom: 1px solid #000; padding-bottom: 10px; margin-bottom: 30px;">ACCOUNT</h3>
+            <h3 style="font-family: 'Montserrat'; font-weight: 300; letter-spacing: 5px; border-bottom: 1px solid #000; padding-bottom: 10px; margin-bottom: 30px;">계좌 번호 안내</h3>
             <div style="text-align: left; padding: 10px 0; border-bottom: 1px solid #eee;">
                 <p style="font-size: 0.8rem; color: #888; margin: 0;">신랑 류승건</p>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -171,10 +177,43 @@
         </div>
     </div>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
+    
     <script>
-        function moveSlider(dir) { const container = document.getElementById('heroSlider'); const width = container.offsetWidth; container.scrollBy({ left: dir * width, behavior: 'smooth' }); }
+        // 무한 로테이션 슬라이더 로직
+        let currentIndex = 0;
+        const totalSlides = 3;
+
+        function moveSlider(dir) {
+            const container = document.getElementById('heroSlider');
+            const width = container.offsetWidth;
+            currentIndex += dir;
+
+            if (currentIndex >= totalSlides) {
+                currentIndex = 0;
+                container.scrollTo({ left: 0, behavior: 'smooth' });
+            } else if (currentIndex < 0) {
+                currentIndex = totalSlides - 1;
+                container.scrollTo({ left: width * (totalSlides - 1), behavior: 'smooth' });
+            } else {
+                container.scrollTo({ left: width * currentIndex, behavior: 'smooth' });
+            }
+        }
+
+        // 스와이프 감지 (모바일 로테이션용)
+        let touchstartX = 0;
+        let touchendX = 0;
+        const slider = document.getElementById('heroSlider');
+        
+        slider.addEventListener('touchstart', e => touchstartX = e.changedTouches[0].screenX);
+        slider.addEventListener('touchend', e => {
+            touchendX = e.changedTouches[0].screenX;
+            if (touchstartX - touchendX > 50) moveSlider(1);
+            if (touchendX - touchstartX > 50) moveSlider(-1);
+        });
+
         function copyToClipboard(id) { const text = document.getElementById(id).innerText; navigator.clipboard.writeText(text).then(() => alert("복사되었습니다.")); }
         function openModal() { document.getElementById('accModal').style.display = 'flex'; }
         function closeModal() { document.getElementById('accModal').style.display = 'none'; }
