@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>류승건 &amp; 이지연 결혼식 초대장</title>
     
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;400;700&family=Montserrat:wght@100;300;400&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght=200;400;700&family=Montserrat:wght@100;300;400&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     
     <style>
@@ -19,15 +19,13 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Noto Serif KR', serif; margin: 0; color: var(--point-black); background: var(--bg-white); line-height: 1.8; word-break: keep-all; }
 
-        /* 1. Hero Slider (모바일 순정 스크롤 지원 및 가둠 현상 해결) */
-        .hero-slider { height: 100vh; width: 100%; position: relative; background: #fff; }
+        /* 1. Hero Slider - 무한 물리 회전 트랙 구조 최적화 */
+        .hero-slider { height: 100vh; width: 100%; overflow: hidden; position: relative; background: #fff; }
         .hero-container { 
-            display: flex; height: 100%; width: 100%; overflow-x: auto; 
-            scroll-snap-type: x mandatory; scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
+            display: flex; height: 100%; width: 100%; 
+            will-change: transform;
         }
-        .hero-container::-webkit-scrollbar { display: none; }
-        .hero-item { min-width: 100%; height: 100%; scroll-snap-align: start; position: relative; }
+        .hero-item { min-width: 100%; height: 100%; position: relative; }
         .hero-item img { width: 100%; height: 100%; object-fit: cover; }
         
         .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.2); border: none; color: white; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: none; align-items: center; justify-content: center; z-index: 10; }
@@ -81,15 +79,27 @@
         .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
         .modal-content { background: white; padding: 40px 25px; width: 90%; max-width: 400px; text-align: center; position: relative; }
         .close-modal { position: absolute; right: 15px; top: 15px; font-size: 1.5rem; cursor: pointer; color: #999; }
+        
+        /* 카카오페이 버튼 전용 인라인 스타일 보완 클래스 */
+        .btn-kakaopay {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            background: #FEE500; color: #191919; text-align: center; padding: 12px;
+            font-size: 0.85rem; font-weight: 700; text-decoration: none; border-radius: 6px;
+            margin-top: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); transition: background 0.2s;
+        }
+        .btn-kakaopay:active { background: #fada0a; }
     </style>
 </head>
 <body>
 
     <div class="hero-slider">
+        <!-- 물리적 회전을 위해 첫 칸과 끝 칸에 복사본 슬라이드(Clone)를 유기적으로 배치 -->
         <div class="hero-container" id="heroSlider">
+            <div class="hero-item"><img src="./assets/main3.png" alt="3번 복사본"></div>
             <div class="hero-item"><img src="./assets/main1.png" alt="1"></div>
             <div class="hero-item"><img src="./assets/main2.png" alt="2"></div>
             <div class="hero-item"><img src="./assets/main3.png" alt="3"></div>
+            <div class="hero-item"><img src="./assets/main1.png" alt="1번 복사본"></div>
         </div>
         <button class="nav-btn prev-btn" onclick="moveSlider(-1)">&#10094;</button>
         <button class="nav-btn next-btn" onclick="moveSlider(1)">&#10095;</button>
@@ -156,23 +166,36 @@
         <button onclick="openModal()" class="btn-black" style="max-width: 300px; margin: 40px auto 0; display: block;">마음 전하실 곳</button>
     </section>
 
+    <!-- 카카오페이 송금 버튼이 결합된 계좌 안내 모달 -->
     <div id="accModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal()">&times;</span>
-            <h3 style="font-family: 'Montserrat'; font-weight: 300; letter-spacing: 5px; border-bottom: 1px solid #000; padding-bottom: 10px; margin-bottom: 30px;">계좌 번호 안내</h3>
-            <div style="text-align: left; padding: 10px 0; border-bottom: 1px solid #eee;">
-                <p style="font-size: 0.8rem; color: #888; margin: 0;">신랑 류승건</p>
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span id="acc-groom">우리 1002-841-241285</span>
+            <h3 style="font-family: 'Montserrat'; font-weight: 300; letter-spacing: 5px; border-bottom: 1px solid #000; padding-bottom: 10px; margin-bottom: 30px;">마음 전하실 곳</h3>
+            
+            <!-- 신랑 측 계좌 & 페이 -->
+            <div style="text-align: left; padding: 10px 0 15px; border-bottom: 1px solid #eee;">
+                <p style="font-size: 0.8rem; color: #888; margin: 0 0 5px 0;">신랑 류승건</p>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span id="acc-groom" style="font-size: 0.95rem;">우리 1002-841-241285</span>
                     <button class="btn-copy-sm" onclick="copyToClipboard('acc-groom')">복사</button>
                 </div>
+                <!-- 여기에 신랑 카카오페이 복사한 링크를 입력하세요 -->
+                <a href="YOUR_GROOM_KAKAOPAY_URL" target="_blank" class="btn-kakaopay">
+                    <i class="fa-solid fa-comment"></i> 카카오페이 송금
+                </a>
             </div>
-            <div style="text-align: left; padding: 10px 0;">
-                <p style="font-size: 0.8rem; color: #888; margin: 0;">신부 이지연</p>
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span id="acc-bride">추후 업데이트 예정</span>
+            
+            <!-- 신부 측 계좌 & 페이 -->
+            <div style="text-align: left; padding: 15px 0 10px;">
+                <p style="font-size: 0.8rem; color: #888; margin: 0 0 5px 0;">신부 이지연</p>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span id="acc-bride" style="font-size: 0.95rem;">추후 업데이트 예정</span>
                     <button class="btn-copy-sm" onclick="copyToClipboard('acc-bride')">복사</button>
                 </div>
+                <!-- 여기에 신부 카카오페이 복사한 링크를 입력하세요 -->
+                <a href="YOUR_BRIDE_KAKAOPAY_URL" target="_blank" class="btn-kakaopay">
+                    <i class="fa-solid fa-comment"></i> 카카오페이 송금
+                </a>
             </div>
         </div>
     </div>
@@ -182,27 +205,64 @@
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
     
     <script>
-        // 무한 로테이션 최적화 로직 (물리 충돌 제거)
-        const totalSlides = 3;
+        // 무한 회전 물리 슬라이더 핵심 엔진 스크립트
+        let currentIndex = 1; // 1번 메인사진 위치에서 시작
+        const totalRealSlides = 3;
+        let isMoving = false;
+        
+        const container = document.getElementById('heroSlider');
+        
+        // 초기 트랙 정렬 설정
+        container.style.transform = `translateX(-${currentIndex * 100}%)`;
 
         function moveSlider(dir) {
-            const container = document.getElementById('heroSlider');
-            const width = container.offsetWidth;
-            
-            // 현재 스크롤 위치 기준으로 정확한 인덱스 계산
-            let currentIndex = Math.round(container.scrollLeft / width);
+            if (isMoving) return;
+            isMoving = true;
             currentIndex += dir;
-
-            if (currentIndex >= totalSlides) {
-                container.scrollTo({ left: 0, behavior: 'smooth' });
-            } else if (currentIndex < 0) {
-                container.scrollTo({ left: width * (totalSlides - 1), behavior: 'smooth' });
-            } else {
-                container.scrollTo({ left: width * currentIndex, behavior: 'smooth' });
-            }
+            
+            container.style.transition = 'transform 0.4s ease-out';
+            container.style.transform = `translateX(-${currentIndex * 100}%)`;
         }
 
-        // 중복 및 충돌을 일으키던 자바스크립트 모바일 스와이프 리스너 완전 제거 (CSS 순정 스크롤로 대체)
+        // 애니메이션이 완전히 끝난 직후 양 끝 경계면에서 인덱스를 스왑하는 트릭 로직
+        container.addEventListener('transitionend', () => {
+            isMoving = false;
+            if (currentIndex === 0) { 
+                container.style.transition = 'none';
+                currentIndex = totalRealSlides; // 진짜 3번 위치로 점프
+                container.style.transform = `translateX(-${currentIndex * 100}%)`;
+            } else if (currentIndex === totalRealSlides + 1) { 
+                container.style.transition = 'none';
+                currentIndex = 1; // 진짜 1번 위치로 점프
+                container.style.transform = `translateX(-${currentIndex * 100}%)`;
+            }
+        });
+
+        // 모바일 웹 스크롤 가둠을 완전 차단하는 정밀 터치 리스너
+        let startX = 0;
+        let startY = 0;
+        
+        container.addEventListener('touchstart', e => {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+        }, { passive: true });
+
+        container.addEventListener('touchend', e => {
+            if (isMoving) return;
+            const endX = e.changedTouches[0].clientX;
+            const endY = e.changedTouches[0].clientY;
+            const diffX = startX - endX;
+            const diffY = startY - endY;
+
+            // 하객들이 아래로 내리는 제스처(Y축 변동)가 더 크면 슬라이더가 이벤트를 뺏지 않고 양보함
+            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 40) {
+                if (diffX > 0) {
+                    moveSlider(1); // 왼쪽으로 밀면 다음 슬라이드
+                } else {
+                    moveSlider(-1); // 오른쪽으로 밀면 이전 슬라이드
+                }
+            }
+        });
 
         function copyToClipboard(id) { const text = document.getElementById(id).innerText; navigator.clipboard.writeText(text).then(() => alert("복사되었습니다.")); }
         function openModal() { document.getElementById('accModal').style.display = 'flex'; }
