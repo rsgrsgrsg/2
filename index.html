@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>류승건 &amp; 이지연 결혼식 초대장</title>
     
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght=200;400;700&family=Montserrat:wght@100;300;400&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;400;700&family=Montserrat:wght@100;300;400&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     
     <style>
@@ -19,12 +19,9 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Noto Serif KR', serif; margin: 0; color: var(--point-black); background: var(--bg-white); line-height: 1.8; word-break: keep-all; }
 
-        /* 1. Hero Slider - 무한 물리 회전 트랙 구조 최적화 */
+        /* 1. Hero Slider */
         .hero-slider { height: 100vh; width: 100%; overflow: hidden; position: relative; background: #fff; }
-        .hero-container { 
-            display: flex; height: 100%; width: 100%; 
-            will-change: transform;
-        }
+        .hero-container { display: flex; height: 100%; width: 100%; will-change: transform; }
         .hero-item { min-width: 100%; height: 100%; position: relative; }
         .hero-item img { width: 100%; height: 100%; object-fit: cover; }
         
@@ -48,6 +45,20 @@
         .section.compact { padding: 40px 30px; } 
         .section-title { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--point-black); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 30px; display: block; }
 
+        /* Gallery Grid */
+        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 0 10px; }
+        .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer; background: #f9f9f9; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Fullscreen Viewer */
+        #galleryViewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10001; align-items: center; justify-content: center; }
+        .viewer-content { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
+        .viewer-img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .viewer-close { position: absolute; top: 20px; right: 20px; color: #fff; font-size: 2rem; cursor: pointer; z-index: 10002; }
+        .viewer-nav { position: absolute; top: 50%; transform: translateY(-50%); color: #fff; font-size: 2rem; background: none; border: none; cursor: pointer; padding: 20px; z-index: 10002; opacity: 0.6; }
+        .v-prev { left: 5px; } .v-next { right: 5px; }
+        .viewer-count { position: absolute; bottom: 30px; color: #fff; font-size: 0.8rem; letter-spacing: 2px; }
+
         .countdown-wrap { display: flex; justify-content: center; gap: 30px; margin: 30px 0; }
         .count-num { font-family: 'Montserrat', sans-serif; font-size: 1.8rem; font-weight: 300; }
         .count-label { font-size: 0.65rem; color: #999; letter-spacing: 2px; }
@@ -56,21 +67,12 @@
         .btn-copy-sm { border: 1px solid #000; background: none; padding: 2px 8px; font-size: 0.7rem; cursor: pointer; transition: 0.3s; font-family: inherit; }
         .btn-copy-sm:active { background: #000; color: #fff; }
 
-        .map-link-area { 
-            width: 100%; height: 250px; border: 1px solid #eee; margin: 20px 0; 
-            display: block; overflow: hidden; position: relative; text-decoration: none;
-            background: #f4f4f4;
-        }
-        .map-overlay-text { position: absolute; bottom: 15px; width: 100%; text-align: center; color: #555; font-size: 0.75rem; font-weight: 400; }
+        .map-link-area { width: 100%; display: block; margin: 20px auto; border: 1px solid #eee; text-decoration: none; background-color: #f4f4f4; }
 
         .gb-card { background: white; padding: 30px 20px; border: 1px solid #eee; max-width: 450px; margin: 0 auto; }
         input, textarea { width: 100%; padding: 15px; border: 1px solid #eee; margin-bottom: 10px; font-family: inherit; font-size: 0.9rem; }
         
-        .btn-black { 
-            background: var(--point-black); color: white; border: none; 
-            padding: 18px; width: 100%; cursor: pointer; letter-spacing: 2px; 
-            font-weight: 700; font-family: inherit; font-size: 0.9rem;
-        }
+        .btn-black { background: var(--point-black); color: white; border: none; padding: 18px; width: 100%; cursor: pointer; letter-spacing: 2px; font-weight: 700; font-family: inherit; font-size: 0.9rem; }
         
         .guest-item { border-bottom: 1px solid #f2f2f2; padding: 20px 0; text-align: left; }
         .guest-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 5px; }
@@ -80,26 +82,18 @@
         .modal-content { background: white; padding: 40px 25px; width: 90%; max-width: 400px; text-align: center; position: relative; }
         .close-modal { position: absolute; right: 15px; top: 15px; font-size: 1.5rem; cursor: pointer; color: #999; }
         
-        /* 카카오페이 버튼 전용 인라인 스타일 보완 클래스 */
-        .btn-kakaopay {
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            background: #FEE500; color: #191919; text-align: center; padding: 12px;
-            font-size: 0.85rem; font-weight: 700; text-decoration: none; border-radius: 6px;
-            margin-top: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); transition: background 0.2s;
-        }
-        .btn-kakaopay:active { background: #fada0a; }
+        .btn-kakaopay { display: flex; align-items: center; justify-content: center; gap: 8px; background: #FEE500; color: #191919; text-align: center; padding: 12px; font-size: 0.85rem; font-weight: 700; text-decoration: none; border-radius: 6px; margin-top: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
     </style>
 </head>
 <body>
 
     <div class="hero-slider">
-        <!-- 물리적 회전을 위해 첫 칸과 끝 칸에 복사본 슬라이드(Clone)를 유기적으로 배치 -->
         <div class="hero-container" id="heroSlider">
-            <div class="hero-item"><img src="./assets/main3.png" alt="3번 복사본"></div>
+            <div class="hero-item"><img src="./assets/main3.png" alt="Clone Last"></div>
             <div class="hero-item"><img src="./assets/main1.png" alt="1"></div>
             <div class="hero-item"><img src="./assets/main2.png" alt="2"></div>
             <div class="hero-item"><img src="./assets/main3.png" alt="3"></div>
-            <div class="hero-item"><img src="./assets/main1.png" alt="1번 복사본"></div>
+            <div class="hero-item"><img src="./assets/main1.png" alt="Clone First"></div>
         </div>
         <button class="nav-btn prev-btn" onclick="moveSlider(-1)">&#10094;</button>
         <button class="nav-btn next-btn" onclick="moveSlider(1)">&#10095;</button>
@@ -120,6 +114,23 @@
 
     <div class="h-divider"></div>
 
+    <section class="section" data-aos="fade-up">
+        <span class="section-title">Gallery</span>
+        <div class="gallery-grid" id="galleryGrid"></div>
+    </section>
+
+    <div id="galleryViewer">
+        <span class="viewer-close" onclick="closeViewer()">&times;</span>
+        <div class="viewer-content" id="viewerContent">
+            <button class="viewer-nav v-prev" onclick="changeViewImg(-1)">&#10094;</button>
+            <img src="" class="viewer-img" id="currentViewerImg">
+            <button class="viewer-nav v-next" onclick="changeViewImg(1)">&#10095;</button>
+            <div class="viewer-count" id="viewerCount">1 / 1</div>
+        </div>
+    </div>
+
+    <div class="h-divider"></div>
+
     <section class="section compact" data-aos="fade-up">
         <span class="section-title">D-Day</span>
         <div class="countdown-wrap">
@@ -131,184 +142,12 @@
 
     <div class="h-divider"></div>
 
-<section class="section compact" data-aos="fade-up">
-    <span class="section-title">Location</span>
-    <h3 style="font-weight: 700; font-size: 1.2rem; margin-bottom: 5px;">메리빌리아 더프레스티지</h3>
-    <div class="address-box">
-        <span id="addr-text" style="color: #888; font-size: 0.85rem;">경기 수원시 권선구 세화로 116 (서둔동)</span>
-        <button class="btn-copy-sm" onclick="copyToClipboard('addr-text')">복사</button>
-    </div>
-
-    <a href="https://naver.me/5apDP7nI" target="_blank" class="map-link-area" 
-       style="background-image: url('./assets/map_preview.png'); 
-              background-size: 100% 100%; 
-              background-position: center; 
-              background-repeat: no-repeat;
-              width: 50%; 
-              aspect-ratio: 5 / 4; /* 500:400 비율 유지 */
-              height: auto; /* 고정 높이 250px 삭제 */
-              margin: 20px auto; 
-              border: 1px solid #eee; 
-              display: block; 
-              text-decoration: none; 
-              background-color: #f4f4f4;">
-    </a>
-
-    <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
-        <a href="https://naver.me/5apDP7nI" target="_blank" style="flex: 1; padding: 10px; border: 1px solid #ddd; font-size: 0.8rem; text-decoration: none; color: #333; background: #fff; text-align: center;">네이버 지도</a>
-        <a href="https://kko.to/EIt4OnhVm4" target="_blank" style="flex: 1; padding: 10px; border: 1px solid #ddd; font-size: 0.8rem; text-decoration: none; color: #333; background: #fff; text-align: center;">카카오내비</a>
-    </div>
-
-    <div style="margin-top: 30px;">
-        <script src="https://cdn.jsdelivr.net/npm/add-to-calendar-button@2" async defer></script>
-        <add-to-calendar-button name="류승건 & 이지연 결혼식" startDate="2026-08-15" startTime="12:00" timeZone="Asia/Seoul" options="'Apple','Google'" label="CALENDAR" lightMode="bodyScheme"></add-to-calendar-button>
-    </div>
-</section>
-
-    <div class="h-divider"></div>
-
     <section class="section compact" data-aos="fade-up">
-        <span class="section-title">Guestbook</span>
-        <div class="gb-card">
-            <input type="text" id="gb_name" placeholder="성함">
-            <textarea id="gb_msg" rows="3" placeholder="축하 메시지를 남겨주세요"></textarea>
-            <button onclick="saveGuestMessage()" class="btn-black">축하 메시지 남기기</button>
-            <div id="gb-list" style="margin-top: 20px;"></div>
+        <span class="section-title">Location</span>
+        <h3 style="font-weight: 700; font-size: 1.2rem; margin-bottom: 5px;">메리빌리아 더프레스티지</h3>
+        <div class="address-box">
+            <span id="addr-text" style="color: #888; font-size: 0.85rem;">경기 수원시 권선구 세화로 116 (서둔동)</span>
+            <button class="btn-copy-sm" onclick="copyToClipboard('addr-text')">복사</button>
         </div>
-        <button onclick="openModal()" class="btn-black" style="max-width: 300px; margin: 40px auto 0; display: block;">마음 전하실 곳</button>
-    </section>
 
-    <!-- 카카오페이 송금 버튼이 결합된 계좌 안내 모달 -->
-<div id="accModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal()">&times;</span>
-            <h3 style="font-family: 'Montserrat'; font-weight: 300; letter-spacing: 5px; border-bottom: 1px solid #000; padding-bottom: 10px; margin-bottom: 30px;">마음 전하실 곳</h3>
-            
-            <div style="text-align: left; padding: 10px 0 15px; border-bottom: 1px solid #eee;">
-                <p style="font-size: 0.8rem; color: #888; margin: 0 0 5px 0;">신랑 류승건</p>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                    <span id="acc-groom" style="font-size: 0.95rem;">우리 1002-841-241285</span>
-                    <button class="btn-copy-sm" onclick="copyToClipboard('acc-groom')">복사</button>
-                </div>
-                <a href="https://qr.kakaopay.com/FNfa3PrZO" target="_blank" class="btn-kakaopay">
-                    <i class="fa-solid fa-comment"></i> 카카오페이 송금
-                </a>
-            </div>
-            
-            <div style="text-align: left; padding: 15px 0 10px;">
-                <p style="font-size: 0.8rem; color: #888; margin: 0 0 5px 0;">신부 이지연</p>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                    <span id="acc-bride" style="font-size: 0.95rem;">새마을 9003197848841</span>
-                    <button class="btn-copy-sm" onclick="copyToClipboard('acc-bride')">복사</button>
-                </div>
-                <a href="https://qr.kakaopay.com/Ej8bBn70Q" target="_blank" class="btn-kakaopay">
-                    <i class="fa-solid fa-comment"></i> 카카오페이 송금
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
-    
-    <script>
-        // 무한 회전 물리 슬라이더 핵심 엔진 스크립트
-        let currentIndex = 1; // 1번 메인사진 위치에서 시작
-        const totalRealSlides = 3;
-        let isMoving = false;
-        
-        const container = document.getElementById('heroSlider');
-        
-        // 초기 트랙 정렬 설정
-        container.style.transform = `translateX(-${currentIndex * 100}%)`;
-
-        function moveSlider(dir) {
-            if (isMoving) return;
-            isMoving = true;
-            currentIndex += dir;
-            
-            container.style.transition = 'transform 0.4s ease-out';
-            container.style.transform = `translateX(-${currentIndex * 100}%)`;
-        }
-
-        // 애니메이션이 완전히 끝난 직후 양 끝 경계면에서 인덱스를 스왑하는 트릭 로직
-        container.addEventListener('transitionend', () => {
-            isMoving = false;
-            if (currentIndex === 0) { 
-                container.style.transition = 'none';
-                currentIndex = totalRealSlides; // 진짜 3번 위치로 점프
-                container.style.transform = `translateX(-${currentIndex * 100}%)`;
-            } else if (currentIndex === totalRealSlides + 1) { 
-                container.style.transition = 'none';
-                currentIndex = 1; // 진짜 1번 위치로 점프
-                container.style.transform = `translateX(-${currentIndex * 100}%)`;
-            }
-        });
-
-        // 모바일 웹 스크롤 가둠을 완전 차단하는 정밀 터치 리스너
-        let startX = 0;
-        let startY = 0;
-        
-        container.addEventListener('touchstart', e => {
-            startX = e.touches[0].clientX;
-            startY = e.touches[0].clientY;
-        }, { passive: true });
-
-        container.addEventListener('touchend', e => {
-            if (isMoving) return;
-            const endX = e.changedTouches[0].clientX;
-            const endY = e.changedTouches[0].clientY;
-            const diffX = startX - endX;
-            const diffY = startY - endY;
-
-            // 하객들이 아래로 내리는 제스처(Y축 변동)가 더 크면 슬라이더가 이벤트를 뺏지 않고 양보함
-            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 40) {
-                if (diffX > 0) {
-                    moveSlider(1); // 왼쪽으로 밀면 다음 슬라이드
-                } else {
-                    moveSlider(-1); // 오른쪽으로 밀면 이전 슬라이드
-                }
-            }
-        });
-
-        function copyToClipboard(id) { const text = document.getElementById(id).innerText; navigator.clipboard.writeText(text).then(() => alert("복사되었습니다.")); }
-        function openModal() { document.getElementById('accModal').style.display = 'flex'; }
-        function closeModal() { document.getElementById('accModal').style.display = 'none'; }
-        
-        const firebaseConfig = { apiKey: "AIzaSyD1LmVHTLYnecokZV67_hCDcM289fl3oiw", authDomain: "sg-jy-233e2.firebaseapp.com", databaseURL: "https://sg-jy-233e2-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "sg-jy-233e2", storageBucket: "sg-jy-233e2.firebasestorage.app", messagingSenderId: "217599075354", appId: "1:217599075354:web:c227474b5efc4fd280dda3" };
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-
-        function updateCountdown() {
-            const target = new Date('2026-08-15T12:00:00').getTime();
-            const now = new Date().getTime();
-            const diff = target - now;
-            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            document.getElementById('days').innerText = d < 10 ? '0'+d : d;
-            document.getElementById('hours').innerText = h < 10 ? '0'+h : h;
-            document.getElementById('mins').innerText = m < 10 ? '0'+m : m;
-        }
-        setInterval(updateCountdown, 1000); updateCountdown();
-
-        function saveGuestMessage() {
-            const name = document.getElementById('gb_name').value.trim();
-            const msg = document.getElementById('gb_msg').value.trim();
-            if (name && msg) { database.ref('guestbook').push({ name, message: msg, timestamp: Date.now() }).then(() => { document.getElementById('gb_name').value = ''; document.getElementById('gb_msg').value = ''; }); }
-        }
-        database.ref('guestbook').on('value', (snapshot) => {
-            const list = document.getElementById('gb-list'); list.innerHTML = '';
-            const items = []; snapshot.forEach(child => items.push(child.val()));
-            items.reverse().forEach(data => {
-                const div = document.createElement('div'); div.className = 'guest-item';
-                div.innerHTML = `<div class="guest-name">${data.name}</div><div class="guest-msg">${data.message}</div>`;
-                list.appendChild(div);
-            });
-        });
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <script>AOS.init({ duration: 1200, once: true });</script>
-</body>
-</html>
+        <a href="https://naver
