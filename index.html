@@ -19,20 +19,28 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Noto Serif KR', serif; margin: 0; color: var(--point-black); background: var(--bg-white); line-height: 1.8; word-break: keep-all; }
 
-        /* 1. Hero Slider */
-        .hero-slider { height: 100vh; width: 100%; overflow: hidden; position: relative; background: #000; }
+        /* 1. Hero Slider (Color Original) */
+        .hero-slider { height: 100vh; width: 100%; overflow: hidden; position: relative; background: #fff; }
         .hero-container { display: flex; height: 100%; width: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; }
         .hero-container::-webkit-scrollbar { display: none; }
         .hero-item { min-width: 100%; height: 100%; scroll-snap-align: start; position: relative; }
-        .hero-item img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) brightness(0.6); }
+        .hero-item img { width: 100%; height: 100%; object-fit: cover; /* 흑백 필터 제거 */ }
         
-        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.2); border: none; color: white; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: none; align-items: center; justify-content: center; z-index: 10; }
+        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.2); border: none; color: white; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: none; align-items: center; justify-content: center; z-index: 10; }
         @media (min-width: 768px) { .nav-btn { display: flex; } }
         .prev-btn { left: 20px; } .next-btn { right: 20px; }
 
-        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; pointer-events: none; z-index: 5; }
-        .hero-names { font-size: 2.2rem; font-weight: 200; letter-spacing: 8px; margin-bottom: 20px; }
-        .hero-date { font-family: 'Montserrat', sans-serif; font-size: 0.9rem; letter-spacing: 5px; opacity: 0.8; }
+        /* 날짜 및 이름 위치를 하단으로 조정 */
+        .hero-overlay { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            display: flex; flex-direction: column; align-items: center; 
+            justify-content: flex-end; /* 하단 배치 */
+            padding-bottom: 60px; /* 바닥에서 띄움 */
+            color: white; text-align: center; pointer-events: none; z-index: 5;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5); /* 글자 가독성 보정 */
+        }
+        .hero-names { font-size: 2.2rem; font-weight: 400; letter-spacing: 8px; margin-bottom: 10px; }
+        .hero-date { font-size: 1.1rem; letter-spacing: 2px; opacity: 0.9; font-weight: 400; }
 
         /* 가로 구분선 */
         .h-divider { width: 100%; height: 1px; background-color: var(--point-black); margin: 0; }
@@ -47,20 +55,15 @@
         .count-num { font-family: 'Montserrat', sans-serif; font-size: 1.8rem; font-weight: 300; }
         .count-label { font-size: 0.65rem; color: #999; letter-spacing: 2px; }
 
-        /* Address & Map */
-        .address-box { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; }
+        /* Address Box */
+        .address-box { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; }
         .btn-copy-sm { border: 1px solid #000; background: none; padding: 2px 8px; font-size: 0.7rem; cursor: pointer; transition: 0.3s; font-family: inherit; }
         .btn-copy-sm:active { background: #000; color: #fff; }
 
-        .map-wrapper { width: 100%; height: 300px; margin: 20px 0; border: 1px solid #eee; overflow: hidden; }
-
-        .map-btns { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; }
-        .btn-map-app { 
-            text-decoration: none; color: #000; font-size: 0.75rem; 
-            border: 1px solid #000; padding: 8px 15px; letter-spacing: 1px;
-            transition: 0.3s;
-        }
-        .btn-map-app:active { background: #000; color: #fff; }
+        /* Map UI */
+        .map-link-area { width: 100%; height: 250px; border: 1px solid #eee; margin: 20px 0; display: block; overflow: hidden; position: relative; text-decoration: none; }
+        .map-link-area img { width: 100%; height: 100%; object-fit: cover; }
+        .map-overlay-text { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.03); display: flex; align-items: center; justify-content: center; color: #555; font-size: 0.8rem; }
 
         /* Guestbook */
         .gb-card { background: white; padding: 30px 20px; border: 1px solid #eee; max-width: 450px; margin: 0 auto; }
@@ -85,8 +88,8 @@
         <button class="nav-btn next-btn" onclick="moveSlider(1)">&#10095;</button>
         <div class="hero-overlay">
             <div data-aos="fade-up" data-aos-duration="2000">
-                <h1 class="hero-names">RYU &amp; LEE</h1>
-                <p class="hero-date">2026. 08. 15. SAT. 12:00 PM</p>
+                <h1 class="hero-names">류승건 &amp; 이지연</h1>
+                <p class="hero-date">2026. 08. 15. 토요일 오후 12시</p>
             </div>
         </div>
     </div>
@@ -115,27 +118,20 @@
         <span class="section-title">Location</span>
         <h3 style="font-weight: 700; font-size: 1.2rem; margin-bottom: 5px;">수원 메리빌리아 가든홀</h3>
         <div class="address-box">
-            <span id="addr-text" style="color: #888; font-size: 0.85rem;">경기도 수원시 어느길 123</span>
+            <span id="addr-text" style="color: #888; font-size: 0.85rem;">경기 수원시 권선구 서둔동 389</span>
             <button class="btn-copy-sm" onclick="copyToClipboard('addr-text')">복사</button>
         </div>
 
-        <div class="map-wrapper">
-            <iframe 
-                src="https://map.naver.com/v5/search/%EC%88%98%EC%9B%90%20%EB%A9%94%EB%A6%AC%EB%B9%8C%EB%A6%AC%EC%95%84/place/1054521745?c=14138612.3524584,4476052.1795793,15,0,0,0,dh" 
-                width="100%" 
-                height="100%" 
-                frameborder="0" 
-                style="border:0;" 
-                allowfullscreen="">
-            </iframe>
+        <a href="https://naver.me/5apDP7nI" target="_blank" class="map-link-area">
+            <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTAzMTdfMTQ4%2FMDAxNjE1OTY0OTU3MTU1.2S_eC6B_m4S_H7D2H_e5vYvWq9zY2&type=f540_300" alt="지도미리보기">
+            <div class="map-overlay-text">지도를 클릭하시면 네이버 지도로 연결됩니다.</div>
+        </a>
+
+        <div style="margin-top: 10px;">
+            <a href="https://naver.me/5apDP7nI" target="_blank" style="text-decoration: none; color: #000; font-size: 0.8rem; border: 1px solid #000; padding: 10px 20px; display: inline-block;">네이버 지도로 길 찾기</a>
         </div>
 
-        <div class="map-btns">
-            <a href="https://naver.me/FvWq9zY2" target="_blank" class="btn-map-app">네이버 지도</a>
-            <a href="https://tmap.nm_link/..." target="_blank" class="btn-map-app">티맵 길찾기</a>
-        </div>
-
-        <div style="margin-top: 20px;">
+        <div style="margin-top: 30px;">
             <script src="https://cdn.jsdelivr.net/npm/add-to-calendar-button@2" async defer></script>
             <add-to-calendar-button name="류승건 &amp; 이지연 결혼식" startDate="2026-08-15" startTime="12:00" timeZone="Asia/Seoul" options="'Apple','Google'" label="CALENDAR" lightMode="bodyScheme"></add-to-calendar-button>
         </div>
@@ -151,7 +147,7 @@
             <button onclick="saveGuestMessage()" class="btn-black">SUBMIT</button>
             <div id="gb-list" style="margin-top: 20px;"></div>
         </div>
-        <button onclick="openModal()" class="footer-btn" style="margin-top: 40px; background:none; border:1px solid #000; padding:15px 40px; cursor:pointer; font-size:0.8rem; letter-spacing:2px;">마음 전하실 곳</button>
+        <button onclick="openModal()" class="btn-black" style="max-width: 300px; background:none; border:1px solid #000; padding:15px 40px; cursor:pointer; margin-top: 40px;">마음 전하실 곳</button>
     </section>
 
     <div id="accModal" class="modal">
@@ -161,14 +157,14 @@
             <div style="text-align: left; padding: 10px 0; border-bottom: 1px solid #eee;">
                 <p style="font-size: 0.8rem; color: #888; margin: 0;">신랑 류승건</p>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span id="acc-groom">우리 1002-xxx-xxxxxx</span>
+                    <span id="acc-groom">우리 1002-841-241285</span>
                     <button class="btn-copy-sm" onclick="copyToClipboard('acc-groom')">복사</button>
                 </div>
             </div>
             <div style="text-align: left; padding: 10px 0;">
                 <p style="font-size: 0.8rem; color: #888; margin: 0;">신부 이지연</p>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span id="acc-bride">카뱅 3333-xx-xxxxxxx</span>
+                    <span id="acc-bride">추후 업데이트 예정</span>
                     <button class="btn-copy-sm" onclick="copyToClipboard('acc-bride')">복사</button>
                 </div>
             </div>
