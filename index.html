@@ -1,3 +1,19 @@
+하객분들의 소중한 축하 메시지가 많아지면 가장 중요한 정보 중 하나인 계좌 안내 버튼이 너무 아래로 밀릴 수 있죠. 아주 현명한 판단이십니다!
+
+요청하신 대로 **[마음 전하실 곳] 버튼을 위로 올리고**, 각 섹션 사이에 **구분선**을 넣어 가독성을 높였습니다.
+
+### 💬 메시지는 어떻게 남나요?
+
+현재 코드는 새로운 메시지가 작성되면 목록의 가장 위(최신순)에 추가되도록 되어 있습니다.
+
+* **문제점:** 메시지가 50개, 100개 쌓이면 페이지가 끝도 없이 길어집니다.
+* **해결책:** 이번 수정본에서는 메시지 목록창에 최대 높이(Max-height)를 설정하고 내부 스크롤을 만들었습니다. 메시지가 많아져도 전체 페이지 길이에 영향을 주지 않고 그 안에서 슥슥 넘겨볼 수 있어 훨씬 깔끔합니다.
+
+---
+
+### 📋 순서와 디자인이 개선된 전체 코드
+
+```html
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -19,33 +35,19 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Noto Serif KR', serif; margin: 0; color: var(--point-black); background: var(--bg-white); line-height: 1.8; word-break: keep-all; }
 
-        /* AOS 로딩 에러 방지 안전장치 */
+        /* AOS 안전장치 */
         [data-aos] { opacity: 1 !important; transform: translate(0) scale(1) !important; transition: none !important; }
         html.aos-init [data-aos] { opacity: 0; }
         html.aos-init .aos-animate { opacity: 1 !important; }
 
-        /* 1. Hero Slider */
+        /* Hero Slider */
         .hero-slider { height: 100vh; width: 100%; overflow: hidden; position: relative; background: #fff; }
         .hero-container { display: flex; height: 100%; width: 100%; will-change: transform; }
         .hero-item { min-width: 100%; height: 100%; position: relative; }
         .hero-item img { width: 100%; height: 100%; object-fit: cover; }
-        
-        .nav-btn { 
-            position: absolute; top: 50%; transform: translateY(-50%); 
-            background: rgba(0,0,0,0.2); border: none; color: white; 
-            width: 44px; height: 44px; border-radius: 50%; cursor: pointer; 
-            display: flex; align-items: center; justify-content: center; 
-            z-index: 20; font-size: 1.2rem;
-        }
+        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.2); border: none; color: white; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; font-size: 1.2rem; }
         .prev-btn { left: 10px; } .next-btn { right: 10px; }
-
-        .hero-overlay { 
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            display: flex; flex-direction: column; align-items: center; 
-            justify-content: flex-end; padding-bottom: 60px;
-            color: white; text-align: center; pointer-events: none; z-index: 5;
-            text-shadow: 0 0 10px rgba(0,0,0,0.5);
-        }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 60px; color: white; text-align: center; pointer-events: none; z-index: 5; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
         .hero-names { font-size: 2.2rem; font-weight: 400; letter-spacing: 8px; margin-bottom: 10px; }
         .hero-date { font-size: 1.1rem; letter-spacing: 2px; opacity: 0.9; font-weight: 400; }
 
@@ -54,7 +56,7 @@
         .section { padding: 80px 30px; text-align: center; }
         .section-title { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--point-black); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 30px; display: block; }
 
-        /* Gallery Grid */
+        /* Gallery */
         .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 0 10px; }
         .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer; background: #f0f0f0; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
@@ -75,24 +77,27 @@
         .address-box { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; }
         .btn-copy-sm { border: 1px solid #000; background: none; padding: 2px 8px; font-size: 0.7rem; cursor: pointer; font-family: inherit; }
 
-        /* 지도 영역: 100% 꽉 차게 수정 */
-        .map-link-area { 
-            width: 100%; 
-            display: block; 
-            margin: 20px auto; 
-            border: 1px solid #eee; 
-            background-color: #f4f4f4; 
-            background-size: cover; 
-            background-position: center; 
-            background-repeat: no-repeat;
-        }
+        .map-link-area { width: 100%; display: block; margin: 20px auto; border: 1px solid #eee; background-color: #f4f4f4; background-size: cover; background-position: center; background-repeat: no-repeat; }
 
+        /* 방명록 스타일 개선 */
         .gb-card { background: white; padding: 30px 20px; border: 1px solid #eee; max-width: 450px; margin: 0 auto; }
-        input, textarea { width: 100%; padding: 15px; border: 1px solid #eee; margin-bottom: 10px; font-family: inherit; }
-        .btn-black { background: var(--point-black); color: white; border: none; padding: 18px; width: 100%; cursor: pointer; letter-spacing: 2px; font-weight: 700; font-family: inherit; }
+        input, textarea { width: 100%; padding: 15px; border: 1px solid #eee; margin-bottom: 10px; font-family: inherit; font-size: 0.9rem; border-radius: 0; outline: none; }
+        .btn-black { background: var(--point-black); color: white; border: none; padding: 18px; width: 100%; cursor: pointer; letter-spacing: 2px; font-weight: 700; font-family: inherit; font-size: 0.9rem; }
         
+        /* 메시지 리스트 박스: 메시지가 많아지면 스크롤 생김 */
+        #gb-list { 
+            margin-top: 20px; 
+            max-height: 400px; 
+            overflow-y: auto; 
+            border-top: 1px solid #f2f2f2;
+            padding-right: 5px;
+        }
+        #gb-list::-webkit-scrollbar { width: 3px; }
+        #gb-list::-webkit-scrollbar-thumb { background: #ddd; }
+
         .guest-item { border-bottom: 1px solid #f2f2f2; padding: 20px 0; text-align: left; }
-        .guest-name { font-weight: 700; font-size: 0.9rem; }
+        .guest-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 5px; display: block; }
+        .guest-msg { font-size: 0.85rem; color: var(--deep-gray); line-height: 1.6; }
 
         .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
         .modal-content { background: white; padding: 40px 25px; width: 90%; max-width: 400px; text-align: center; position: relative; }
@@ -177,15 +182,22 @@
 
     <div class="h-divider"></div>
 
+    <section class="section" data-aos="fade-up" style="padding: 60px 30px;">
+        <span class="section-title">Account</span>
+        <p style="font-size: 0.9rem; margin-bottom: 25px;">축복해주시는 소중한 마음 잊지 않고<br>예쁘게 잘 살겠습니다.</p>
+        <button onclick="openModal()" class="btn-black" style="max-width: 300px; margin: 0 auto; display: block;">마음 전하실 곳</button>
+    </section>
+
+    <div class="h-divider"></div>
+
     <section class="section" data-aos="fade-up">
         <span class="section-title">Guestbook</span>
         <div class="gb-card">
             <input type="text" id="gb_name" placeholder="성함">
             <textarea id="gb_msg" rows="3" placeholder="축하 메시지를 남겨주세요"></textarea>
             <button onclick="saveGuestMessage()" class="btn-black">메시지 남기기</button>
-            <div id="gb-list" style="margin-top: 20px;"></div>
+            <div id="gb-list"></div>
         </div>
-        <button onclick="openModal()" class="btn-black" style="max-width: 300px; margin: 40px auto 0; display: block;">마음 전하실 곳</button>
     </section>
 
     <div id="accModal" class="modal">
@@ -224,10 +236,8 @@
             }
         };
 
-        // 2. 메인 슬라이더 (무한)
-        let heroIdx = 1;
-        const totalHero = 3;
-        let isHeroMoving = false;
+        // 2. 메인 슬라이더
+        let heroIdx = 1; const totalHero = 3; let isHeroMoving = false;
         const heroContainer = document.getElementById('heroSlider');
         if(heroContainer) heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`;
 
@@ -259,11 +269,9 @@
         }
 
         // 3. 갤러리 (p01 ~ p09)
-        const totalGalleryImages = 9; 
-        let gViewIdx = 0;
+        const totalGalleryImages = 9; let gViewIdx = 0;
         function initGallery() {
-            const grid = document.getElementById('galleryGrid');
-            if(!grid) return;
+            const grid = document.getElementById('galleryGrid'); if(!grid) return;
             for (let i = 1; i <= totalGalleryImages; i++) {
                 const num = i < 10 ? '0' + i : i;
                 const item = document.createElement('div');
@@ -274,19 +282,9 @@
         }
         initGallery();
 
-        function openViewer(idx) {
-            gViewIdx = idx; updateViewer();
-            document.getElementById('galleryViewer').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-        function closeViewer() {
-            document.getElementById('galleryViewer').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-        function changeViewImg(dir) {
-            gViewIdx = (gViewIdx + dir + totalGalleryImages) % totalGalleryImages;
-            updateViewer();
-        }
+        function openViewer(idx) { gViewIdx = idx; updateViewer(); document.getElementById('galleryViewer').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+        function closeViewer() { document.getElementById('galleryViewer').style.display = 'none'; document.body.style.overflow = 'auto'; }
+        function changeViewImg(dir) { gViewIdx = (gViewIdx + dir + totalGalleryImages) % totalGalleryImages; updateViewer(); }
         function updateViewer() {
             const num = (gViewIdx + 1) < 10 ? '0' + (gViewIdx + 1) : (gViewIdx + 1);
             document.getElementById('currentViewerImg').src = `./assets/p${num}.png`;
@@ -294,10 +292,7 @@
         }
 
         // 4. 유틸리티
-        function copyToClipboard(id) { 
-            const text = document.getElementById(id).innerText; 
-            navigator.clipboard.writeText(text).then(() => alert("복사되었습니다.")); 
-        }
+        function copyToClipboard(id) { const text = document.getElementById(id).innerText; navigator.clipboard.writeText(text).then(() => alert("복사되었습니다.")); }
         function openModal() { document.getElementById('accModal').style.display = 'flex'; }
         function closeModal() { document.getElementById('accModal').style.display = 'none'; }
         
@@ -305,6 +300,7 @@
             const firebaseConfig = { apiKey: "AIzaSyD1LmVHTLYnecokZV67_hCDcM289fl3oiw", authDomain: "sg-jy-233e2.firebaseapp.com", databaseURL: "https://sg-jy-233e2-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "sg-jy-233e2", storageBucket: "sg-jy-233e2.firebasestorage.app", messagingSenderId: "217599075354", appId: "1:217599075354:web:c227474b5efc4fd280dda3" };
             firebase.initializeApp(firebaseConfig);
             const database = firebase.database();
+            
             function updateCountdown() {
                 const target = new Date('2026-08-15T12:00:00').getTime();
                 const now = new Date().getTime();
@@ -319,11 +315,13 @@
                 }
             }
             setInterval(updateCountdown, 1000); updateCountdown();
+
             function saveGuestMessage() {
                 const name = document.getElementById('gb_name').value.trim();
                 const msg = document.getElementById('gb_msg').value.trim();
                 if (name && msg) { database.ref('guestbook').push({ name, message: msg, timestamp: Date.now() }).then(() => { document.getElementById('gb_name').value = ''; document.getElementById('gb_msg').value = ''; }); }
             }
+            
             database.ref('guestbook').on('value', (snapshot) => {
                 const list = document.getElementById('gb-list'); if(!list) return;
                 list.innerHTML = '';
@@ -331,10 +329,21 @@
                     const data = child.val();
                     const div = document.createElement('div'); div.className = 'guest-item';
                     div.innerHTML = `<div class="guest-name">${data.name}</div><div class="guest-msg">${data.message}</div>`;
-                    list.prepend(div);
+                    list.prepend(div); // 최신 메시지를 목록 맨 위로 배치
                 });
             });
         } catch(e) {}
     </script>
 </body>
 </html>
+
+```
+
+### ✅ 수정 포인트
+
+1. **순서 변경:** `Location(위치)` -> `Account(마음 전하실 곳)` -> `Guestbook(방명록)` 순서로 변경했습니다.
+2. **섹션 구분선:** `Account` 섹션 전후에 `h-divider`를 넣어 섹션이 명확히 구분되게 했습니다.
+3. **방명록 스크롤 박스:** `#gb-list`에 `max-height: 400px`를 주어 메시지가 10개 이상 쌓이더라도 방명록 영역 안에서만 스크롤이 되도록 했습니다. 덕분에 전체 페이지의 끝이 무한정 길어지지 않습니다.
+4. **최신순 배치:** `list.prepend(div)`를 사용하여 방금 작성된 메시지가 항상 맨 위에 보이게 유지했습니다.
+
+이제 하객분들이 축하 메시지를 남겨도 계좌 버튼은 항상 그 자리에 안정적으로 위치하게 됩니다! :)
