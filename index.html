@@ -11,16 +11,16 @@
     
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;400;700&family=Montserrat:wght@100;300;400&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
         :root {
             --point-black: #000000;
             --deep-gray: #333333;
-            --border-color: #000000;
             --bg-white: #ffffff;
         }
 
-        /* [보안] 드래그 및 선택 금지 */
+        /* [보안] 텍스트 선택 및 드래그 금지 */
         * { 
             box-sizing: border-box; 
             -webkit-tap-highlight-color: transparent;
@@ -28,7 +28,7 @@
             user-select: none;
         }
 
-        /* 입력창 및 복사 영역 예외 허용 */
+        /* 입력창 및 복사 영역은 드래그 가능하게 예외 설정 */
         input, textarea, [id*="acc-"], [id*="addr-"] { 
             -webkit-user-select: text; 
             user-select: text; 
@@ -36,34 +36,40 @@
 
         body { font-family: 'Noto Serif KR', serif; margin: 0; color: var(--point-black); background: var(--bg-white); line-height: 1.8; word-break: keep-all; }
 
-        /* AOS 로딩 안전장치 */
+        /* AOS 로딩 안전장치: 스크립트 에러 시에도 내용이 보이게 함 */
         [data-aos] { opacity: 1 !important; transform: translate(0) scale(1) !important; transition: none !important; }
         html.aos-init [data-aos] { opacity: 0; }
         html.aos-init .aos-animate { opacity: 1 !important; }
+
+        .h-divider { width: 100%; height: 1px; background-color: var(--point-black); margin: 0; }
+        .section { padding: 80px 30px; text-align: center; }
+        .section-title { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--point-black); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 30px; display: block; }
 
         /* 1. Hero Slider */
         .hero-slider { height: 100vh; width: 100%; overflow: hidden; position: relative; background: #fff; }
         .hero-container { display: flex; height: 100%; width: 100%; will-change: transform; }
         .hero-item { min-width: 100%; height: 100%; position: relative; }
         .hero-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
-        
-        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.2); border: none; color: white; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; font-size: 1.2rem; }
+        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.15); border: none; color: white; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; font-size: 1.2rem; }
         .prev-btn { left: 10px; } .next-btn { right: 10px; }
         .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 60px; color: white; text-align: center; pointer-events: none; z-index: 5; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
         .hero-names { font-size: 2.2rem; font-weight: 400; letter-spacing: 8px; margin-bottom: 10px; }
         .hero-date { font-size: 1.1rem; letter-spacing: 2px; opacity: 0.9; font-weight: 400; }
 
-        .h-divider { width: 100%; height: 1px; background-color: var(--point-black); margin: 0; }
+        /* 2. D-Day */
+        .countdown-wrap { display: flex; justify-content: center; gap: 30px; margin: 30px 0; }
+        .count-num { font-family: 'Montserrat', sans-serif; font-size: 1.8rem; font-weight: 300; }
+        .count-label { font-size: 0.65rem; color: #999; letter-spacing: 2px; }
 
-        .section { padding: 80px 30px; text-align: center; }
-        .section-title { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--point-black); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 30px; display: block; }
+        /* 3. Location */
+        .address-box { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; }
+        .btn-copy-sm { border: 1px solid #000; background: none; padding: 2px 8px; font-size: 0.7rem; cursor: pointer; font-family: inherit; }
+        .map-link-area { width: 100%; display: block; margin: 20px auto; border: 1px solid #eee; background-color: #f4f4f4; background-size: cover; background-position: center; background-repeat: no-repeat; }
 
-        /* 갤러리 그리드 */
+        /* 4. Gallery */
         .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 0 10px; }
         .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer; background: #f0f0f0; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
-
-        /* 갤러리 뷰어 */
         #galleryViewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10001; align-items: center; justify-content: center; }
         .viewer-content { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
         .viewer-img { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
@@ -72,27 +78,16 @@
         .v-prev { left: 5px; } .v-next { right: 5px; }
         .viewer-count { position: absolute; bottom: 30px; color: #fff; font-size: 0.8rem; letter-spacing: 2px; }
 
-        .countdown-wrap { display: flex; justify-content: center; gap: 30px; margin: 30px 0; }
-        .count-num { font-family: 'Montserrat', sans-serif; font-size: 1.8rem; font-weight: 300; }
-        .count-label { font-size: 0.65rem; color: #999; letter-spacing: 2px; }
-
-        .address-box { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; }
-        .btn-copy-sm { border: 1px solid #000; background: none; padding: 2px 8px; font-size: 0.7rem; cursor: pointer; font-family: inherit; }
-
-        .map-link-area { width: 100%; display: block; margin: 20px auto; border: 1px solid #eee; background-color: #f4f4f4; background-size: cover; background-position: center; background-repeat: no-repeat; }
-
-        /* 방명록 */
+        /* 5. Guestbook & Account */
         .gb-card { background: white; padding: 30px 20px; border: 1px solid #eee; max-width: 450px; margin: 0 auto; }
         input, textarea { width: 100%; padding: 15px; border: 1px solid #eee; margin-bottom: 10px; font-family: inherit; font-size: 0.9rem; border-radius: 0; outline: none; }
         .btn-black { background: var(--point-black); color: white; border: none; padding: 18px; width: 100%; cursor: pointer; letter-spacing: 2px; font-weight: 700; font-family: inherit; font-size: 0.9rem; }
-        
         #gb-list { margin-top: 20px; max-height: 400px; overflow-y: auto; border-top: 1px solid #f2f2f2; padding-right: 5px; }
         #gb-list::-webkit-scrollbar { width: 3px; }
         #gb-list::-webkit-scrollbar-thumb { background: #ddd; }
         .guest-item { border-bottom: 1px solid #f2f2f2; padding: 20px 0; text-align: left; }
         .guest-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 5px; display: block; }
-        .guest-msg { font-size: 0.85rem; color: var(--deep-gray); line-height: 1.6; }
-
+        .guest-msg { font-size: 0.85rem; color: #555; line-height: 1.6; }
         .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
         .modal-content { background: white; padding: 40px 25px; width: 90%; max-width: 400px; text-align: center; position: relative; }
         .close-modal { position: absolute; right: 15px; top: 15px; font-size: 1.5rem; cursor: pointer; color: #999; }
@@ -146,11 +141,9 @@
             <span id="addr-text" style="color: #888; font-size: 0.85rem;">경기 수원시 권선구 세화로 116 (서둔동)</span>
             <button class="btn-copy-sm" onclick="copyToClipboard('addr-text')">복사</button>
         </div>
-
         <a href="https://naver.me/5apDP7nI" target="_blank" class="map-link-area" 
            style="background-image: url('./assets/map_preview.png'); width: 100%; aspect-ratio: 900 / 650; height: auto;">
         </a>
-
         <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
             <a href="https://naver.me/5apDP7nI" target="_blank" style="flex: 1; padding: 12px; border: 1px solid #ddd; font-size: 0.85rem; text-decoration: none; color: #333; background: #fff; text-align: center;">네이버 지도</a>
             <a href="https://kko.to/EIt4OnhVm4" target="_blank" style="flex: 1; padding: 12px; border: 1px solid #ddd; font-size: 0.85rem; text-decoration: none; color: #333; background: #fff; text-align: center;">카카오내비</a>
@@ -217,20 +210,18 @@
         </div>
     </div>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
     
     <script>
-        // AOS 초기화 안전장치
+        /** 1. AOS & 보안 초기화 **/
         window.onload = function() {
-            try { AOS.init({ duration: 1200, once: true }); } catch (e) {
-                document.querySelectorAll('[data-aos]').forEach(el => el.classList.add('aos-animate'));
-            }
+            try { AOS.init({ duration: 1200, once: true }); } 
+            catch (e) { document.querySelectorAll('[data-aos]').forEach(el => el.classList.add('aos-animate')); }
         };
 
-        // 메인 슬라이더
+        /** 2. 메인 슬라이더 (무한 로프) **/
         let heroIdx = 1; const totalHero = 3; let isHeroMoving = false;
         const heroContainer = document.getElementById('heroSlider');
         if(heroContainer) heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`;
@@ -262,17 +253,25 @@
             });
         }
 
-        // 갤러리 (경로: assets/p00/pXX.png)
-        const totalGalleryImages = 9; let gViewIdx = 0;
+        /** 3. 갤러리 로직 (assets/p00 폴더 내 비연속 파일명 대응) **/
+        const galleryFiles = [
+            'p01', 'p02', 'p03', 'p04', 'p05', 'p06', 
+            'p11', 'p12', 'p13', 'p14', 'p15', 'p16', 'p17', 'p18', 'p19', 'p20', 'p21', 
+            'p31', 'p32', 'p33', 'p34', 'p35', 'p36', 'p37', 'p39', 'p40', 
+            'p61', 'p62', 'p63', 'p64', 'p65'
+        ];
+        const totalGalleryImages = galleryFiles.length;
+        let gViewIdx = 0;
+
         function initGallery() {
             const grid = document.getElementById('galleryGrid'); if(!grid) return;
-            for (let i = 1; i <= totalGalleryImages; i++) {
-                const num = i < 10 ? '0' + i : i;
+            grid.innerHTML = '';
+            galleryFiles.forEach((name, i) => {
                 const item = document.createElement('div');
                 item.className = 'gallery-item';
-                item.innerHTML = `<img src="./assets/p00/p${num}.png" loading="lazy" onclick="openViewer(${i-1})" onerror="this.src='https://via.placeholder.com/300?text=No+Image'">`;
+                item.innerHTML = `<img src="./assets/p00/${name}.png" loading="lazy" onclick="openViewer(${i})" onerror="this.src='https://via.placeholder.com/300?text=No+Image'">`;
                 grid.appendChild(item);
-            }
+            });
         }
         initGallery();
 
@@ -280,12 +279,20 @@
         function closeViewer() { document.getElementById('galleryViewer').style.display = 'none'; document.body.style.overflow = 'auto'; }
         function changeViewImg(dir) { gViewIdx = (gViewIdx + dir + totalGalleryImages) % totalGalleryImages; updateViewer(); }
         function updateViewer() {
-            const num = (gViewIdx + 1) < 10 ? '0' + (gViewIdx + 1) : (gViewIdx + 1);
-            document.getElementById('currentViewerImg').src = `./assets/p00/p${num}.png`;
+            const name = galleryFiles[gViewIdx];
+            document.getElementById('currentViewerImg').src = `./assets/p00/${name}.png`;
             document.getElementById('viewerCount').innerText = `${gViewIdx + 1} / ${totalGalleryImages}`;
         }
 
-        // 유틸리티
+        // 뷰어 스와이프
+        let vStartX = 0;
+        document.getElementById('viewerContent').addEventListener('touchstart', e => vStartX = e.changedTouches[0].screenX, {passive: true});
+        document.getElementById('viewerContent').addEventListener('touchend', e => {
+            const diff = vStartX - e.changedTouches[0].screenX;
+            if (Math.abs(diff) > 50) changeViewImg(diff > 0 ? 1 : -1);
+        }, {passive: true});
+
+        /** 4. 유틸리티 및 파이어베이스 **/
         function copyToClipboard(id) { const text = document.getElementById(id).innerText; navigator.clipboard.writeText(text).then(() => alert("복사되었습니다.")); }
         function openModal() { document.getElementById('accModal').style.display = 'flex'; }
         function closeModal() { document.getElementById('accModal').style.display = 'none'; }
@@ -296,6 +303,7 @@
             firebase.initializeApp(firebaseConfig);
             const database = firebase.database();
             
+            // 디데이 카운트다운
             function updateCountdown() {
                 const target = new Date('2026-08-15T12:00:00').getTime();
                 const now = new Date().getTime();
@@ -311,23 +319,24 @@
             }
             setInterval(updateCountdown, 1000); updateCountdown();
 
+            // 방명록 저장
             function saveGuestMessage() {
                 let name = document.getElementById('gb_name').value.trim();
                 let msg = document.getElementById('gb_msg').value.trim();
                 if (name && msg) { database.ref('guestbook').push({ name: sanitize(name), message: sanitize(msg), timestamp: Date.now() }).then(() => { document.getElementById('gb_name').value = ''; document.getElementById('gb_msg').value = ''; }); }
             }
-            
+            // 방명록 리스트 로드 (최신순)
             database.ref('guestbook').on('value', (snapshot) => {
                 const list = document.getElementById('gb-list'); if(!list) return;
                 list.innerHTML = '';
                 snapshot.forEach(child => {
                     const data = child.val();
                     const div = document.createElement('div'); div.className = 'guest-item';
-                    div.innerHTML = `<div class="guest-name">${data.name}</div><div class="guest-msg">${data.message}</div>`;
+                    div.innerHTML = `<span class="guest-name">${data.name}</span><div class="guest-msg">${data.message}</div>`;
                     list.prepend(div);
                 });
             });
-        } catch(e) {}
+        } catch(e) { console.error("Script Error:", e); }
     </script>
 </body>
 </html>
