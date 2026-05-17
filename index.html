@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>류승건 이지연 결혼식 초대장</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <script src="https://cdn.jsdelivr.net/npm/add-to-calendar-button@2" async defer></script>
+    <style>
+        :root { --main-gold: #c2a379; --bg-gray: #f8f8f8; }
+        body { font-family: 'Noto Serif KR', serif; margin: 0; color: #333; background: #fff; line-height: 1.6; word-break: keep-all; }
+        .section { padding: 60px 20px; text-align: center; }
+        .hero { height: 100vh; background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('./assets/images/main.png') center/cover no-repeat; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 80px; color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .btn-gold { background: var(--main-gold); color: white; border: none; padding: 12px 30px; border-radius: 5px; cursor: pointer; text-decoration: none; display: inline-block; width: 100%; box-sizing: border-box; font-family: inherit; font-size: 1rem; }
+        .guestbook-container { background: var(--bg-gray); padding: 30px 20px; border-radius: 15px; max-width: 400px; margin: 20px auto; }
+        input, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; font-family: inherit; }
+        .guest-item { background: white; padding: 15px; border-radius: 10px; margin-top: 15px; text-align: left; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div data-aos="fade-up">
+            <h1 style="font-size: 2.5rem; margin-bottom: 10px;">류승건 그리고 이지연</h1>
+            <p style="font-size: 1.2rem; letter-spacing: 3px;">2026. 08. 15. SAT. 12:00 PM</p>
+        </div>
+    </section>
+
+    <section class="section" data-aos="fade-up">
+        <h2 style="color: var(--main-gold);">Invitation</h2>
+        <p>저희 두 사람이 사랑으로 하나가 되는<br>약속의 자리에 여러분을 초대합니다.</p>
+    </section>
+
+    <section class="section" style="background: var(--bg-gray);">
+        <div data-aos="fade-up">
+            <h3>방명록</h3>
+            <div class="guestbook-container">
+                <input type="text" id="name" placeholder="이름을 입력해주세요">
+                <textarea id="message" rows="3" placeholder="축하 메시지를 남겨주세요"></textarea>
+                <button onclick="saveMessage()" class="btn-gold">메시지 남기기</button>
+                <div id="guestbook-list"></div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyD1LmVHTLYnecokZV67_hCDcM289fl3oiw",
+            authDomain: "sg-jy-233e2.firebaseapp.com",
+            databaseURL: "https://sg-jy-233e2-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "sg-jy-233e2",
+            storageBucket: "sg-jy-233e2.firebasestorage.app",
+            messagingSenderId: "217599075354",
+            appId: "1:217599075354:web:c227474b5efc4fd280dda3"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        function saveMessage() {
+            const name = document.getElementById('name').value;
+            const msg = document.getElementById('message').value;
+            if (name.trim() && msg.trim()) {
+                database.ref('guestbook').push({
+                    name: name,
+                    message: msg,
+                    timestamp: Date.now()
+                }).then(() => {
+                    document.getElementById('name').value = '';
+                    document.getElementById('message').value = '';
+                });
+            } else {
+                alert("이름과 메시지를 입력해주세요!");
+            }
+        }
+
+        database.ref('guestbook').on('value', (snapshot) => {
+            const list = document.getElementById('guestbook-list');
+            list.innerHTML = '';
+            const items = [];
+            snapshot.forEach((child) => { items.push(child.val()); });
+            items.reverse().forEach((data) => {
+                const div = document.createElement('div');
+                div.className = 'guest-item';
+                div.innerHTML = `<strong>${data.name}</strong><br>${data.message}`;
+                list.appendChild(div);
+            });
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>AOS.init();</script>
+</body>
+</html>
