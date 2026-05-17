@@ -25,9 +25,27 @@
         .hero-item { min-width: 100%; height: 100%; position: relative; }
         .hero-item img { width: 100%; height: 100%; object-fit: cover; }
         
-        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.2); border: none; color: white; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: none; align-items: center; justify-content: center; z-index: 10; }
-        @media (min-width: 768px) { .nav-btn { display: flex; } }
-        .prev-btn { left: 20px; } .next-btn { right: 20px; }
+        .nav-btn { 
+            position: absolute; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            background: rgba(0,0,0,0.15); 
+            border: none; 
+            color: white; 
+            width: 44px; 
+            height: 44px; 
+            border-radius: 50%; 
+            cursor: pointer; 
+            display: flex;
+            align-items: center; 
+            justify-content: center; 
+            z-index: 20;
+            font-size: 1.2rem;
+            transition: background 0.3s;
+        }
+        .nav-btn:active { background: rgba(0,0,0,0.4); }
+        .prev-btn { left: 10px; } 
+        .next-btn { right: 10px; }
 
         .hero-overlay { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
@@ -45,7 +63,7 @@
         .section.compact { padding: 40px 30px; } 
         .section-title { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--point-black); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 30px; display: block; }
 
-        /* Gallery Grid - 사진이 없을 때도 영역이 보이도록 배경색 추가 */
+        /* Gallery Grid */
         .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 0 10px; }
         .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer; background: #f0f0f0; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
@@ -95,6 +113,7 @@
         </div>
         <button class="nav-btn prev-btn" onclick="moveSlider(-1)">&#10094;</button>
         <button class="nav-btn next-btn" onclick="moveSlider(1)">&#10095;</button>
+        
         <div class="hero-overlay">
             <div data-aos="fade-up" data-aos-duration="2000">
                 <h1 class="hero-names">류승건 &amp; 이지연</h1>
@@ -118,207 +137,3 @@
     </section>
 
     <div id="galleryViewer">
-        <span class="viewer-close" onclick="closeViewer()">&times;</span>
-        <div class="viewer-content" id="viewerContent">
-            <button class="viewer-nav v-prev" onclick="changeViewImg(-1)">&#10094;</button>
-            <img src="" class="viewer-img" id="currentViewerImg">
-            <button class="viewer-nav v-next" onclick="changeViewImg(1)">&#10095;</button>
-            <div class="viewer-count" id="viewerCount">1 / 1</div>
-        </div>
-    </div>
-
-    <div class="h-divider"></div>
-
-    <section class="section compact" data-aos="fade-up">
-        <span class="section-title">D-Day</span>
-        <div class="countdown-wrap">
-            <div class="count-item"><span class="count-num" id="days">00</span><br><span class="count-label">DAYS</span></div>
-            <div class="count-item"><span class="count-num" id="hours">00</span><br><span class="count-label">HOURS</span></div>
-            <div class="count-item"><span class="count-num" id="mins">00</span><br><span class="count-label">MINS</span></div>
-        </div>
-    </section>
-
-    <div class="h-divider"></div>
-
-    <section class="section compact" data-aos="fade-up">
-        <span class="section-title">Location</span>
-        <h3 style="font-weight: 700; font-size: 1.2rem; margin-bottom: 5px;">메리빌리아 더프레스티지</h3>
-        <div class="address-box">
-            <span id="addr-text" style="color: #888; font-size: 0.85rem;">경기 수원시 권선구 세화로 116 (서둔동)</span>
-            <button class="btn-copy-sm" onclick="copyToClipboard('addr-text')">복사</button>
-        </div>
-
-        <a href="https://naver.me/5apDP7nI" target="_blank" class="map-link-area" 
-           style="background-image: url('./assets/map_preview.png'); width: 50%; aspect-ratio: 5 / 4; height: auto;">
-        </a>
-
-        <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
-            <a href="https://naver.me/5apDP7nI" target="_blank" style="flex: 1; padding: 10px; border: 1px solid #ddd; font-size: 0.8rem; text-decoration: none; color: #333; background: #fff; text-align: center;">네이버 지도</a>
-            <a href="https://kko.to/EIt4OnhVm4" target="_blank" style="flex: 1; padding: 10px; border: 1px solid #ddd; font-size: 0.8rem; text-decoration: none; color: #333; background: #fff; text-align: center;">카카오내비</a>
-        </div>
-
-        <div style="margin-top: 30px;">
-            <script src="https://cdn.jsdelivr.net/npm/add-to-calendar-button@2" async defer></script>
-            <add-to-calendar-button name="류승건 & 이지연 결혼식" startDate="2026-08-15" startTime="12:00" timeZone="Asia/Seoul" options="'Apple','Google'" label="CALENDAR" lightMode="bodyScheme"></add-to-calendar-button>
-        </div>
-    </section>
-
-    <div class="h-divider"></div>
-
-    <section class="section compact" data-aos="fade-up">
-        <span class="section-title">Guestbook</span>
-        <div class="gb-card">
-            <input type="text" id="gb_name" placeholder="성함">
-            <textarea id="gb_msg" rows="3" placeholder="축하 메시지를 남겨주세요"></textarea>
-            <button onclick="saveGuestMessage()" class="btn-black">축하 메시지 남기기</button>
-            <div id="gb-list" style="margin-top: 20px;"></div>
-        </div>
-        <button onclick="openModal()" class="btn-black" style="max-width: 300px; margin: 40px auto 0; display: block;">마음 전하실 곳</button>
-    </section>
-
-    <div id="accModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal()">&times;</span>
-            <h3 style="font-family: 'Montserrat'; font-weight: 300; letter-spacing: 5px; border-bottom: 1px solid #000; padding-bottom: 10px; margin-bottom: 30px;">마음 전하실 곳</h3>
-            <div style="text-align: left; padding: 10px 0 15px; border-bottom: 1px solid #eee;">
-                <p style="font-size: 0.8rem; color: #888; margin: 0 0 5px 0;">신랑 류승건</p>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                    <span id="acc-groom" style="font-size: 0.95rem;">우리 1002-841-241285</span>
-                    <button class="btn-copy-sm" onclick="copyToClipboard('acc-groom')">복사</button>
-                </div>
-                <a href="https://qr.kakaopay.com/FNfa3PrZO" target="_blank" class="btn-kakaopay">카카오페이 송금</a>
-            </div>
-            <div style="text-align: left; padding: 15px 0 10px;">
-                <p style="font-size: 0.8rem; color: #888; margin: 0 0 5px 0;">신부 이지연</p>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                    <span id="acc-bride" style="font-size: 0.95rem;">새마을 9003197848841</span>
-                    <button class="btn-copy-sm" onclick="copyToClipboard('acc-bride')">복사</button>
-                </div>
-                <a href="https://qr.kakaopay.com/Ej8bBn70Q" target="_blank" class="btn-kakaopay">카카오페이 송금</a>
-            </div>
-        </div>
-    </div>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
-    
-    <script>
-        // AOS 초기화 (가장 먼저 실행되도록 상단 배치)
-        document.addEventListener('DOMContentLoaded', function() {
-            try { AOS.init({ duration: 1200, once: true }); } catch(e) { console.error(e); }
-        });
-
-        // 1. 메인 슬라이더 로직
-        let heroIdx = 1;
-        const totalHero = 3;
-        let isHeroMoving = false;
-        const heroContainer = document.getElementById('heroSlider');
-        if(heroContainer) heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`;
-
-        function moveSlider(dir) {
-            if (isHeroMoving) return;
-            isHeroMoving = true;
-            heroIdx += dir;
-            heroContainer.style.transition = 'transform 0.4s ease-out';
-            heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`;
-        }
-
-        heroContainer.addEventListener('transitionend', () => {
-            isHeroMoving = false;
-            if (heroIdx === 0) {
-                heroContainer.style.transition = 'none'; heroIdx = totalHero;
-                heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`;
-            } else if (heroIdx === totalHero + 1) {
-                heroContainer.style.transition = 'none'; heroIdx = 1;
-                heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`;
-            }
-        });
-
-        // 2. 갤러리 로직 (p01 ~ p09)
-        const totalGalleryImages = 9; 
-        let gViewIdx = 0;
-
-        function initGallery() {
-            const grid = document.getElementById('galleryGrid');
-            if(!grid) return;
-            for (let i = 1; i <= totalGalleryImages; i++) {
-                const num = i < 10 ? '0' + i : i;
-                const item = document.createElement('div');
-                item.className = 'gallery-item';
-                item.innerHTML = `<img src="./assets/p${num}.png" loading="lazy" onclick="openViewer(${i-1})" onerror="this.parentElement.style.display='none'">`;
-                grid.appendChild(item);
-            }
-        }
-        initGallery();
-
-        function openViewer(idx) {
-            gViewIdx = idx; updateViewer();
-            document.getElementById('galleryViewer').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeViewer() {
-            document.getElementById('galleryViewer').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        function changeViewImg(dir) {
-            gViewIdx = (gViewIdx + dir + totalGalleryImages) % totalGalleryImages;
-            updateViewer();
-        }
-
-        function updateViewer() {
-            const num = (gViewIdx + 1) < 10 ? '0' + (gViewIdx + 1) : (gViewIdx + 1);
-            document.getElementById('currentViewerImg').src = `./assets/p${num}.png`;
-            document.getElementById('viewerCount').innerText = `${gViewIdx + 1} / ${totalGalleryImages}`;
-        }
-
-        // 3. 기타 기능 (Firebase, Countdown 등)
-        function copyToClipboard(id) { 
-            const text = document.getElementById(id).innerText; 
-            navigator.clipboard.writeText(text).then(() => alert("복사되었습니다.")); 
-        }
-        function openModal() { document.getElementById('accModal').style.display = 'flex'; }
-        function closeModal() { document.getElementById('accModal').style.display = 'none'; }
-        
-        try {
-            const firebaseConfig = { apiKey: "AIzaSyD1LmVHTLYnecokZV67_hCDcM289fl3oiw", authDomain: "sg-jy-233e2.firebaseapp.com", databaseURL: "https://sg-jy-233e2-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "sg-jy-233e2", storageBucket: "sg-jy-233e2.firebasestorage.app", messagingSenderId: "217599075354", appId: "1:217599075354:web:c227474b5efc4fd280dda3" };
-            firebase.initializeApp(firebaseConfig);
-            const database = firebase.database();
-
-            function updateCountdown() {
-                const target = new Date('2026-08-15T12:00:00').getTime();
-                const now = new Date().getTime();
-                const diff = target - now;
-                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                if(document.getElementById('days')) {
-                    document.getElementById('days').innerText = d < 10 ? '0'+d : d;
-                    document.getElementById('hours').innerText = h < 10 ? '0'+h : h;
-                    document.getElementById('mins').innerText = m < 10 ? '0'+m : m;
-                }
-            }
-            setInterval(updateCountdown, 1000); updateCountdown();
-
-            function saveGuestMessage() {
-                const name = document.getElementById('gb_name').value.trim();
-                const msg = document.getElementById('gb_msg').value.trim();
-                if (name && msg) { database.ref('guestbook').push({ name, message: msg, timestamp: Date.now() }).then(() => { document.getElementById('gb_name').value = ''; document.getElementById('gb_msg').value = ''; }); }
-            }
-            database.ref('guestbook').on('value', (snapshot) => {
-                const list = document.getElementById('gb-list'); if(!list) return;
-                list.innerHTML = '';
-                const items = []; snapshot.forEach(child => items.push(child.val()));
-                items.reverse().forEach(data => {
-                    const div = document.createElement('div'); div.className = 'guest-item';
-                    div.innerHTML = `<div class="guest-name">${data.name}</div><div class="guest-msg">${data.message}</div>`;
-                    list.appendChild(div);
-                });
-            });
-        } catch(e) { console.error("Firebase/Logic Error:", e); }
-    </script>
-</body>
-</html>
