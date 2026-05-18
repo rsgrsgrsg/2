@@ -82,25 +82,10 @@
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
         .btn-more { margin: 20px auto; padding: 12px 30px; border: 1px solid #000; background: #fff; cursor: pointer; font-family: inherit; font-size: 0.85rem; display: block; }
 
-        /* 확대 뷰어 모달 */
-        #galleryViewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10001; align-items: center; justify-content: center; }
-        .viewer-content { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
-        .viewer-img { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
-        .viewer-close { position: absolute; top: 20px; right: 20px; color: #fff; font-size: 2.5rem; cursor: pointer; z-index: 10002; }
-        .viewer-nav { position: absolute; top: 50%; transform: translateY(-50%); color: #fff; font-size: 2.5rem; background: none; border: none; cursor: pointer; padding: 20px; z-index: 10002; opacity: 0.7; }
-        .v-prev { left: 10px; } .v-next { right: 10px; }
-        .viewer-count { position: absolute; bottom: 40px; color: #fff; font-size: 0.85rem; letter-spacing: 2px; }
-
         /* 계좌 & 방명록 */
         .btn-point { background: var(--point-color); color: white; border: none; padding: 18px; width: 100%; cursor: pointer; letter-spacing: 2px; font-weight: 700; font-family: inherit; font-size: 0.9rem; }
         .gb-card { background: white; padding: 30px 20px; border: 1px solid #eee; max-width: 450px; margin: 0 auto; }
         input, textarea { width: 100%; padding: 15px; border: 1px solid #eee; margin-bottom: 10px; font-family: inherit; font-size: 0.9rem; border-radius: 0; outline: none; }
-        #gb-list { margin-top: 20px; max-height: 400px; overflow-y: auto; border-top: 1px solid #f2f2f2; padding-right: 5px; }
-        #gb-list::-webkit-scrollbar { width: 3px; }
-        #gb-list::-webkit-scrollbar-thumb { background: #ddd; }
-        .guest-item { border-bottom: 1px solid #f2f2f2; padding: 20px 0; text-align: left; }
-        .guest-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 5px; display: block; }
-        .guest-msg { font-size: 0.85rem; color: var(--deep-gray); line-height: 1.6; }
         .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
         .modal-content { background: white; padding: 40px 25px; width: 90%; max-width: 400px; text-align: center; position: relative; }
         .close-modal { position: absolute; right: 15px; top: 15px; font-size: 1.5rem; cursor: pointer; color: #999; }
@@ -178,34 +163,12 @@
         <button id="moreBtn" class="btn-more" onclick="toggleGallery()">더보기 ▽</button>
     </section>
 
-    <div id="galleryViewer">
-        <span class="viewer-close" onclick="closeViewer()">×</span>
-        <div class="viewer-content" id="viewerContent">
-            <button class="viewer-nav v-prev" onclick="changeViewImg(-1)">&#10094;</button>
-            <img src="" class="viewer-img" id="currentViewerImg">
-            <button class="viewer-nav v-next" onclick="changeViewImg(1)">&#10095;</button>
-            <div class="viewer-count" id="viewerCount">1 / 1</div>
-        </div>
-    </div>
-
     <div class="h-divider"></div>
 
     <section class="section" data-aos="fade-up" style="padding: 60px 30px;">
         <span class="section-title">Account</span>
         <p style="font-size: 0.9rem; margin-bottom: 25px;">축복해주시는 소중한 마음 잊지 않고<br>예쁘게 잘 살겠습니다.</p>
         <button onclick="openModal()" class="btn-point" style="max-width: 300px; margin: 0 auto; display: block;">마음 전하실 곳</button>
-    </section>
-
-    <div class="h-divider"></div>
-
-    <section class="section" data-aos="fade-up">
-        <span class="section-title">Guestbook</span>
-        <div class="gb-card">
-            <input type="text" id="gb_name" placeholder="성함">
-            <textarea id="gb_msg" rows="3" placeholder="축하 메시지를 남겨주세요"></textarea>
-            <button onclick="saveGuestMessage()" class="btn-point">메시지 남기기</button>
-            <div id="gb-list"></div>
-        </div>
     </section>
 
     <div style="padding: 60px 20px; text-align: center; background-color: #f9f9f9; border-top: 1px solid #eee;">
@@ -260,12 +223,12 @@
         let isBgmPlaying = false;
         function toggleBgm() {
             if (isBgmPlaying) { bgm.pause(); bgmBtn.classList.remove('playing'); } 
-            else { bgm.play().catch(e => console.log('Autoplay blocked')); bgmBtn.classList.add('playing'); }
+            else { bgm.play().catch(e => console.log('BGM Play Error')); bgmBtn.classList.add('playing'); }
             isBgmPlaying = !isBgmPlaying;
         }
         document.body.addEventListener('click', function() { if(!isBgmPlaying) toggleBgm(); }, { once: true });
 
-        // 카카오톡 공유 기능 [수정됨]
+        // 카카오톡 공유 기능 [사용자 설정 반영]
         if (!Kakao.isInitialized()) {
             Kakao.init('d5e6a819b168903c774656f7f3299763');
         }
@@ -275,7 +238,7 @@
             });
         }
 
-        // 메인 슬라이더
+        // 메인 슬라이더 로직
         let heroIdx = 1; const totalHero = 3; let isHeroMoving = false;
         const heroContainer = document.getElementById('heroSlider');
         if(heroContainer) heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`;
@@ -301,7 +264,6 @@
             galleryFiles.forEach((name, idx) => {
                 const item = document.createElement('div');
                 item.className = 'gallery-item';
-                item.setAttribute('onclick', `openViewer(${idx})`);
                 item.innerHTML = `<img src="./assets/p00/${name}.png" loading="lazy">`;
                 grid.appendChild(item);
             });
@@ -315,41 +277,23 @@
             if(wrap.classList.contains('limited')) document.getElementById('gallerySection').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // 확대 뷰어
-        let gViewIdx = 0;
-        function openViewer(idx) { gViewIdx = idx; updateViewer(); document.getElementById('galleryViewer').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
-        function closeViewer() { document.getElementById('galleryViewer').style.display = 'none'; document.body.style.overflow = 'auto'; }
-        function changeViewImg(dir) { gViewIdx = (gViewIdx + dir + galleryFiles.length) % galleryFiles.length; updateViewer(); }
-        function updateViewer() {
-            document.getElementById('currentViewerImg').src = `./assets/p00/${galleryFiles[gViewIdx]}.png`;
-            document.getElementById('viewerCount').innerText = `${gViewIdx + 1} / ${galleryFiles.length}`;
-        }
-
         // 유틸리티
         function copyToClipboard(id) { navigator.clipboard.writeText(document.getElementById(id).innerText).then(() => alert("복사되었습니다.")); }
         function openModal() { document.getElementById('accModal').style.display = 'flex'; }
         function closeModal() { document.getElementById('accModal').style.display = 'none'; }
 
-        // 파이어베이스 & 디데이 (생략 가능하나 기존 기능 유지)
+        // 파이어베이스 & 디데이 로직
         try {
             const firebaseConfig = { apiKey: "AIzaSyD1LmVHTLYnecokZV67_hCDcM289fl3oiw", authDomain: "sg-jy-233e2.firebaseapp.com", databaseURL: "https://sg-jy-233e2-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "sg-jy-233e2", storageBucket: "sg-jy-233e2.firebasestorage.app", messagingSenderId: "217599075354", appId: "1:217599075354:web:c227474b5efc4fd280dda3" };
             firebase.initializeApp(firebaseConfig);
             const database = firebase.database();
             function updateCountdown() {
                 const diff = new Date('2026-08-15T12:00:00').getTime() - new Date().getTime();
-                document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-                document.getElementById('hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-                document.getElementById('mins').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+                document.getElementById('days').innerText = Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24))).toString().padStart(2, '0');
+                document.getElementById('hours').innerText = Math.max(0, Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).toString().padStart(2, '0');
+                document.getElementById('mins').innerText = Math.max(0, Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).toString().padStart(2, '0');
             }
             setInterval(updateCountdown, 1000); updateCountdown();
-            function saveGuestMessage() {
-                let name = document.getElementById('gb_name').value; let msg = document.getElementById('gb_msg').value;
-                if (name && msg) { database.ref('guestbook').push({ name, message: msg, timestamp: Date.now() }); document.getElementById('gb_name').value=''; document.getElementById('gb_msg').value=''; }
-            }
-            database.ref('guestbook').on('value', (snap) => {
-                const list = document.getElementById('gb-list'); list.innerHTML = '';
-                snap.forEach(c => { const d = c.val(); const div = document.createElement('div'); div.className='guest-item'; div.innerHTML=`<span class="guest-name">${d.name}</span><div class="guest-msg">${d.message}</div>`; list.prepend(div); });
-            });
         } catch(e) {}
     </script>
 </body>
