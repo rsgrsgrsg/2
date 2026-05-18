@@ -5,13 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>류승건 & 이지연 결혼식 초대장</title>
     
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="류승건 ♥ 이지연 결혼합니다.">
-    <meta property="og:description" content="2026년 08월 15일 토요일 오후 12시">
-    <meta property="og:image" content="https://sg-jy.space/assets/main3.png">
-    <meta property="og:url" content="https://sg-jy.space/">
-
-    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js" integrity="sha384-lLeS4GCqY8u6YXSAbpU3pPZ2Yf+LOnT5E569u0jA2aM0o8b/7uYpY+6Z1W7I1pU7" crossorigin="anonymous"></script>
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js"></script>
 
     <style>
         :root { --point-black: #000000; --point-color: #D1A7A7; --deep-gray: #333333; --bg-white: #ffffff; }
@@ -26,6 +20,7 @@
         .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 0 10px; }
         .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; background: #f0f0f0; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+        .btn-kakao { background-color: #FEE500; color: #191919; border: none; padding: 15px 30px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 1rem; }
     </style>
 </head>
 <body>
@@ -45,60 +40,47 @@
     </div>
 
     <section class="section">
-        <span style="font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 30px; display: block;">Gallery</span>
+        <span style="font-size: 0.75rem; letter-spacing: 6px; display: block; margin-bottom: 30px;">GALLERY</span>
         <div class="gallery-grid" id="galleryGrid"></div>
     </section>
 
     <div style="padding: 60px 20px; text-align: center; background-color: #f9f9f9; border-top: 1px solid #eee;">
-        <button onclick="shareKakao()" style="background-color: #FEE500; color: #191919; border: none; padding: 15px 30px; border-radius: 12px; font-weight: bold; cursor: pointer;">
+        <button id="kakao-link-btn" class="btn-kakao">
             카카오톡으로 청첩장 보내기
         </button>
     </div>
 
     <script>
-        // [1] 카카오 초기화 - SDK 로드 완료 후 실행되도록 설정
-        function initKakao() {
+        // 1. 카카오 초기화 (사용자님이 확인하신 앱 JS 키)
+        try {
+            Kakao.init('a5ea5495dd09ddffc0e6d746f448858b');
+            console.log('Kakao Init Success:', Kakao.isInitialized());
+        } catch (e) {
+            alert('카카오 초기화 실패: ' + e.message);
+        }
+
+        // 2. 카카오톡 공유 버튼 이벤트 연결 (onclick 대신 정석적인 방법 사용)
+        document.getElementById('kakao-link-btn').addEventListener('click', function() {
+            // 버튼 클릭 확인용 알림
+            console.log('버튼 클릭됨');
+            
             try {
-                if (typeof Kakao !== 'undefined') {
-                    if (!Kakao.isInitialized()) {
-                        // 알려주신 JavaScript 키 적용
-                        Kakao.init('a5ea5495dd09ddffc0e6d746f448858b'); 
-                        console.log('카카오 SDK 초기화 성공');
-                    }
-                } else {
-                    console.error('Kakao SDK가 로드되지 않았습니다.');
-                }
-            } catch (e) {
-                alert('초기화 에러 발생: ' + e.message);
+                Kakao.Share.sendCustom({
+                    templateId: 133283, // 확인하신 템플릿 ID
+                    installTalk: true,
+                });
+            } catch (err) {
+                alert('공유 실패: ' + JSON.stringify(err));
             }
-        }
-        
-        // 페이지 로드 시 초기화 실행
-        window.addEventListener('load', initKakao);
+        });
 
-        // [2] 카카오 공유 함수 (템플릿 ID: 133283)
-        function shareKakao() {
-            if (!Kakao.isInitialized()) {
-                alert('카카오 SDK가 아직 초기화되지 않았습니다. 잠시 후 다시 시도해주세요.');
-                return;
-            }
-
-            Kakao.Share.sendCustom({
-                templateId: 133283,
-                installTalk: true,
-                fail: function(err) {
-                    alert('공유 실패: ' + JSON.stringify(err));
-                }
-            });
-        }
-
-        // [3] 슬라이더 및 갤러리 복구 로직
+        // 3. 기존 슬라이더/갤러리 로직 복구
         const galleryFiles = ['p01','p02','p03','p04','p05','p06','p11','p12','p13','p14','p15','p16','p17','p18','p19','p20','p21','p31','p32','p33','p34','p35','p36','p37','p39','p40','p61','p62','p63','p64','p65'];
         const grid = document.getElementById('galleryGrid');
         galleryFiles.forEach(name => {
             const div = document.createElement('div');
             div.className = 'gallery-item';
-            div.innerHTML = `<img src="./assets/p00/${name}.png" style="width:100%; height:100%; object-fit:cover;" loading="lazy">`;
+            div.innerHTML = `<img src="./assets/p00/${name}.png" style="width:100%; height:100%; object-fit:cover;">`;
             grid.appendChild(div);
         });
 
