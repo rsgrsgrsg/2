@@ -3,137 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="류승건 ♥ 이지연 결혼합니다.">
-    <meta property="og:description" content="2026년 08월 15일 토요일 오후 12시, 저희의 시작을 축복해주세요.">
-    <meta property="og:image" content="https://sg-jy.space/assets/main3.png">
-    <meta property="og:url" content="https://sg-jy.space/">
-
-    <title>류승건 & 이지연 결혼식 초대장</title>
-    
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;400;700&family=Montserrat:wght@100;300;400&display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>류승건 & 이지연 청첩장</title>
     
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js"></script>
 
     <style>
-        :root { --point-black: #000000; --point-color: #D1A7A7; --deep-gray: #333333; --bg-white: #ffffff; }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; }
-        body { font-family: 'Noto Serif KR', serif; margin: 0; color: var(--point-black); background: var(--bg-white); line-height: 1.8; word-break: keep-all; }
-        
-        .section { padding: 80px 30px; text-align: center; }
-        .section-title { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--point-black); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 30px; display: block; }
-        .h-divider { width: 100%; height: 1px; background-color: var(--point-black); margin: 0; }
-
-        /* 슬라이더 복구 */
-        .hero-slider { height: 100vh; width: 100%; overflow: hidden; position: relative; background: #fff; }
-        .hero-container { display: flex; height: 100%; width: 100%; will-change: transform; }
-        .hero-item { min-width: 100%; height: 100%; position: relative; }
-        .hero-item img { width: 100%; height: 100%; object-fit: cover; }
-        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 60px; color: white; text-align: center; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
-        
-        /* 갤러리 복구 */
-        .gallery-wrap { position: relative; overflow: hidden; max-height: 5000px; transition: max-height 0.8s ease-in-out; }
-        .gallery-wrap.limited { max-height: 330px; }
-        .gallery-wrap.limited::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to bottom, transparent, var(--bg-white)); }
-        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 0 10px; }
-        .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; background: #f0f0f0; }
-        .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
-        .btn-more { margin: 20px auto; padding: 12px 30px; border: 1px solid #000; background: #fff; cursor: pointer; font-size: 0.85rem; display: block; }
+        body { font-family: sans-serif; text-align: center; padding-top: 50px; background-color: #fff; }
+        .btn-kakao { 
+            background-color: #FEE500; color: #191919; border: none; 
+            padding: 20px 40px; border-radius: 12px; font-weight: bold; 
+            font-size: 1.1rem; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .info { margin-top: 20px; color: #666; font-size: 0.9rem; line-height: 1.6; }
     </style>
 </head>
 <body>
 
-    <div class="hero-slider">
-        <div class="hero-container" id="heroSlider">
-            <div class="hero-item"><img src="./assets/main3.png"></div>
-            <div class="hero-item"><img src="./assets/main1.png"></div>
-            <div class="hero-item"><img src="./assets/main2.png"></div>
-            <div class="hero-item"><img src="./assets/main3.png"></div>
-            <div class="hero-item"><img src="./assets/main1.png"></div>
-        </div>
-        <div class="hero-overlay">
-            <h1 style="font-size: 2.2rem; letter-spacing: 8px;">류승건 & 이지연</h1>
-            <p>2026. 08. 15. 토요일 오후 12시</p>
-        </div>
-    </div>
+    <h2>카카오톡 공유 테스트</h2>
+    
+    <button type="button" class="btn-kakao" onclick="shareKakao()">
+        카카오톡으로 청첩장 보내기
+    </button>
 
-    <section class="section" id="gallerySection">
-        <span class="section-title">Gallery</span>
-        <div class="gallery-wrap limited" id="galleryWrap">
-            <div class="gallery-grid" id="galleryGrid"></div>
-        </div>
-        <button id="moreBtn" class="btn-more" onclick="toggleGallery()">더보기 ▽</button>
-    </section>
-
-    <div style="padding: 60px 20px; text-align: center; background-color: #f9f9f9; border-top: 1px solid #eee;">
-        <button onclick="shareKakao()" style="background-color: #FEE500; color: #191919; border: none; padding: 15px 30px; border-radius: 12px; font-weight: bold; cursor: pointer;">
-            카카오톡으로 청첩장 보내기
-        </button>
+    <div class="info">
+        버튼을 눌렀을 때 아무 반응이 없다면<br>
+        파일이 제대로 저장/업로드 되었는지 확인해주세요.
     </div>
 
     <script>
-        // 1. 카카오 초기화 (새로운 JavaScript 키)
+        // 1. 초기화 시도 및 에러 체크
         try {
             if (!Kakao.isInitialized()) {
+                // 사용자님의 JavaScript 키 적용
                 Kakao.init('a5ea5495dd09ddffc0e6d746f448858b');
-                console.log('카카오 초기화 성공');
+                console.log('카카오 초기화 성공 여부:', Kakao.isInitialized());
             }
         } catch (e) {
-            alert('카카오 초기화 에러: ' + e.message);
+            alert('초기화 단계 에러: ' + e.message);
         }
 
-        // 2. 에러 코드를 포함한 공유 함수 (템플릿 ID: 133283)
+        // 2. 공유 함수
         function shareKakao() {
-            Kakao.Share.sendCustom({
-                templateId: 133283,
-                installTalk: true,
-                fail: function(err) {
-                    // 에러가 발생하면 상세 내용을 팝업으로 띄웁니다.
-                    alert('발송 실패!\n에러 코드: ' + err.code + '\n이유: ' + err.msg + '\n\n*도메인 등록이나 템플릿 설정을 확인하세요.');
-                    console.error('카카오 공유 에러 상세:', err);
-                },
-                success: function() {
-                    console.log('공유 성공');
-                }
-            });
-        }
+            // 버튼이 눌렸는지 확인하기 위한 첫 번째 알림
+            alert('1단계: 버튼 클릭됨');
 
-        // 3. 슬라이더 & 갤러리 로직 (원상복구)
-        const galleryFiles = ['p01','p02','p03','p04','p05','p06','p11','p12','p13','p14','p15','p16','p17','p18','p19','p20','p21','p31','p32','p33','p34','p35','p36','p37','p39','p40','p61','p62','p63','p64','p65'];
-        const grid = document.getElementById('galleryGrid');
-        galleryFiles.forEach((name) => {
-            const item = document.createElement('div');
-            item.className = 'gallery-item';
-            item.innerHTML = `<img src="./assets/p00/${name}.png" loading="lazy">`;
-            grid.appendChild(item);
-        });
-
-        function toggleGallery() {
-            const wrap = document.getElementById('galleryWrap');
-            wrap.classList.toggle('limited');
-            document.getElementById('moreBtn').innerText = wrap.classList.contains('limited') ? '더보기 ▽' : '접기 △';
-        }
-
-        let heroIdx = 1;
-        const heroContainer = document.getElementById('heroSlider');
-        if(heroContainer) {
-            heroContainer.style.transform = `translateX(-100%)`;
-            setInterval(() => {
-                heroIdx++;
-                heroContainer.style.transition = 'transform 0.4s ease-out';
-                heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`;
-                if (heroIdx > 3) {
-                    setTimeout(() => {
-                        heroContainer.style.transition = 'none';
-                        heroIdx = 1;
-                        heroContainer.style.transform = `translateX(-100%)`;
-                    }, 400);
-                }
-            }, 3500);
+            try {
+                Kakao.Share.sendCustom({
+                    templateId: 133283, // 알려주신 템플릿 ID
+                    installTalk: true,
+                    fail: function(err) {
+                        // 전송 실패 시 이유를 팝업으로 띄움
+                        alert('전송 실패 에러:\n' + JSON.stringify(err));
+                    },
+                    success: function() {
+                        alert('공유 성공!');
+                    }
+                });
+            } catch (e) {
+                alert('함수 실행 중 에러: ' + e.message);
+            }
         }
     </script>
+
 </body>
 </html>
