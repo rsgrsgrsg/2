@@ -9,7 +9,135 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="류승건 ♥ 이지연 결혼합니다.">
     <meta property="og:description" content="2026년 08월 15일 토요일 오후 12시, 저희의 시작을 축복해주세요.">
+    <meta property="og:image" content="https://sg-jy.space/assets/main3.png"><!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>류승건 & 이지연 결혼식 초대장</title>
+    
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="류승건 ♥ 이지연 결혼합니다.">
+    <meta property="og:description" content="2026년 08월 15일 토요일 오후 12시, 저희의 시작을 축복해주세요.">
     <meta property="og:image" content="https://sg-jy.space/assets/main3.png">
+    <meta property="og:url" content="https://sg-jy.space/">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;400;700&family=Montserrat:wght@100;300;400&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root { --point-black: #000000; --point-color: #D1A7A7; --deep-gray: #333333; --bg-white: #ffffff; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; }
+        input, textarea, [id*="acc-"], [id*="addr-"] { -webkit-user-select: text; user-select: text; }
+        body { font-family: 'Noto Serif KR', serif; margin: 0; color: var(--point-black); background: var(--bg-white); line-height: 1.8; word-break: keep-all; }
+        
+        .bgm-btn { position: fixed; top: 15px; right: 15px; z-index: 9990; width: 42px; height: 42px; background: rgba(255, 255, 255, 0.85); border: 1px solid #ddd; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--point-color); font-size: 1.1rem; box-shadow: 0 2px 6px rgba(0,0,0,0.1); outline: none; }
+        
+        /* 메인 슬라이더 */
+        .hero-slider { height: 100vh; width: 100%; overflow: hidden; position: relative; background: #fff; }
+        .hero-container { display: flex; height: 100%; width: 100%; will-change: transform; }
+        .hero-item { min-width: 100%; height: 100%; position: relative; }
+        .hero-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.15); border: none; color: white; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; font-size: 1.2rem; }
+        .prev-btn { left: 10px; } .next-btn { right: 10px; }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 60px; color: white; text-align: center; pointer-events: none; z-index: 5; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
+        .hero-names { font-size: 2.2rem; font-weight: 400; letter-spacing: 8px; margin-bottom: 10px; }
+
+        .section { padding: 80px 30px; text-align: center; }
+        .h-divider { width: 100%; height: 1px; background-color: var(--point-black); margin: 0; }
+        
+        /* 갤러리 */
+        .gallery-wrap { position: relative; overflow: hidden; max-height: 5000px; transition: max-height 0.8s ease-in-out; }
+        .gallery-wrap.limited { max-height: 330px; }
+        .gallery-wrap.limited::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to bottom, transparent, var(--bg-white)); pointer-events: none; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 0 10px; }
+        .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer; background: #f0f0f0; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+    </style>
+</head>
+<body oncontextmenu="return false">
+
+    <audio id="bgm" src="./assets/bgm.mp3" loop></audio>
+    <button id="bgmBtn" class="bgm-btn" onclick="toggleBgm()"><i class="fas fa-music"></i></button>
+
+    <div class="hero-slider">
+        <div class="hero-container" id="heroSlider">
+            <div class="hero-item"><img src="./assets/main3.png"></div>
+            <div class="hero-item"><img src="./assets/main1.png"></div>
+            <div class="hero-item"><img src="./assets/main2.png"></div>
+            <div class="hero-item"><img src="./assets/main3.png"></div>
+            <div class="hero-item"><img src="./assets/main1.png"></div>
+        </div>
+        <button class="nav-btn prev-btn" onclick="moveSlider(-1)">&#10094;</button>
+        <button class="nav-btn next-btn" onclick="moveSlider(1)">&#10095;</button>
+        <div class="hero-overlay">
+            <h1 class="hero-names">류승건 & 이지연</h1>
+            <p>2026. 08. 15. 토요일 오후 12시</p>
+        </div>
+    </div>
+
+    <div class="h-divider"></div>
+
+    <section class="section">
+        <div class="gallery-wrap limited" id="galleryWrap">
+            <div class="gallery-grid" id="galleryGrid"></div>
+        </div>
+        <button onclick="document.getElementById('galleryWrap').classList.toggle('limited')" style="margin-top:20px; padding:10px 20px; background:#fff; border:1px solid #000; cursor:pointer;">더보기 ▽</button>
+    </section>
+
+    <div style="padding: 60px 20px; text-align: center; background-color: #f9f9f9; border-top: 1px solid #eee;">
+        <button onclick="shareKakao()" style="background-color: #FEE500; color: #191919; border: none; padding: 15px 30px; border-radius: 12px; font-weight: bold; font-size: 1rem; cursor: pointer;">
+            카카오톡으로 청첩장 보내기
+        </button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js"></script>
+
+    <script>
+        // 1. 사용자님이 지정한 정확한 키로 초기화
+        Kakao.init('a5ea5495dd09ddffc0e6d746f448858b');
+
+        // 2. 카카오톡 공유 기능
+        function shareKakao() {
+            Kakao.Share.sendCustom({
+                templateId: 133283
+            });
+        }
+
+        // 3. 메인 슬라이더 제어
+        let heroIdx = 1;
+        const heroContainer = document.getElementById('heroSlider');
+        function moveSlider(dir) {
+            heroIdx += dir;
+            heroContainer.style.transition = 'transform 0.4s ease-out';
+            heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`;
+            if (heroIdx === 0) {
+                setTimeout(() => { heroContainer.style.transition = 'none'; heroIdx = 3; heroContainer.style.transform = 'translateX(-300%)'; }, 400);
+            } else if (heroIdx === 4) {
+                setTimeout(() => { heroContainer.style.transition = 'none'; heroIdx = 1; heroContainer.style.transform = 'translateX(-100%)'; }, 400);
+            }
+        }
+
+        // 4. 갤러리 제어
+        const galleryFiles = ['p01','p02','p03','p04','p05','p06','p11','p12','p13','p14','p15','p16','p17','p18','p19','p20','p21','p31','p32','p33','p34','p35','p36','p37','p39','p40','p61','p62','p63','p64','p65'];
+        const grid = document.getElementById('galleryGrid');
+        galleryFiles.forEach((name) => {
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
+            item.innerHTML = `<img src="./assets/p00/${name}.png" loading="lazy">`;
+            grid.appendChild(item);
+        });
+
+        // 5. BGM 제어
+        const bgm = document.getElementById('bgm');
+        function toggleBgm() {
+            if (bgm.paused) { bgm.play().catch(e => {}); } else { bgm.pause(); }
+        }
+    </script>
+</body>
+</html>
     <meta property="og:url" content="https://sg-jy.space/">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;400;700&family=Montserrat:wght@100;300;400&display=swap">
