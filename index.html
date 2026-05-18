@@ -402,5 +402,29 @@
             });
         } catch(e) {}
     </script>
+    
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js" 
+        integrity="sha384-lLeS4GCqY8u6YXSAbpU3pPZ2Yf+LOnT5E569u0jA2aM0o8b/7uYpY+6Z1W7I1pU7" 
+        crossorigin="anonymous"></script>
+
+<script>
+  // 2. 카카오 SDK 초기화 (사용자님의 키 입력됨)
+  Kakao.init('d5e6a819b168903c774656f7f3299763');
+
+  // 3. 카카오톡 공유 버튼 기능 연결
+  function shareKakao() {
+    Kakao.Share.sendCustom({
+      templateId: 1460758, // 예: 102345 (방금 만든 번호로 수정!)
+    });
+  }
+</script>
+
+<div style="text-align: center; margin-top: 20px;">
+  <button onclick="shareKakao()" style="background-color: #FEE500; color: #000; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer;">
+    카카오톡으로 공유하기
+  </button>
+</div>
+
+    
 </body>
 </html>
