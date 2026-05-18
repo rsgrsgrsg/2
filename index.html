@@ -3,21 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="류승건 ♥ 이지연 결혼합니다.">
+    <meta property="og:description" content="2026년 08월 15일 토요일 오후 12시">
+    <meta property="og:image" content="https://sg-jy.space/assets/main3.png">
+    <meta property="og:url" content="https://sg-jy.space/">
+
     <title>류승건 & 이지연 결혼식 초대장</title>
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;400;700&family=Montserrat:wght@100;300;400&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js" integrity="sha384-lLeS4GCqY8u6YXSAbpU3pPZ2Yf+LOnT5E569u0jA2aM0o8b/7uYpY+6Z1W7I1pU7" crossorigin="anonymous"></script>
 
     <style>
-        /* 사용자님의 원본 CSS (기존 파일 그대로 두시면 됩니다) */
         :root { --point-black: #000000; --point-color: #D1A7A7; --deep-gray: #333333; --bg-white: #ffffff; }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Noto Serif KR', serif; margin: 0; }
-        .hero-slider { height: 100vh; width: 100%; overflow: hidden; position: relative; }
-        .hero-container { display: flex; height: 100%; width: 100%; transition: transform 0.4s ease-out; }
-        .hero-item { min-width: 100%; height: 100%; }
-        .hero-item img { width: 100%; height: 100%; object-fit: cover; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; }
+        input, textarea, [id*="acc-"], [id*="addr-"] { -webkit-user-select: text; user-select: text; }
+        body { font-family: 'Noto Serif KR', serif; margin: 0; color: var(--point-black); background: var(--bg-white); line-height: 1.8; word-break: keep-all; }
+        [data-aos] { opacity: 1 !important; transform: translate(0) scale(1) !important; transition: none !important; }
+        html.aos-init [data-aos] { opacity: 0; }
+        html.aos-init .aos-animate { opacity: 1 !important; }
+        .section { padding: 80px 30px; text-align: center; }
+        .section-title { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--point-black); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 30px; display: block; }
+        .h-divider { width: 100%; height: 1px; background-color: var(--point-black); margin: 0; }
+        .hero-slider { height: 100vh; width: 100%; overflow: hidden; position: relative; background: #fff; }
+        .hero-container { display: flex; height: 100%; width: 100%; will-change: transform; transition: transform 0.4s ease-out; }
+        .hero-item { min-width: 100%; height: 100%; position: relative; }
+        .hero-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 60px; color: white; text-align: center; text-shadow: 0 0 10px rgba(0,0,0,0.5); pointer-events: none; }
+        .hero-names { font-size: 2.2rem; font-weight: 400; letter-spacing: 8px; margin-bottom: 10px; }
+        .hero-date { font-size: 1.1rem; letter-spacing: 2px; opacity: 0.9; }
         .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 0 10px; }
-        .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; background: #f0f0f0; }
+        .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer; background: #f0f0f0; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
     </style>
 </head>
 <body>
@@ -30,65 +52,68 @@
             <div class="hero-item"><img src="./assets/main3.png"></div>
             <div class="hero-item"><img src="./assets/main1.png"></div>
         </div>
+        <div class="hero-overlay">
+            <div data-aos="fade-up" data-aos-duration="2000">
+                <h1 class="hero-names">류승건 & 이지연</h1>
+                <p class="hero-date">2026. 08. 15. 토요일 오후 12시</p>
+            </div>
+        </div>
     </div>
 
-    <section style="padding: 80px 0; text-align: center;">
-        <h2 style="font-size: 0.75rem; letter-spacing: 6px; margin-bottom: 30px;">GALLERY</h2>
+    <section class="section" data-aos="fade-up" id="gallerySection">
+        <span class="section-title">Gallery</span>
         <div class="gallery-grid" id="galleryGrid"></div>
     </section>
 
     <div style="padding: 60px 20px; text-align: center; background-color: #f9f9f9; border-top: 1px solid #eee;">
-        <button onclick="shareKakao()" style="background-color: #FEE500; color: #191919; border: none; padding: 15px 30px; border-radius: 12px; font-weight: bold; cursor: pointer;">
+        <button onclick="shareKakao()" style="display: flex; align-items: center; justify-content: center; gap: 8px; margin: 0 auto; background-color: #FEE500; color: #191919; border: none; padding: 15px 30px; border-radius: 12px; font-size: 0.95rem; font-weight: bold; cursor: pointer; font-family: 'Noto Serif KR', serif;">
             카카오톡으로 청첩장 보내기
         </button>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
-        // 1. 카카오 초기화 (앱 ID 1460840에 해당하는 JS 키 확인 필요)
-        // 만약 에러가 계속 나면 카카오 디벨로퍼 '요약 정보'에서 'JavaScript 키'를 복사해 아래에 넣으세요.
-        try {
-            Kakao.init('d5e6a819a47355199ed57682989b9ef8'); 
-            console.log('카카오 초기화 여부:', Kakao.isInitialized());
-        } catch (e) {
-            console.error('초기화 에러:', e);
+        // AOS 초기화
+        window.onload = function() { AOS.init({ duration: 1200, once: true }); };
+
+        // [복구] 메인 슬라이더 로직
+        let heroIdx = 1;
+        const heroContainer = document.getElementById('heroSlider');
+        heroContainer.style.transform = `translateX(-100%)`;
+        setInterval(() => {
+            heroIdx++;
+            heroContainer.style.transition = 'transform 0.4s ease-out';
+            heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`;
+            if (heroIdx >= 4) {
+                setTimeout(() => {
+                    heroContainer.style.transition = 'none';
+                    heroIdx = 1;
+                    heroContainer.style.transform = `translateX(-100%)`;
+                }, 400);
+            }
+        }, 3000);
+
+        // [복구] 갤러리 로직
+        const galleryFiles = ['p01','p02','p03','p04','p05','p06','p11','p12','p13','p14','p15','p16','p17','p18','p19','p20','p21','p31','p32','p33','p34','p35','p36','p37','p39','p40','p61','p62','p63','p64','p65'];
+        const grid = document.getElementById('galleryGrid');
+        galleryFiles.forEach((name) => {
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
+            item.innerHTML = `<img src="./assets/p00/${name}.png" style="width:100%; height:100%; object-fit:cover;">`;
+            grid.appendChild(item);
+        });
+
+        // [카카오톡 공유 - 새 JavaScript 키 적용]
+        // 방금 확인하신 키: a5ea5495dd09ddffc0e6d746f448858b
+        if (!Kakao.isInitialized()) {
+            Kakao.init('a5ea5495dd09ddffc0e6d746f448858b'); 
         }
 
         function shareKakao() {
             Kakao.Share.sendCustom({
-                templateId: 133283, // 알려주신 템플릿 ID
-                installTalk: true,
-                fail: function(err) {
-                    // 에러가 나면 폰 화면에 팝업을 띄웁니다.
-                    alert('에러 내용: ' + JSON.stringify(err));
-                }
+                templateId: 133283 // 템플릿 ID
             });
         }
-
-        // [기존 슬라이더/갤러리 로직]
-        const galleryFiles = ['p01','p02','p03','p04','p05','p06','p11','p12','p13','p14','p15','p16','p17','p18','p19','p20','p21','p31','p32','p33','p34','p35','p36','p37','p39','p40','p61','p62','p63','p64','p65'];
-        const grid = document.getElementById('galleryGrid');
-        galleryFiles.forEach(name => {
-            const div = document.createElement('div');
-            div.className = 'gallery-item';
-            div.innerHTML = `<img src="./assets/p00/${name}.png" style="width:100%; height:100%; object-fit:cover;">`;
-            grid.appendChild(div);
-        });
-
-        let heroIdx = 1;
-        const container = document.getElementById('heroSlider');
-        container.style.transform = `translateX(-100%)`;
-        setInterval(() => {
-            heroIdx++;
-            container.style.transition = 'transform 0.4s ease-out';
-            container.style.transform = `translateX(-${heroIdx * 100}%)`;
-            if (heroIdx >= 4) {
-                setTimeout(() => {
-                    container.style.transition = 'none';
-                    heroIdx = 1;
-                    container.style.transform = `translateX(-100%)`;
-                }, 400);
-            }
-        }, 3000);
     </script>
 </body>
 </html>
