@@ -32,12 +32,11 @@
         .section-title { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--point-black); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 30px; display: block; }
         .h-divider { width: 100%; height: 1px; background-color: var(--point-black); margin: 0; }
 
-        /* BGM 버튼 */
         .bgm-btn { position: fixed; top: 15px; right: 15px; z-index: 9990; width: 42px; height: 42px; background: rgba(255, 255, 255, 0.85); border: 1px solid #ddd; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--point-color); font-size: 1.1rem; box-shadow: 0 2px 6px rgba(0,0,0,0.1); outline: none; }
         .bgm-btn.playing i.fa-music { animation: spin 3s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* 메인 슬라이더 (복구됨) */
+        /* 메인 슬라이더 원상복구 */
         .hero-slider { height: 100vh; width: 100%; overflow: hidden; position: relative; background: #fff; }
         .hero-container { display: flex; height: 100%; width: 100%; will-change: transform; }
         .hero-item { min-width: 100%; height: 100%; position: relative; }
@@ -48,15 +47,7 @@
         .hero-names { font-size: 2.2rem; font-weight: 400; letter-spacing: 8px; margin-bottom: 10px; }
         .hero-date { font-size: 1.1rem; letter-spacing: 2px; opacity: 0.9; font-weight: 400; }
 
-        /* 디데이 & 위치 */
-        .countdown-wrap { display: flex; justify-content: center; gap: 30px; margin: 30px 0; }
-        .count-num { font-family: 'Montserrat', sans-serif; font-size: 1.8rem; font-weight: 300; }
-        .count-label { font-size: 0.65rem; color: #999; letter-spacing: 2px; }
-        .address-box { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; }
-        .btn-copy-sm { border: 1px solid #000; background: none; padding: 2px 8px; font-size: 0.7rem; cursor: pointer; font-family: inherit; }
-        .map-link-area { width: 100%; display: block; margin: 20px auto; border: 1px solid #eee; background-color: #f4f4f4; background-size: cover; background-position: center; }
-
-        /* 갤러리 (복구됨) */
+        /* 갤러리 원상복구 */
         .gallery-wrap { position: relative; overflow: hidden; max-height: 5000px; transition: max-height 0.8s ease-in-out; }
         .gallery-wrap.limited { max-height: 330px; }
         .gallery-wrap.limited::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to bottom, transparent, var(--bg-white)); pointer-events: none; }
@@ -65,11 +56,9 @@
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
         .btn-more { margin: 20px auto; padding: 12px 30px; border: 1px solid #000; background: #fff; cursor: pointer; font-family: inherit; font-size: 0.85rem; display: block; }
 
-        /* 계좌 & 방명록 */
         .btn-point { background: var(--point-color); color: white; border: none; padding: 18px; width: 100%; cursor: pointer; font-weight: 700; font-family: inherit; }
         .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
         .modal-content { background: white; padding: 40px 25px; width: 90%; max-width: 400px; text-align: center; position: relative; }
-        .btn-kakaopay { display: flex; align-items: center; justify-content: center; gap: 8px; background: #FEE500; color: #191919; text-align: center; padding: 12px; font-size: 0.85rem; font-weight: 700; text-decoration: none; border-radius: 6px; margin-top: 10px; }
     </style>
 </head>
 <body oncontextmenu="return false">
@@ -106,17 +95,6 @@
 
     <div class="h-divider"></div>
 
-    <section class="section" data-aos="fade-up">
-        <span class="section-title">D-Day</span>
-        <div class="countdown-wrap">
-            <div class="count-item"><span class="count-num" id="days">00</span><br><span class="count-label">DAYS</span></div>
-            <div class="count-item"><span class="count-num" id="hours">00</span><br><span class="count-label">HOURS</span></div>
-            <div class="count-item"><span class="count-num" id="mins">00</span><br><span class="count-label">MINS</span></div>
-        </div>
-    </section>
-
-    <div class="h-divider"></div>
-
     <section class="section" data-aos="fade-up" id="gallerySection">
         <span class="section-title">Gallery</span>
         <div class="gallery-wrap limited" id="galleryWrap">
@@ -129,29 +107,24 @@
 
     <div style="padding: 60px 20px; text-align: center; background-color: #f9f9f9; border-top: 1px solid #eee;">
         <button onclick="shareKakao()" style="display: flex; align-items: center; justify-content: center; gap: 8px; margin: 0 auto; background-color: #FEE500; color: #191919; border: none; padding: 15px 30px; border-radius: 12px; font-size: 0.95rem; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); font-family: 'Noto Serif KR', serif;">
-            <i class="fa-solid fa-comment"></i> 카카오톡으로 청첩장 보내기
+            카카오톡으로 청첩장 보내기
         </button>
-        <p style="font-size: 0.75rem; color: #999; margin-top: 15px; letter-spacing: 1px;">친구들에게 기쁜 소식을 공유해보세요.</p>
-    </div>
-
-    <div id="accModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal()">×</span>
-            <h3 style="font-weight: 700;">마음 전하실 곳</h3>
-            <div style="text-align: left; padding: 20px 0;">
-                <p>신랑 류승건: 우리 1002-841-241285</p>
-                <a href="https://qr.kakaopay.com/FNfa3PrZO" target="_blank" class="btn-kakaopay">카카오페이 송금</a>
-            </div>
-        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
-
     <script>
-        // AOS 초기화
+        // AOS
         window.onload = function() { AOS.init({ duration: 1200, once: true }); };
+
+        // [핵심] 카카오톡 초기화 및 공유 (ID: 1460758 수정 완료)
+        if (!Kakao.isInitialized()) {
+            Kakao.init('d5e6a819a47355199ed57682989b9ef8'); 
+        }
+        function shareKakao() {
+            Kakao.Share.sendCustom({
+                templateId: 1460758, 
+            });
+        }
 
         // BGM 로직
         const bgm = document.getElementById('bgm');
@@ -163,16 +136,6 @@
             isBgmPlaying = !isBgmPlaying;
         }
         document.body.addEventListener('click', function() { if(!isBgmPlaying) toggleBgm(); }, { once: true });
-
-        // [핵심] 카카오톡 초기화 및 공유 (ID: 133278 수정 완료)
-        if (!Kakao.isInitialized()) {
-            Kakao.init('d5e6a819a47355199ed57682989b9ef8'); 
-        }
-        function shareKakao() {
-            Kakao.Share.sendCustom({
-                templateId: 133278, // 실제 템플릿 ID로 변경 완료
-            });
-        }
 
         // 슬라이더 로직
         let heroIdx = 1; const totalHero = 3;
@@ -186,7 +149,7 @@
             else if (heroIdx === totalHero + 1) { setTimeout(() => { heroContainer.style.transition = 'none'; heroIdx = 1; heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`; }, 400); }
         }
 
-        // 갤러리 로직 (p01 ~ p65)
+        // 갤러리 로직
         const galleryFiles = ['p01','p02','p03','p04','p05','p06','p11','p12','p13','p14','p15','p16','p17','p18','p19','p20','p21','p31','p32','p33','p34','p35','p36','p37','p39','p40','p61','p62','p63','p64','p65'];
         const grid = document.getElementById('galleryGrid');
         galleryFiles.forEach((name) => {
@@ -200,20 +163,6 @@
             wrap.classList.toggle('limited');
             document.getElementById('moreBtn').innerText = wrap.classList.contains('limited') ? '더보기 ▽' : '접기 △';
         }
-
-        // 디데이 계산기
-        function updateCountdown() {
-            const diff = new Date('2026-08-15T12:00:00').getTime() - new Date().getTime();
-            document.getElementById('days').innerText = Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24))).toString().padStart(2, '0');
-            document.getElementById('hours').innerText = Math.max(0, Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).toString().padStart(2, '0');
-            document.getElementById('mins').innerText = Math.max(0, Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).toString().padStart(2, '0');
-        }
-        setInterval(updateCountdown, 1000); updateCountdown();
-
-        // 유틸리티
-        function copyToClipboard(id) { navigator.clipboard.writeText(document.getElementById(id).innerText).then(() => alert("복사되었습니다.")); }
-        function openModal() { document.getElementById('accModal').style.display = 'flex'; }
-        function closeModal() { document.getElementById('accModal').style.display = 'none'; }
     </script>
 </body>
 </html>
