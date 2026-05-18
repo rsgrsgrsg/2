@@ -39,7 +39,7 @@
         .section-title { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--point-black); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 30px; display: block; }
         .h-divider { width: 100%; height: 1px; background-color: var(--point-black); margin: 0; }
 
-        /* BGM 버튼 */
+        /* [해결 3] BGM 떠있는 버튼 스타일 */
         .bgm-btn {
             position: fixed; top: 15px; right: 15px; z-index: 9990;
             width: 42px; height: 42px; background: rgba(255, 255, 255, 0.85);
@@ -51,7 +51,7 @@
         .bgm-btn.playing i.fa-music { animation: spin 3s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* 메인 슬라이더 */
+        /* [원상복구완료] 메인 슬라이더 디자인 */
         .hero-slider { height: 100vh; width: 100%; overflow: hidden; position: relative; background: #fff; }
         .hero-container { display: flex; height: 100%; width: 100%; will-change: transform; }
         .hero-item { min-width: 100%; height: 100%; position: relative; }
@@ -70,9 +70,10 @@
         .btn-copy-sm { border: 1px solid #000; background: none; padding: 2px 8px; font-size: 0.7rem; cursor: pointer; font-family: inherit; }
         .map-link-area { width: 100%; display: block; margin: 20px auto; border: 1px solid #eee; background-color: #f4f4f4; background-size: cover; background-position: center; }
 
-        /* 갤러리 */
+        /* [원상복구완료] 갤러리 디자인 및 펼치기/접기 완벽 적용 */
         .gallery-wrap { position: relative; overflow: hidden; max-height: 5000px; transition: max-height 0.8s ease-in-out; }
-        .gallery-wrap.limited { max-height: 330px; }
+        .gallery-wrap.limited { max-height: 330px; } /* 처음엔 약 3줄 분량만 표시 */
+        /* 안 펼쳤을 때 아래쪽이 흐려지는 효과 */
         .gallery-wrap.limited::after {
             content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 60px;
             background: linear-gradient(to bottom, transparent, var(--bg-white)); pointer-events: none;
@@ -82,10 +83,25 @@
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
         .btn-more { margin: 20px auto; padding: 12px 30px; border: 1px solid #000; background: #fff; cursor: pointer; font-family: inherit; font-size: 0.85rem; display: block; }
 
-        /* 계좌 & 방명록 */
+        /* 확대 뷰어 모달 */
+        #galleryViewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10001; align-items: center; justify-content: center; }
+        .viewer-content { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
+        .viewer-img { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
+        .viewer-close { position: absolute; top: 20px; right: 20px; color: #fff; font-size: 2.5rem; cursor: pointer; z-index: 10002; }
+        .viewer-nav { position: absolute; top: 50%; transform: translateY(-50%); color: #fff; font-size: 2.5rem; background: none; border: none; cursor: pointer; padding: 20px; z-index: 10002; opacity: 0.7; }
+        .v-prev { left: 10px; } .v-next { right: 10px; }
+        .viewer-count { position: absolute; bottom: 40px; color: #fff; font-size: 0.85rem; letter-spacing: 2px; }
+
+        /* 마음 전하실 곳 & 방명록 (Dusty Rose 적용 완료) */
         .btn-point { background: var(--point-color); color: white; border: none; padding: 18px; width: 100%; cursor: pointer; letter-spacing: 2px; font-weight: 700; font-family: inherit; font-size: 0.9rem; }
         .gb-card { background: white; padding: 30px 20px; border: 1px solid #eee; max-width: 450px; margin: 0 auto; }
         input, textarea { width: 100%; padding: 15px; border: 1px solid #eee; margin-bottom: 10px; font-family: inherit; font-size: 0.9rem; border-radius: 0; outline: none; }
+        #gb-list { margin-top: 20px; max-height: 400px; overflow-y: auto; border-top: 1px solid #f2f2f2; padding-right: 5px; }
+        #gb-list::-webkit-scrollbar { width: 3px; }
+        #gb-list::-webkit-scrollbar-thumb { background: #ddd; }
+        .guest-item { border-bottom: 1px solid #f2f2f2; padding: 20px 0; text-align: left; }
+        .guest-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 5px; display: block; }
+        .guest-msg { font-size: 0.85rem; color: var(--deep-gray); line-height: 1.6; }
         .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
         .modal-content { background: white; padding: 40px 25px; width: 90%; max-width: 400px; text-align: center; position: relative; }
         .close-modal { position: absolute; right: 15px; top: 15px; font-size: 1.5rem; cursor: pointer; color: #999; }
@@ -163,12 +179,34 @@
         <button id="moreBtn" class="btn-more" onclick="toggleGallery()">더보기 ▽</button>
     </section>
 
+    <div id="galleryViewer">
+        <span class="viewer-close" onclick="closeViewer()">×</span>
+        <div class="viewer-content" id="viewerContent">
+            <button class="viewer-nav v-prev" onclick="changeViewImg(-1)">&#10094;</button>
+            <img src="" class="viewer-img" id="currentViewerImg">
+            <button class="viewer-nav v-next" onclick="changeViewImg(1)">&#10095;</button>
+            <div class="viewer-count" id="viewerCount">1 / 1</div>
+        </div>
+    </div>
+
     <div class="h-divider"></div>
 
     <section class="section" data-aos="fade-up" style="padding: 60px 30px;">
         <span class="section-title">Account</span>
         <p style="font-size: 0.9rem; margin-bottom: 25px;">축복해주시는 소중한 마음 잊지 않고<br>예쁘게 잘 살겠습니다.</p>
         <button onclick="openModal()" class="btn-point" style="max-width: 300px; margin: 0 auto; display: block;">마음 전하실 곳</button>
+    </section>
+
+    <div class="h-divider"></div>
+
+    <section class="section" data-aos="fade-up">
+        <span class="section-title">Guestbook</span>
+        <div class="gb-card">
+            <input type="text" id="gb_name" placeholder="성함">
+            <textarea id="gb_msg" rows="3" placeholder="축하 메시지를 남겨주세요"></textarea>
+            <button onclick="saveGuestMessage()" class="btn-point">메시지 남기기</button>
+            <div id="gb-list"></div>
+        </div>
     </section>
 
     <div style="padding: 60px 20px; text-align: center; background-color: #f9f9f9; border-top: 1px solid #eee;">
@@ -208,8 +246,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
-    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js" integrity="sha384-lLeS4GCqY8u6YXSAbpU3pPZ2Yf+LOnT5E569u0jA2aM0o8b/7uYpY+6Z1W7I1pU7" crossorigin="anonymous"></script>
-
+    
     <script>
         // AOS 초기화
         window.onload = function() {
@@ -217,34 +254,38 @@
             catch (e) { document.querySelectorAll('[data-aos]').forEach(el => el.classList.add('aos-animate')); }
         };
 
-        // BGM 로직
+        // [해결 3] BGM(배경음악) 재생 로직
         const bgm = document.getElementById('bgm');
         const bgmBtn = document.getElementById('bgmBtn');
         let isBgmPlaying = false;
+
         function toggleBgm() {
-            if (isBgmPlaying) { bgm.pause(); bgmBtn.classList.remove('playing'); } 
-            else { bgm.play().catch(e => console.log('BGM Play Error')); bgmBtn.classList.add('playing'); }
+            if (isBgmPlaying) {
+                bgm.pause();
+                bgmBtn.classList.remove('playing');
+            } else {
+                bgm.play().catch(e => console.log('Autoplay prevented'));
+                bgmBtn.classList.add('playing');
+            }
             isBgmPlaying = !isBgmPlaying;
         }
-        document.body.addEventListener('click', function() { if(!isBgmPlaying) toggleBgm(); }, { once: true });
 
-        // 카카오톡 공유 기능 [사용자 설정 반영]
-        if (!Kakao.isInitialized()) {
-            Kakao.init('d5e6a819b168903c774656f7f3299763');
-        }
-        function shareKakao() {
-            Kakao.Share.sendCustom({
-                templateId: 1460758,
-            });
-        }
+        // 브라우저 정책상, 하객이 화면을 처음 터치(클릭)할 때 자동으로 음악이 재생되도록 합니다.
+        document.body.addEventListener('click', function playOnFirstClick() {
+            if(!isBgmPlaying) toggleBgm();
+            document.body.removeEventListener('click', playOnFirstClick);
+        }, { once: true });
+
 
         // 메인 슬라이더 로직
         let heroIdx = 1; const totalHero = 3; let isHeroMoving = false;
         const heroContainer = document.getElementById('heroSlider');
         if(heroContainer) heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`;
+
         function moveSlider(dir) {
             if (isHeroMoving || !heroContainer) return;
-            isHeroMoving = true; heroIdx += dir;
+            isHeroMoving = true;
+            heroIdx += dir;
             heroContainer.style.transition = 'transform 0.4s ease-out';
             heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`;
         }
@@ -254,47 +295,136 @@
                 if (heroIdx === 0) { heroContainer.style.transition = 'none'; heroIdx = totalHero; heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`; }
                 else if (heroIdx === totalHero + 1) { heroContainer.style.transition = 'none'; heroIdx = 1; heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`; }
             });
+            let hStartX = 0;
+            heroContainer.addEventListener('touchstart', e => hStartX = e.touches[0].clientX, {passive: true});
+            heroContainer.addEventListener('touchend', e => {
+                const diffX = hStartX - e.changedTouches[0].clientX;
+                if (Math.abs(diffX) > 50) moveSlider(diffX > 0 ? 1 : -1);
+            });
         }
 
-        // 갤러리 로직
-        const galleryFiles = ['p01','p02','p03','p04','p05','p06','p11','p12','p13','p14','p15','p16','p17','p18','p19','p20','p21','p31','p32','p33','p34','p35','p36','p37','p39','p40','p61','p62','p63','p64','p65'];
+        // [해결 2] 갤러리 로직 (클릭 이벤트를 div로 옮겨 확대 기능 완벽 구현)
+        const galleryFiles = [
+            'p01', 'p02', 'p03', 'p04', 'p05', 'p06', 
+            'p11', 'p12', 'p13', 'p14', 'p15', 'p16', 'p17', 'p18', 'p19', 'p20', 'p21', 
+            'p31', 'p32', 'p33', 'p34', 'p35', 'p36', 'p37', 'p39', 'p40', 
+            'p61', 'p62', 'p63', 'p64', 'p65'
+        ];
+        const totalGalleryImages = galleryFiles.length;
+        let gViewIdx = 0;
+
         function initGallery() {
             const grid = document.getElementById('galleryGrid');
             if(!grid) return;
             galleryFiles.forEach((name, idx) => {
                 const item = document.createElement('div');
                 item.className = 'gallery-item';
-                item.innerHTML = `<img src="./assets/p00/${name}.png" loading="lazy">`;
+                // 중요: onclick을 div 태그에 부여하여 pointer-events:none 우회
+                item.setAttribute('onclick', `openViewer(${idx})`);
+                item.innerHTML = `<img src="./assets/p00/${name}.png" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Error'">`;
                 grid.appendChild(item);
             });
         }
         initGallery();
+
+        // [해결 1] 갤러리 더보기/접기 토글
         function toggleGallery() {
             const wrap = document.getElementById('galleryWrap');
             const btn = document.getElementById('moreBtn');
-            wrap.classList.toggle('limited');
-            btn.innerText = wrap.classList.contains('limited') ? '더보기 ▽' : '접기 △';
-            if(wrap.classList.contains('limited')) document.getElementById('gallerySection').scrollIntoView({ behavior: 'smooth' });
+            if (wrap.classList.contains('limited')) {
+                wrap.classList.remove('limited');
+                btn.innerText = '접기 △';
+            } else {
+                wrap.classList.add('limited');
+                btn.innerText = '더보기 ▽';
+                document.getElementById('gallerySection').scrollIntoView({ behavior: 'smooth' });
+            }
         }
 
-        // 유틸리티
+        // 확대 뷰어 로직 (터치 스와이프 포함)
+        function openViewer(idx) {
+            gViewIdx = idx; updateViewer();
+            document.getElementById('galleryViewer').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        function closeViewer() {
+            document.getElementById('galleryViewer').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        function changeViewImg(dir) {
+            gViewIdx = (gViewIdx + dir + totalGalleryImages) % totalGalleryImages;
+            updateViewer();
+        }
+        function updateViewer() {
+            const name = galleryFiles[gViewIdx];
+            document.getElementById('currentViewerImg').src = `./assets/p00/${name}.png`;
+            document.getElementById('viewerCount').innerText = `${gViewIdx + 1} / ${totalGalleryImages}`;
+        }
+        
+        let vStartX = 0;
+        document.getElementById('viewerContent').addEventListener('touchstart', e => vStartX = e.changedTouches[0].screenX, {passive: true});
+        document.getElementById('viewerContent').addEventListener('touchend', e => {
+            const diff = vStartX - e.changedTouches[0].screenX;
+            if (Math.abs(diff) > 50) changeViewImg(diff > 0 ? 1 : -1);
+        }, {passive: true});
+
+        // 유틸리티 및 파이어베이스
         function copyToClipboard(id) { navigator.clipboard.writeText(document.getElementById(id).innerText).then(() => alert("복사되었습니다.")); }
         function openModal() { document.getElementById('accModal').style.display = 'flex'; }
         function closeModal() { document.getElementById('accModal').style.display = 'none'; }
+        function sanitize(str) { const temp = document.createElement('div'); temp.textContent = str; return temp.innerHTML; }
 
-        // 파이어베이스 & 디데이 로직
         try {
             const firebaseConfig = { apiKey: "AIzaSyD1LmVHTLYnecokZV67_hCDcM289fl3oiw", authDomain: "sg-jy-233e2.firebaseapp.com", databaseURL: "https://sg-jy-233e2-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "sg-jy-233e2", storageBucket: "sg-jy-233e2.firebasestorage.app", messagingSenderId: "217599075354", appId: "1:217599075354:web:c227474b5efc4fd280dda3" };
             firebase.initializeApp(firebaseConfig);
             const database = firebase.database();
+            
             function updateCountdown() {
-                const diff = new Date('2026-08-15T12:00:00').getTime() - new Date().getTime();
-                document.getElementById('days').innerText = Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24))).toString().padStart(2, '0');
-                document.getElementById('hours').innerText = Math.max(0, Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).toString().padStart(2, '0');
-                document.getElementById('mins').innerText = Math.max(0, Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).toString().padStart(2, '0');
+                const target = new Date('2026-08-15T12:00:00').getTime();
+                const now = new Date().getTime();
+                const diff = target - now;
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                if(document.getElementById('days')) {
+                    document.getElementById('days').innerText = d < 10 ? '0'+d : d;
+                    document.getElementById('hours').innerText = h < 10 ? '0'+h : h;
+                    document.getElementById('mins').innerText = m < 10 ? '0'+m : m;
+                }
             }
             setInterval(updateCountdown, 1000); updateCountdown();
+
+            function saveGuestMessage() {
+                let name = document.getElementById('gb_name').value.trim();
+                let msg = document.getElementById('gb_msg').value.trim();
+                if (name && msg) { database.ref('guestbook').push({ name: sanitize(name), message: sanitize(msg), timestamp: Date.now() }).then(() => { document.getElementById('gb_name').value = ''; document.getElementById('gb_msg').value = ''; }); }
+            }
+            database.ref('guestbook').on('value', (snapshot) => {
+                const list = document.getElementById('gb-list'); if(!list) return;
+                list.innerHTML = '';
+                snapshot.forEach(child => {
+                    const data = child.val();
+                    const div = document.createElement('div'); div.className = 'guest-item';
+                    div.innerHTML = `<span class="guest-name">${data.name}</span><div class="guest-msg">${data.message}</div>`;
+                    list.prepend(div);
+                });
+            });
         } catch(e) {}
     </script>
+    
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js" integrity="sha384-lLeS4GCqY8u6YXSAbpU3pPZ2Yf+LOnT5E569u0jA2aM0o8b/7uYpY+6Z1W7I1pU7" crossorigin="anonymous"></script>
+    <script>
+      // 중복 실행 방지 초기화
+      if (!Kakao.isInitialized()) {
+        Kakao.init('d5e6a819b168903c774656f7f3299763');
+      }
+
+      function shareKakao() {
+        Kakao.Share.sendCustom({
+          templateId: 1460758,
+        });
+      }
+    </script>
+
 </body>
 </html>
