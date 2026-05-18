@@ -30,13 +30,37 @@
         .section { padding: 80px 30px; text-align: center; }
         .section-title { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--point-black); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 30px; display: block; }
         .h-divider { width: 100%; height: 1px; background-color: var(--point-black); margin: 0; }
+        .bgm-btn { position: fixed; top: 15px; right: 15px; z-index: 9990; width: 42px; height: 42px; background: rgba(255, 255, 255, 0.85); border: 1px solid #ddd; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--point-color); font-size: 1.1rem; box-shadow: 0 2px 6px rgba(0,0,0,0.1); outline: none; }
+        .bgm-btn.playing i.fa-music { animation: spin 3s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        
+        /* 메인 슬라이더 원상복구 */
         .hero-slider { height: 100vh; width: 100%; overflow: hidden; position: relative; background: #fff; }
         .hero-container { display: flex; height: 100%; width: 100%; will-change: transform; }
         .hero-item { min-width: 100%; height: 100%; position: relative; }
-        .hero-item img { width: 100%; height: 100%; object-fit: cover; }
+        .hero-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.15); border: none; color: white; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; font-size: 1.2rem; }
+        .prev-btn { left: 10px; } .next-btn { right: 10px; }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 60px; color: white; text-align: center; pointer-events: none; z-index: 5; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
+        .hero-names { font-size: 2.2rem; font-weight: 400; letter-spacing: 8px; margin-bottom: 10px; }
+        .hero-date { font-size: 1.1rem; letter-spacing: 2px; opacity: 0.9; font-weight: 400; }
+        
+        .countdown-wrap { display: flex; justify-content: center; gap: 30px; margin: 30px 0; }
+        .count-num { font-family: 'Montserrat', sans-serif; font-size: 1.8rem; font-weight: 300; }
+        .count-label { font-size: 0.65rem; color: #999; letter-spacing: 2px; }
+        .address-box { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; }
+        .btn-copy-sm { border: 1px solid #000; background: none; padding: 2px 8px; font-size: 0.7rem; cursor: pointer; font-family: inherit; }
+        .map-link-area { width: 100%; display: block; margin: 20px auto; border: 1px solid #eee; background-color: #f4f4f4; background-size: cover; background-position: center; }
+
+        /* 갤러리 원상복구 */
+        .gallery-wrap { position: relative; overflow: hidden; max-height: 5000px; transition: max-height 0.8s ease-in-out; }
+        .gallery-wrap.limited { max-height: 330px; }
+        .gallery-wrap.limited::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to bottom, transparent, var(--bg-white)); pointer-events: none; }
         .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 0 10px; }
-        .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; background: #f0f0f0; }
-        .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+        .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer; background: #f0f0f0; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+        .btn-more { margin: 20px auto; padding: 12px 30px; border: 1px solid #000; background: #fff; cursor: pointer; font-family: inherit; font-size: 0.85rem; display: block; }
+        
         .btn-point { background: var(--point-color); color: white; border: none; padding: 18px; width: 100%; cursor: pointer; font-weight: 700; font-family: inherit; }
         .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
         .modal-content { background: white; padding: 40px 25px; width: 90%; max-width: 400px; text-align: center; position: relative; }
@@ -44,10 +68,10 @@
         .btn-kakaopay { display: flex; align-items: center; justify-content: center; gap: 8px; background: #FEE500; color: #191919; text-align: center; padding: 12px; font-size: 0.85rem; font-weight: 700; text-decoration: none; border-radius: 6px; margin-top: 10px; }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false">
 
     <audio id="bgm" src="./assets/bgm.mp3" loop></audio>
-    <button id="bgmBtn" style="position: fixed; top: 15px; right: 15px; z-index: 9990; width: 42px; height: 42px; background: rgba(255, 255, 255, 0.85); border: 1px solid #ddd; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #D1A7A7;" onclick="toggleBgm()">
+    <button id="bgmBtn" class="bgm-btn" onclick="toggleBgm()">
         <i class="fas fa-music"></i>
     </button>
 
@@ -67,57 +91,64 @@
 
     <section class="section" id="gallerySection">
         <span class="section-title">Gallery</span>
-        <div class="gallery-grid" id="galleryGrid"></div>
+        <div class="gallery-wrap limited" id="galleryWrap">
+            <div class="gallery-grid" id="galleryGrid"></div>
+        </div>
+        <button id="moreBtn" class="btn-more" onclick="toggleGallery()">더보기 ▽</button>
     </section>
 
     <div style="padding: 60px 20px; text-align: center; background-color: #f9f9f9; border-top: 1px solid #eee;">
-        <button id="kakaotalk-sharing-btn" style="display: flex; align-items: center; justify-content: center; gap: 8px; margin: 0 auto; background-color: #FEE500; color: #191919; border: none; padding: 15px 30px; border-radius: 12px; font-size: 0.95rem; font-weight: bold; cursor: pointer; font-family: 'Noto Serif KR', serif;">
-            <i class="fa-solid fa-comment"></i> 카카오톡으로 청첩장 보내기
+        <button onclick="shareKakao()" style="display: flex; align-items: center; justify-content: center; gap: 8px; margin: 0 auto; background-color: #FEE500; color: #191919; border: none; padding: 15px 30px; border-radius: 12px; font-size: 0.95rem; font-weight: bold; cursor: pointer; font-family: 'Noto Serif KR', serif;">
+            카카오톡으로 청첩장 보내기
         </button>
-        <p style="font-size: 0.75rem; color: #999; margin-top: 15px; letter-spacing: 1px;">친구들에게 기쁜 소식을 공유해보세요.</p>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
-        // [1] 카카오 초기화 및 버튼 바인딩 (수정된 키 적용)
-        try {
-            if (!Kakao.isInitialized()) {
-                Kakao.init('755e4d36f5152f41db346997d77781ae');
-            }
-            
-            // 더 강력한 버튼 바인딩 방식 사용
-            Kakao.Share.createCustomButton({
-                container: '#kakaotalk-sharing-btn',
-                templateId: 1460758,
-            });
-        } catch (e) {
-            alert('카카오 초기화 실패: ' + e.message);
+        // 1. 카카오톡 초기화 (새로 주신 승건&지연 전용 키 적용)
+        if (!Kakao.isInitialized()) {
+            Kakao.init('755e4d36f5152f41db346997d77781ae');
         }
 
-        // [2] 기존 디자인 로직 (슬라이더, 갤러리)
-        window.onload = function() {
-            AOS.init({ duration: 1200, once: true });
-            const galleryFiles = ['p01','p02','p03','p04','p05','p06','p11','p12','p13','p14','p15','p16','p17','p18','p19','p20','p21','p31','p32','p33','p34','p35','p36','p37','p39','p40','p61','p62','p63','p64','p65'];
-            const grid = document.getElementById('galleryGrid');
-            galleryFiles.forEach((name) => {
-                const item = document.createElement('div');
-                item.className = 'gallery-item';
-                item.innerHTML = `<img src="./assets/p00/${name}.png" loading="lazy">`;
-                grid.appendChild(item);
+        function shareKakao() {
+            Kakao.Share.sendCustom({
+                templateId: 1460758,
             });
-        };
+        }
 
-        // 슬라이더 간단 로직
+        // 2. 갤러리/슬라이더 로직 복구
+        const galleryFiles = ['p01', 'p02', 'p03', 'p04', 'p05', 'p06', 'p11', 'p12', 'p13', 'p14', 'p15', 'p16', 'p17', 'p18', 'p19', 'p20', 'p21', 'p31', 'p32', 'p33', 'p34', 'p35', 'p36', 'p37', 'p39', 'p40', 'p61', 'p62', 'p63', 'p64', 'p65'];
+        const grid = document.getElementById('galleryGrid');
+        galleryFiles.forEach((name) => {
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
+            item.innerHTML = `<img src="./assets/p00/${name}.png" loading="lazy">`;
+            grid.appendChild(item);
+        });
+
+        function toggleGallery() {
+            const wrap = document.getElementById('galleryWrap');
+            const btn = document.getElementById('moreBtn');
+            wrap.classList.toggle('limited');
+            btn.innerText = wrap.classList.contains('limited') ? '더보기 ▽' : '접기 △';
+        }
+
         let heroIdx = 1;
         const heroContainer = document.getElementById('heroSlider');
         setInterval(() => {
             heroIdx++;
-            if (heroIdx > 4) heroIdx = 1;
-            heroContainer.style.transition = heroIdx === 1 ? 'none' : 'transform 0.4s ease-out';
+            heroContainer.style.transition = 'transform 0.4s ease-out';
             heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`;
+            if (heroIdx > 3) {
+                setTimeout(() => {
+                    heroContainer.style.transition = 'none';
+                    heroIdx = 1;
+                    heroContainer.style.transform = `translateX(-100%)`;
+                }, 400);
+            }
         }, 3000);
 
-        function toggleBgm() { /* 기존 BGM 함수 */ }
+        function toggleBgm() { /* BGM 로직 생략 */ }
         function copyToClipboard(id) { navigator.clipboard.writeText(document.getElementById(id).innerText).then(() => alert("복사되었습니다.")); }
     </script>
 </body>
