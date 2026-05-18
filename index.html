@@ -18,33 +18,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        :root { 
-            --point-black: #000000; 
-            --point-color: #D1A7A7; 
-            --deep-gray: #333333; 
-            --bg-white: #ffffff; 
-        }
+        :root { --point-black: #000000; --point-color: #D1A7A7; --deep-gray: #333333; --bg-white: #ffffff; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; }
-        input, textarea, [id*="acc-"], [id*="addr-"] { -webkit-user-select: text; user-select: text; }
         body { font-family: 'Noto Serif KR', serif; margin: 0; color: var(--point-black); background: var(--bg-white); line-height: 1.8; word-break: keep-all; }
-
-        /* [원복] 메인 슬라이더 스타일 */
         .hero-slider { height: 100vh; width: 100%; overflow: hidden; position: relative; background: #fff; }
         .hero-container { display: flex; height: 100%; width: 100%; will-change: transform; }
         .hero-item { min-width: 100%; height: 100%; position: relative; }
-        .hero-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
-        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.15); border: none; color: white; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; font-size: 1.2rem; }
+        .hero-item img { width: 100%; height: 100%; object-fit: cover; }
+        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.15); border: none; color: white; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; }
         .prev-btn { left: 10px; } .next-btn { right: 10px; }
         .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 60px; color: white; text-align: center; pointer-events: none; z-index: 5; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
         .hero-names { font-size: 2.2rem; font-weight: 400; letter-spacing: 8px; margin-bottom: 10px; }
-
-        /* [원복] 갤러리 스타일 */
         .section { padding: 80px 30px; text-align: center; }
         .gallery-wrap { position: relative; overflow: hidden; max-height: 5000px; transition: max-height 0.8s ease-in-out; }
         .gallery-wrap.limited { max-height: 330px; }
-        .gallery-wrap.limited::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to bottom, transparent, var(--bg-white)); pointer-events: none; }
         .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 0 10px; }
-        .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer; background: #f0f0f0; }
+        .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; background: #f0f0f0; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
     </style>
 </head>
@@ -74,25 +63,23 @@
     </section>
 
     <div style="padding: 60px 20px; text-align: center; background-color: #f9f9f9; border-top: 1px solid #eee;">
-        <button onclick="shareKakao()" style="background-color: #FEE500; color: #191919; border: none; padding: 15px 30px; border-radius: 12px; font-weight: bold; cursor: pointer;">
+        <button onclick="shareKakao()" style="background-color: #FEE500; color: #191919; border: none; padding: 15px 30px; border-radius: 12px; font-weight: bold; cursor: pointer; font-family: 'Noto Serif KR', serif;">
             카카오톡으로 청첩장 보내기
         </button>
     </div>
 
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js"></script>
     <script>
-        // 사용자님이 직접 주신 새로운 JavaScript 키 적용
-        if (!Kakao.isInitialized()) {
-            Kakao.init('6922959e199cbff0068b5b0a35d5a5ab');
-        }
+        // 사용자님이 주신 정확한 정보 적용
+        Kakao.init('a5ea5495dd09ddffc0e6d746f448858b');
 
         function shareKakao() {
             Kakao.Share.sendCustom({
-                templateId: 1460758,
+                templateId: 133283 // 새로운 템플릿 ID로 수정 완료
             });
         }
 
-        // [복구] 슬라이더 제어
+        // 디자인 원복용 슬라이더 로직
         let heroIdx = 1;
         const heroContainer = document.getElementById('heroSlider');
         function moveSlider(dir) {
@@ -106,8 +93,8 @@
             }
         }
 
-        // [복구] 갤러리 이미지 로드
-        const galleryFiles = ['p01', 'p02', 'p03', 'p04', 'p05', 'p06', 'p11', 'p12', 'p13', 'p14', 'p15', 'p16', 'p17', 'p18', 'p19', 'p20', 'p21', 'p31', 'p32', 'p33', 'p34', 'p35', 'p36', 'p37', 'p39', 'p40', 'p61', 'p62', 'p63', 'p64', 'p65'];
+        // 디자인 원복용 갤러리 로직
+        const galleryFiles = ['p01','p02','p03','p04','p05','p06','p11','p12','p13','p14','p15','p16','p17','p18','p19','p20','p21','p31','p32','p33','p34','p35','p36','p37','p39','p40','p61','p62','p63','p64','p65'];
         const grid = document.getElementById('galleryGrid');
         galleryFiles.forEach((name) => {
             const item = document.createElement('div');
