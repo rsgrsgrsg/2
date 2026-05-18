@@ -42,7 +42,6 @@
         .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer; background: #f0f0f0; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
         
-        /* 디버그 창 스타일 */
         #debugLog { display: none; margin: 20px; padding: 15px; background: #333; color: #0f0; font-family: monospace; text-align: left; font-size: 0.8rem; word-break: break-all; border-radius: 8px; }
     </style>
 </head>
@@ -88,7 +87,6 @@
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js"></script>
 
     <script>
-        // 화면에 에러를 찍어주는 함수
         function printLog(msg) {
             const logDiv = document.getElementById('debugLog');
             logDiv.style.display = 'block';
@@ -96,7 +94,7 @@
         }
 
         try {
-            // 1. 카카오 초기화 (사용자님 제공 정보)
+            // 1. 카카오 초기화
             if (!Kakao.isInitialized()) {
                 Kakao.init('a5ea5495dd09ddffc0e6d746f448858b');
                 printLog('[시스템] 카카오 SDK 초기화 완료');
@@ -106,22 +104,12 @@
         }
 
         function shareKakao() {
-            printLog('[시스템] 공유 버튼 클릭됨 - 템플릿 ID: 133283 호출 중...');
+            printLog('[시스템] 버튼 클릭됨 - 카톡 호출 중...');
             
-            try {
-                Kakao.Share.sendCustom({
-                    templateId: 133283,
-                    fail: function(error) {
-                        // 카카오 API가 에러를 뱉어내면 여기로 옵니다
-                        alert('카카오에서 전송을 거부했습니다.\n오류 코드: ' + JSON.stringify(error));
-                        printLog('[카카오 에러] ' + JSON.stringify(error));
-                    }
-                });
-            } catch (e) {
-                // 스크립트 자체가 터지면 여기로 옵니다
-                alert('코드 실행 중 에러가 발생했습니다: ' + e.message);
-                printLog('[스크립트 에러] ' + e.message);
-            }
+            // 오류를 유발했던 fail 파라미터 삭제! 정상적인 호출만 남겼습니다.
+            Kakao.Share.sendCustom({
+                templateId: 133283
+            });
         }
 
         // --- 여기서부터 디자인 원상복구 로직 ---
