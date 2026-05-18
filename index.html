@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
     <title>류승건 & 이지연 결혼식 초대장</title>
     
     <meta property="og:type" content="website">
@@ -16,29 +17,39 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        :root { --point-black: #000000; --point-color: #D1A7A7; --bg-white: #ffffff; }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        :root { --point-black: #000000; --point-color: #D1A7A7; --deep-gray: #333333; --bg-white: #ffffff; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; }
+        input, textarea, [id*="acc-"], [id*="addr-"] { -webkit-user-select: text; user-select: text; }
         body { font-family: 'Noto Serif KR', serif; margin: 0; color: var(--point-black); background: var(--bg-white); line-height: 1.8; word-break: keep-all; }
         
-        /* 메인 슬라이더 원본 복구 */
-        .hero-slider { height: 100vh; width: 100%; overflow: hidden; position: relative; }
+        .bgm-btn { position: fixed; top: 15px; right: 15px; z-index: 9990; width: 42px; height: 42px; background: rgba(255, 255, 255, 0.85); border: 1px solid #ddd; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--point-color); font-size: 1.1rem; box-shadow: 0 2px 6px rgba(0,0,0,0.1); outline: none; }
+        .hero-slider { height: 100vh; width: 100%; overflow: hidden; position: relative; background: #fff; }
         .hero-container { display: flex; height: 100%; width: 100%; will-change: transform; }
         .hero-item { min-width: 100%; height: 100%; position: relative; }
-        .hero-item img { width: 100%; height: 100%; object-fit: cover; }
-        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.15); border: none; color: white; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; z-index: 20; }
+        .hero-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.15); border: none; color: white; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; font-size: 1.2rem; }
         .prev-btn { left: 10px; } .next-btn { right: 10px; }
-        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 60px; color: white; text-align: center; text-shadow: 0 0 10px rgba(0,0,0,0.5); pointer-events: none; }
-        .hero-names { font-size: 2.2rem; font-weight: 400; letter-spacing: 8px; }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 60px; color: white; text-align: center; pointer-events: none; z-index: 5; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
+        .hero-names { font-size: 2.2rem; font-weight: 400; letter-spacing: 8px; margin-bottom: 10px; }
 
         .section { padding: 80px 30px; text-align: center; }
-        .gallery-wrap { position: relative; overflow: hidden; max-height: 5000px; transition: max-height 0.8s; }
+        .h-divider { width: 100%; height: 1px; background-color: var(--point-black); margin: 0; }
+        
+        .gallery-wrap { position: relative; overflow: hidden; max-height: 5000px; transition: max-height 0.8s ease-in-out; }
         .gallery-wrap.limited { max-height: 330px; }
+        .gallery-wrap.limited::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to bottom, transparent, var(--bg-white)); pointer-events: none; }
         .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 0 10px; }
-        .gallery-item { aspect-ratio: 1/1; overflow: hidden; background: #f0f0f0; }
+        .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer; background: #f0f0f0; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+        
+        /* 디버그 창 스타일 */
+        #debugLog { display: none; margin: 20px; padding: 15px; background: #333; color: #0f0; font-family: monospace; text-align: left; font-size: 0.8rem; word-break: break-all; border-radius: 8px; }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false">
+
+    <audio id="bgm" src="./assets/bgm.mp3" loop></audio>
+    <button id="bgmBtn" class="bgm-btn" onclick="toggleBgm()"><i class="fas fa-music"></i></button>
 
     <div class="hero-slider">
         <div class="hero-container" id="heroSlider">
@@ -56,44 +67,77 @@
         </div>
     </div>
 
+    <div class="h-divider"></div>
+
     <section class="section">
         <div class="gallery-wrap limited" id="galleryWrap">
             <div class="gallery-grid" id="galleryGrid"></div>
         </div>
-        <button onclick="document.getElementById('galleryWrap').classList.toggle('limited')" style="margin-top:20px; padding:10px 20px; background:#fff; border:1px solid #000;">더보기 ▽</button>
+        <button onclick="document.getElementById('galleryWrap').classList.toggle('limited')" style="margin-top:20px; padding:10px 20px; background:#fff; border:1px solid #000; cursor:pointer;">더보기 ▽</button>
     </section>
 
     <div style="padding: 60px 20px; text-align: center; background-color: #f9f9f9; border-top: 1px solid #eee;">
-        <button onclick="shareKakao()" style="background-color: #FEE500; color: #191919; border: none; padding: 15px 30px; border-radius: 12px; font-weight: bold; cursor: pointer;">
+        <button onclick="shareKakao()" style="background-color: #FEE500; color: #191919; border: none; padding: 15px 30px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 1rem;">
             카카오톡으로 청첩장 보내기
         </button>
+        
+        <div id="debugLog"></div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js"></script>
+
     <script>
-        // 중요: 4019 에러 해결을 위해 '진짜' JavaScript 키를 사용합니다.
-        if (!Kakao.isInitialized()) {
-            Kakao.init('d81c672ba4a37e5d5244722a36b1bd258'); 
+        // 화면에 에러를 찍어주는 함수
+        function printLog(msg) {
+            const logDiv = document.getElementById('debugLog');
+            logDiv.style.display = 'block';
+            logDiv.innerHTML += msg + '<br>';
+        }
+
+        try {
+            // 1. 카카오 초기화 (사용자님 제공 정보)
+            if (!Kakao.isInitialized()) {
+                Kakao.init('a5ea5495dd09ddffc0e6d746f448858b');
+                printLog('[시스템] 카카오 SDK 초기화 완료');
+            }
+        } catch (e) {
+            printLog('[에러] 카카오 초기화 실패: ' + e.message);
         }
 
         function shareKakao() {
-            Kakao.Share.sendCustom({
-                templateId: 133283 
-            });
+            printLog('[시스템] 공유 버튼 클릭됨 - 템플릿 ID: 133283 호출 중...');
+            
+            try {
+                Kakao.Share.sendCustom({
+                    templateId: 133283,
+                    fail: function(error) {
+                        // 카카오 API가 에러를 뱉어내면 여기로 옵니다
+                        alert('카카오에서 전송을 거부했습니다.\n오류 코드: ' + JSON.stringify(error));
+                        printLog('[카카오 에러] ' + JSON.stringify(error));
+                    }
+                });
+            } catch (e) {
+                // 스크립트 자체가 터지면 여기로 옵니다
+                alert('코드 실행 중 에러가 발생했습니다: ' + e.message);
+                printLog('[스크립트 에러] ' + e.message);
+            }
         }
 
-        // 슬라이더 복구 로직
+        // --- 여기서부터 디자인 원상복구 로직 ---
         let heroIdx = 1;
         const heroContainer = document.getElementById('heroSlider');
         function moveSlider(dir) {
             heroIdx += dir;
             heroContainer.style.transition = 'transform 0.4s ease-out';
             heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`;
-            if (heroIdx === 0) { setTimeout(() => { heroContainer.style.transition='none'; heroIdx=3; heroContainer.style.transform='translateX(-300%)'; }, 400); }
-            else if (heroIdx === 4) { setTimeout(() => { heroContainer.style.transition='none'; heroIdx=1; heroContainer.style.transform='translateX(-100%)'; }, 400); }
+            if (heroIdx === 0) {
+                setTimeout(() => { heroContainer.style.transition = 'none'; heroIdx = 3; heroContainer.style.transform = 'translateX(-300%)'; }, 400);
+            } else if (heroIdx === 4) {
+                setTimeout(() => { heroContainer.style.transition = 'none'; heroIdx = 1; heroContainer.style.transform = 'translateX(-100%)'; }, 400);
+            }
         }
 
-        // 갤러리 복구 로직
         const galleryFiles = ['p01','p02','p03','p04','p05','p06','p11','p12','p13','p14','p15','p16','p17','p18','p19','p20','p21','p31','p32','p33','p34','p35','p36','p37','p39','p40','p61','p62','p63','p64','p65'];
         const grid = document.getElementById('galleryGrid');
         galleryFiles.forEach((name) => {
@@ -102,6 +146,11 @@
             item.innerHTML = `<img src="./assets/p00/${name}.png" loading="lazy">`;
             grid.appendChild(item);
         });
+
+        const bgm = document.getElementById('bgm');
+        function toggleBgm() {
+            if (bgm.paused) { bgm.play().catch(e => {}); } else { bgm.pause(); }
+        }
     </script>
 </body>
 </html>
