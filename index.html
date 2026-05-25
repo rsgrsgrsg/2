@@ -2,37 +2,44 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>류승건 & 이지연 결혼식</title>
     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=vox8crpza6"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --main-color: #D1A7A7; }
-        body { font-family: 'Noto Serif KR', serif; margin: 0; }
+        body { font-family: 'Noto Serif KR', serif; margin: 0; color: #333; }
         .section { padding: 50px 20px; text-align: center; }
-        .btn { padding: 12px 25px; border-radius: 25px; border: 1px solid #ddd; background: #fff; cursor: pointer; margin: 5px; }
+        .btn { display: inline-block; padding: 15px 30px; border-radius: 30px; border: 1px solid #ddd; background: #fff; cursor: pointer; text-decoration: none; color: #555; margin: 5px; }
         .btn-point { background: var(--main-color); color: white; border: none; }
         
-        /* 갤러리 접기/펼치기 */
+        /* 갤러리/방명록 */
         .gallery-wrap { max-height: 400px; overflow: hidden; transition: 0.5s; }
-        .gallery-wrap.open { max-height: 2000px; }
         .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
-        .gallery-item img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+        .gallery-item img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 5px; }
+        .gb-list { height: 250px; overflow-y: auto; text-align: left; padding: 10px; border: 1px solid #eee; margin-top: 10px; border-radius: 10px; }
         
-        /* 모달 디자인 */
+        /* 모달 */
         .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; }
-        .modal-content { background:white; padding:30px; border-radius:20px; width:80%; }
     </style>
 </head>
 <body>
 
-    <div style="height:100vh; background:#eee;">
-        <img id="mainImg" src="./assets/main1.png" style="width:100%; height:80%; object-fit:cover;">
-        <h1>류승건 & 이지연</h1>
-        <p>2026년 8월 15일 토요일 오후 12시</p>
+    <div style="height:100vh; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; padding-bottom:10%; background:#eee;">
+        <h1 id="heroTitle">류승건 & 이지연</h1>
+        <p id="heroDate">2026년 8월 15일 토요일 오후 12시</p>
     </div>
 
     <section class="section">
+        <h3>D-Day</h3>
+        <div id="d-day-calc" style="font-size:2rem; color:var(--main-color);"></div>
+    </section>
+
+    <section class="section">
         <h3>Location</h3>
-        <div id="map" style="width:100%; height:300px;"></div>
+        <div id="map"></div>
+        <a href="https://naver.me/5apDP7nI" class="btn">네이버 지도</a>
+        <a href="https://kko.to/EIt4OnhVm4" class="btn">카카오내비</a>
     </section>
 
     <section class="section">
@@ -40,40 +47,64 @@
         <div id="galleryWrap" class="gallery-wrap">
             <div class="gallery-grid" id="galleryGrid"></div>
         </div>
-        <button class="btn" id="moreBtn" onclick="toggleGallery()">사진 더보기</button>
+        <button class="btn" onclick="toggleGallery()">사진 더보기</button>
     </section>
 
     <section class="section">
         <button class="btn btn-point" onclick="document.getElementById('accModal').style.display='flex'">마음 전하실 곳</button>
     </section>
 
+    <section class="section">
+        <h3>Guestbook</h3>
+        <input type="text" id="gb_name" class="btn" placeholder="성함">
+        <textarea id="gb_msg" class="btn" placeholder="메시지"></textarea>
+        <button class="btn btn-point" onclick="saveGuestMessage()">메시지 남기기</button>
+        <div id="gb-list" class="gb-list"></div>
+    </section>
+
     <div id="accModal" class="modal" onclick="this.style.display='none'">
-        <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="btn" onclick="event.stopPropagation()">
             <h3>마음 전하실 곳</h3>
-            <p>신랑 류승건: 우리은행 123-456-789</p>
+            <p>신랑 류승건: 우리 1002-841-241285</p>
             <button class="btn" onclick="document.getElementById('accModal').style.display='none'">닫기</button>
         </div>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
+
     <script>
-        // 지도 동적 로드
+        // 초기화 함수 통합
         window.onload = () => {
+            // 지도
             new naver.maps.Map('map', { center: new naver.maps.LatLng(37.265747, 126.999818), zoom: 16 });
             
-            // 메인 이미지 슬라이더 (3초 간격)
-            let i = 1;
-            setInterval(() => {
-                i = i >= 3 ? 1 : i + 1;
-                document.getElementById('mainImg').src = `./assets/main${i}.png`;
-            }, 3000);
+            // 디데이 (마이너스 표시)
+            const target = new Date('2026-08-15');
+            const today = new Date();
+            const diff = Math.floor((today - target) / (1000*60*60*24));
+            document.getElementById('d-day-calc').innerText = `결혼식 ${diff > 0 ? '+' : ''}${diff}일`;
+
+            // 갤러리 로드
+            const grid = document.getElementById('galleryGrid');
+            ['p01.png','p02.png','p03.png','p58.jpg'].forEach(f => grid.innerHTML += `<div class="gallery-item"><img src="./assets/p00/${f}"></div>`);
         };
 
-        // 갤러리 더보기/접기
+        // 방명록
+        const db = firebase.initializeApp({apiKey: "AIzaSyD1LmVHTLYnecokZV67_hCDcM289fl3oiw", databaseURL: "https://sg-jy-233e2-default-rtdb.asia-southeast1.firebasedatabase.app"}).database();
+        function saveGuestMessage() {
+            const n = document.getElementById('gb_name').value.trim();
+            const m = document.getElementById('gb_msg').value.trim();
+            if (!n) return alert('성함을 입력해주세요.');
+            if (!m) return alert('축하 메시지를 입력해주세요.');
+            db.ref('guestbook').push({name: n, msg: m});
+            alert('등록 완료!');
+        }
+
+        // 갤러리 더보기
         function toggleGallery() {
             const wrap = document.getElementById('galleryWrap');
-            const btn = document.getElementById('moreBtn');
-            wrap.classList.toggle('open');
-            btn.innerText = wrap.classList.contains('open') ? '접기' : '사진 더보기';
+            wrap.style.maxHeight = wrap.style.maxHeight === '2000px' ? '400px' : '2000px';
         }
     </script>
 </body>
