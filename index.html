@@ -209,10 +209,12 @@
             <button class="btn-copy-sm" style="background: var(--point-color); color: white;" onclick="copyToClipboard('addr-text')">복사</button>
         </div>
         
-        <a href="https://naver.me/5apDP7nI" target="_blank" class="map-link-area" 
-           style="background-image: url('./assets/map_preview.png'); width: 100%; aspect-ratio: 900 / 650; height: auto;">
-        </a>
-
+        <div class="map-container" style="width: 100%; height: 300px; border-radius: 8px; overflow: hidden; border: 1px solid #eee;">
+            <iframe src="https://map.naver.com/v5/entry/place/1429219358?c=15.00,0,0,0,dh" 
+                    width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen="" loading="lazy">
+            </iframe>
+        </div>
+    
         <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
             <a href="https://naver.me/5apDP7nI" target="_blank" class="btn-point" style="flex: 1; margin: 0; padding: 12px;">네이버 지도</a>
             <a href="https://kko.to/EIt4OnhVm4" target="_blank" class="btn-point" style="flex: 1; margin: 0; padding: 12px;">카카오 네비</a>
