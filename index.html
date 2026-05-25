@@ -90,11 +90,11 @@
         .hero-date { 
             font-size: 1.1rem; 
             letter-spacing: 1px; 
-            font-weight: 400;
-            color: #ffffff; 
-            text-shadow: 0 0 8px rgba(0, 0, 0, 0.6); 
+            font-weight: 400; /* 글자가 뭉개지지 않게 두께를 살짝 뺐습니다 */
+            color: #ffffff; /* 사진 위에서 잘 보이도록 흰색 텍스트로 변경 */
+            text-shadow: 0 0 8px rgba(0, 0, 0, 0.6); /* 배경 사진이 밝아도 글자가 묻히지 않게 텍스트 그림자 추가 */
             margin-top: 10px;
-        }
+}
 
         /* 디데이 & 위치 */
         .countdown-wrap { display: flex; justify-content: center; gap: 30px; margin: 30px 0; }
@@ -311,9 +311,6 @@
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"></script>
     
     <script>
-        // 전역변수 설정
-        let database;
-
         // AOS 초기화
         window.onload = function() {
             try { AOS.init({ duration: 1200, once: true }); } 
@@ -368,7 +365,7 @@
             });
         }
 
-        // 갤러리 로직
+        // 갤러리 로직 (p58은 jpg, 나머지는 png)
         const galleryFiles = ['p01', 'p02', 'p03', 'p04', 'p05', 'p06', 'p11', 'p12', 'p13', 'p14', 'p15', 'p16', 'p17', 'p18', 'p19', 'p20', 'p21', 'p31', 'p32', 'p33', 'p34', 'p35', 'p36', 'p37', 'p39', 'p40', 'p51', 'p52', 'p53', 'p54', 'p56', 'p57', 'p58', 'p61', 'p62', 'p63', 'p64', 'p65'];
         const totalGalleryImages = galleryFiles.length;
         let gViewIdx = 0;
@@ -400,6 +397,7 @@
             }
         }
 
+        // 모달 및 뷰어 로직
         function openViewer(idx) { gViewIdx = idx; updateViewer(); document.getElementById('galleryViewer').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
         function closeViewer() { document.getElementById('galleryViewer').style.display = 'none'; document.body.style.overflow = 'auto'; }
         function changeViewImg(dir) { gViewIdx = (gViewIdx + dir + totalGalleryImages) % totalGalleryImages; updateViewer(); }
@@ -409,7 +407,7 @@
             document.getElementById('currentViewerImg').src = `./assets/p00/${name}${ext}`;
             document.getElementById('viewerCount').innerText = `${gViewIdx + 1} / ${totalGalleryImages}`;
         }
-           
+          
         let vStartX = 0;
         document.getElementById('viewerContent').addEventListener('touchstart', e => vStartX = e.changedTouches[0].screenX, {passive: true});
         document.getElementById('viewerContent').addEventListener('touchend', e => {
@@ -424,16 +422,24 @@
         function sanitize(str) { const temp = document.createElement('div'); temp.textContent = str; return temp.innerHTML; }
 
         // 카카오 공유 로직
-        if (!Kakao.isInitialized()) { Kakao.init('a5ea5495dd09ddffc0e6d746f448858b'); }
-        function shareKakao() {
-            Kakao.Share.sendCustom({
-                templateId: 133283,
-                templateArgs: {
-                    'title': '류승건 & 이지연 결혼식에 초대합니다',
-                    'description': '2026년 8월 15일 토요일 오후 12시\n메리빌리아 더프레스티지'
-                }
-            });
+        if (!Kakao.isInitialized()) {
+            Kakao.init('a5ea5495dd09ddffc0e6d746f448858b');
         }
+
+// 기존의 shareKakao() 함수를 아래 코드로 완전히 교체합니다.
+
+function shareKakao() {
+    Kakao.Share.sendCustom({
+        templateId: 133283, // 💡 123456 대신 카카오 디벨로퍼스에서 확인한 본인의 '템플릿 ID(숫자)'를 입력하세요.
+        
+        // 템플릿 빌더에서 사용자 정의 인자(변수)를 설정했다면 아래처럼 값을 넘겨줄 수 있습니다. 
+        // 변수를 따로 설정하지 않았다면 templateArgs 부분은 삭제하셔도 됩니다.
+        templateArgs: {
+            'title': '류승건 & 이지연 결혼식에 초대합니다',
+            'description': '2026년 8월 15일 토요일 오후 12시\n메리빌리아 더프레스티지'
+        }
+    });
+}
 
         // 파이어베이스 연동 및 방명록, 카운트다운 로직
         try {
@@ -447,9 +453,8 @@
                 appId: "1:217599075354:web:c227474b5efc4fd280dda3" 
             };
             firebase.initializeApp(firebaseConfig);
-            database = firebase.database();
+            const database = firebase.database();
             
-            // 카운트다운
             function updateCountdown() {
                 const target = new Date('2026-08-15T12:00:00').getTime();
                 const now = new Date().getTime();
@@ -465,46 +470,32 @@
             }
             setInterval(updateCountdown, 1000); updateCountdown();
 
-            // 데이터 실시간 가져오기 (역순)
+            function saveGuestMessage() {
+                let name = document.getElementById('gb_name').value.trim();
+                let msg = document.getElementById('gb_msg').value.trim();
+                if (name && msg) { 
+                    database.ref('guestbook').push({ 
+                        name: sanitize(name), 
+                        message: sanitize(msg), 
+                        timestamp: Date.now() 
+                    }).then(() => { 
+                        document.getElementById('gb_name').value = ''; 
+                        document.getElementById('gb_msg').value = ''; 
+                    }); 
+                }
+            }
             database.ref('guestbook').on('value', (snapshot) => {
                 const list = document.getElementById('gb-list'); if(!list) return;
                 list.innerHTML = '';
                 const messages = [];
                 snapshot.forEach(child => { messages.push(child.val()); });
-                
-                // 역순 정렬해서 보여주기
                 messages.reverse().forEach(data => {
                     const div = document.createElement('div'); div.className = 'guest-item';
                     div.innerHTML = `<span class="guest-name">${data.name}</span><div class="guest-msg">${data.message}</div>`;
                     list.appendChild(div);
                 });
             });
-        } catch(e) { console.error(e); }
-
-        // 방명록 저장 로직 (전역 함수로 분리)
-        function saveGuestMessage() {
-            let nameInput = document.getElementById('gb_name');
-            let msgInput = document.getElementById('gb_msg');
-            let name = nameInput.value.trim();
-            let msg = msgInput.value.trim();
-
-            // 유효성 검사
-            if (!name && !msg) { alert("성함과 메시지를 기재해 주세요."); return; }
-            else if (!name) { alert("성함을 기재해 주세요."); return; }
-            else if (!msg) { alert("메시지를 기재해 주세요."); return; }
-
-            // 저장
-            if (database) {
-                database.ref('guestbook').push({ 
-                    name: sanitize(name), 
-                    message: sanitize(msg), 
-                    timestamp: Date.now() 
-                }).then(() => { 
-                    nameInput.value = ''; 
-                    msgInput.value = ''; 
-                });
-            }
-        }
+        } catch(e) {}
     </script>
 </body>
 </html>
