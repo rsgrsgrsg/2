@@ -21,7 +21,7 @@
     <style>
         :root { 
             --point-black: #000000; 
-            --point-color: #D1A7A7; /* Dusty Rose */
+            --point-color: #D1A7A7; 
             --deep-gray: #333333; 
             --bg-white: #ffffff; 
         }
@@ -59,8 +59,6 @@
         .prev-btn { left: 10px; } .next-btn { right: 10px; }
         .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 80px; color: white; text-align: center; pointer-events: none; z-index: 5; text-shadow: 0 0 10px rgba(0,0,0,0.6); }
         .hero-names { font-size: 2.2rem; font-weight: 400; letter-spacing: 8px; margin-bottom: 15px; }
-        
-        /* ✅ 수정 1: 메인 예식일 크기 조절 */
         .hero-date { font-size: 1.4rem; letter-spacing: 2px; opacity: 1; font-weight: 400; font-family: 'Montserrat', sans-serif; }
 
         /* 디데이 */
@@ -69,7 +67,7 @@
         .count-label { font-size: 0.65rem; color: #999; letter-spacing: 2px; }
 
         /* 지도 영역 */
-        #map { width: 100%; height: 320px; border: 1px solid #eee; margin: 20px 0; }
+        #map { width: 100%; height: 320px; border: 1px solid #eee; margin: 20px 0; background-color: #f9f9f9; }
         .address-box { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; }
         .btn-copy-sm { border: 1px solid #000; background: none; padding: 2px 8px; font-size: 0.7rem; cursor: pointer; font-family: inherit; }
 
@@ -82,15 +80,20 @@
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
         .btn-more { margin: 20px auto; padding: 12px 30px; border: 1px solid #000; background: #fff; cursor: pointer; font-family: inherit; font-size: 0.85rem; display: block; }
 
+        /* 확대 뷰어 모달 (누락되었던 부분 복구) */
+        #galleryViewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10001; align-items: center; justify-content: center; }
+        .viewer-content { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
+        .viewer-img { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
+        .viewer-close { position: absolute; top: 20px; right: 20px; color: #fff; font-size: 2.5rem; cursor: pointer; z-index: 10002; }
+        .viewer-nav { position: absolute; top: 50%; transform: translateY(-50%); color: #fff; font-size: 2.5rem; background: none; border: none; cursor: pointer; padding: 20px; z-index: 10002; opacity: 0.7; }
+        .v-prev { left: 10px; } .v-next { right: 10px; }
+        .viewer-count { position: absolute; bottom: 40px; color: #fff; font-size: 0.85rem; letter-spacing: 2px; }
+
         /* 공통 버튼 디자인 */
         .btn-point { background: var(--point-color); color: white; border: none; padding: 18px; width: 100%; cursor: pointer; letter-spacing: 2px; font-weight: 700; font-family: inherit; font-size: 0.9rem; }
-        .gb-card { background: white; padding: 30px 20px; border: 1px solid #eee; max-width: 450px; margin: 0 auto; }
-        input, textarea { width: 100%; padding: 15px; border: 1px solid #eee; margin-bottom: 10px; font-family: inherit; font-size: 0.9rem; border-radius: 0; outline: none; }
-        
         .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
         .modal-content { background: white; padding: 40px 25px; width: 90%; max-width: 400px; text-align: center; position: relative; }
         .close-modal { position: absolute; right: 15px; top: 15px; font-size: 1.5rem; cursor: pointer; color: #999; }
-        .btn-kakaopay { display: flex; align-items: center; justify-content: center; gap: 8px; background: #FEE500; color: #191919; text-align: center; padding: 12px; font-size: 0.85rem; font-weight: 700; text-decoration: none; border-radius: 6px; margin-top: 10px; }
     </style>
 </head>
 <body oncontextmenu="return false">
@@ -165,20 +168,39 @@
         <button id="moreBtn" class="btn-more" onclick="toggleGallery()">더보기 ▽</button>
     </section>
 
+    <div id="galleryViewer">
+        <span class="viewer-close" onclick="closeViewer()">×</span>
+        <div class="viewer-content" id="viewerContent">
+            <button class="viewer-nav v-prev" onclick="changeViewImg(-1)">&#10094;</button>
+            <img src="" class="viewer-img" id="currentViewerImg">
+            <button class="viewer-nav v-next" onclick="changeViewImg(1)">&#10095;</button>
+            <div class="viewer-count" id="viewerCount">1 / 1</div>
+        </div>
+    </div>
+
+    <div class="h-divider"></div>
+
+    <section class="section" data-aos="fade-up" style="padding: 60px 30px;">
+        <span class="section-title">Account</span>
+        <p style="font-size: 0.9rem; margin-bottom: 25px;">축복해주시는 소중한 마음 잊지 않고<br>예쁘게 잘 살겠습니다.</p>
+        <button onclick="openModal()" class="btn-point" style="max-width: 300px; margin: 0 auto; display: block;">마음 전하실 곳</button>
+    </section>
+
     <div id="accModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal()">×</span>
             <h3 style="font-weight: 700; border-bottom: 1px solid #000; padding-bottom: 10px; margin-bottom: 20px;">마음 전하실 곳</h3>
             <div style="text-align: left; padding: 10px 0 15px; border-bottom: 1px solid #eee;">
                 <p style="font-weight: 700; margin: 0 0 10px 0; color: var(--point-color);">신랑 측 계좌</p>
-                <p style="font-size: 0.85rem; color: #888; margin: 0;">우리 1002-841-241285 (류승건)</p>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span id="acc-groom" style="font-size: 0.95rem; color: #333;">우리 1002-841-241285 (류승건)</span>
+                    <button class="btn-copy-sm" onclick="copyToClipboard('acc-groom')">복사</button>
+                </div>
             </div>
-            </div>
+        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js"></script>
     
     <script>
@@ -193,7 +215,7 @@
                 minZoom: 10,
                 zoomControl: true,
                 draggable: true,
-                scrollWheel: false // 원치 않는 스크롤 방지
+                scrollWheel: false
             });
 
             var marker = new naver.maps.Marker({
@@ -201,15 +223,20 @@
                 map: map
             });
         }
-        
-        // 지도는 스크립트 로드 후 실행
-        if (typeof naver !== 'undefined') {
-            initMap();
-        }
 
-        // 카카오 SDK 초기화
-        if (!Kakao.isInitialized()) { Kakao.init('a5ea5495dd09ddffc0e6d746f448858b'); }
-        function shareKakao() { Kakao.Share.sendCustom({ templateId: 133283 }); }
+        // 페이지 로드 시 실행 (지도 및 AOS 애니메이션 안전하게 로딩)
+        window.onload = function() {
+            // AOS 초기화
+            try { AOS.init({ duration: 1200, once: true }); } 
+            catch (e) { document.querySelectorAll('[data-aos]').forEach(el => el.classList.add('aos-animate')); }
+
+            // 네이버 지도 초기화 (스크립트가 로드된 경우에만)
+            if (typeof naver !== 'undefined') {
+                initMap();
+            } else {
+                console.warn("네이버 지도 Client ID가 올바르지 않거나 스크립트를 불러오지 못했습니다.");
+            }
+        };
 
         // BGM 로직
         const bgm = document.getElementById('bgm');
@@ -221,7 +248,7 @@
             isBgmPlaying = !isBgmPlaying;
         }
 
-        // 슬라이더 및 기타 유틸리티 함수 (이전과 동일)
+        // 슬라이더 로직
         let heroIdx = 1; const totalHero = 3; let isHeroMoving = false;
         const heroContainer = document.getElementById('heroSlider');
         function moveSlider(dir) {
@@ -238,6 +265,64 @@
             });
         }
 
+        // 갤러리 로직 (누락되었던 부분 완벽 복구)
+        const galleryFiles = ['p01', 'p02', 'p03', 'p04', 'p05', 'p06', 'p11', 'p12', 'p13', 'p14', 'p15', 'p16', 'p17', 'p18', 'p19', 'p20', 'p21', 'p31', 'p32', 'p33', 'p34', 'p35', 'p36', 'p37', 'p39', 'p40', 'p61', 'p62', 'p63', 'p64', 'p65'];
+        const totalGalleryImages = galleryFiles.length;
+        let gViewIdx = 0;
+
+        function initGallery() {
+            const grid = document.getElementById('galleryGrid');
+            if(!grid) return;
+            galleryFiles.forEach((name, idx) => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                item.setAttribute('onclick', `openViewer(${idx})`);
+                item.innerHTML = `<img src="./assets/p00/${name}.png" loading="lazy">`;
+                grid.appendChild(item);
+            });
+        }
+        initGallery();
+
+        function toggleGallery() {
+            const wrap = document.getElementById('galleryWrap');
+            const btn = document.getElementById('moreBtn');
+            if (wrap.classList.contains('limited')) {
+                wrap.classList.remove('limited');
+                btn.innerText = '접기 △';
+            } else {
+                wrap.classList.add('limited');
+                btn.innerText = '더보기 ▽';
+                document.getElementById('gallerySection').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function openViewer(idx) {
+            gViewIdx = idx; updateViewer();
+            document.getElementById('galleryViewer').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        function closeViewer() {
+            document.getElementById('galleryViewer').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        function changeViewImg(dir) {
+            gViewIdx = (gViewIdx + dir + totalGalleryImages) % totalGalleryImages;
+            updateViewer();
+        }
+        function updateViewer() {
+            const name = galleryFiles[gViewIdx];
+            document.getElementById('currentViewerImg').src = `./assets/p00/${name}.png`;
+            document.getElementById('viewerCount').innerText = `${gViewIdx + 1} / ${totalGalleryImages}`;
+        }
+
+        // 스와이프로 갤러리 이미지 넘기기
+        let vStartX = 0;
+        document.getElementById('viewerContent').addEventListener('touchstart', e => vStartX = e.changedTouches[0].screenX, {passive: true});
+        document.getElementById('viewerContent').addEventListener('touchend', e => {
+            const diff = vStartX - e.changedTouches[0].screenX;
+            if (Math.abs(diff) > 50) changeViewImg(diff > 0 ? 1 : -1);
+        }, {passive: true});
+
         // 디데이 계산
         function updateCountdown() {
             const target = new Date('2026-08-15T12:00:00').getTime();
@@ -249,12 +334,15 @@
                 h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             }
-            document.getElementById('days').innerText = d < 10 ? '0'+d : d;
-            document.getElementById('hours').innerText = h < 10 ? '0'+h : h;
-            document.getElementById('mins').innerText = m < 10 ? '0'+m : m;
+            if(document.getElementById('days')) {
+                document.getElementById('days').innerText = d < 10 ? '0'+d : d;
+                document.getElementById('hours').innerText = h < 10 ? '0'+h : h;
+                document.getElementById('mins').innerText = m < 10 ? '0'+m : m;
+            }
         }
         setInterval(updateCountdown, 1000); updateCountdown();
 
+        // 유틸리티
         function copyToClipboard(id) { const text = document.getElementById(id).innerText; navigator.clipboard.writeText(text).then(() => alert("복사되었습니다.")); }
         function openModal() { document.getElementById('accModal').style.display = 'flex'; }
         function closeModal() { document.getElementById('accModal').style.display = 'none'; }
