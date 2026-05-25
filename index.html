@@ -33,7 +33,7 @@
         .section-title { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--point-black); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 30px; display: block; }
         .h-divider { width: 100%; height: 1px; background-color: var(--point-black); margin: 0; }
 
-        /* 통합 버튼 디자인 */
+        /* 통합 버튼 디자인 (곡률 및 디자인 통일) */
         .btn-point { 
             background: var(--point-color); 
             color: white; 
@@ -52,6 +52,7 @@
             border-radius: 8px;
         }
 
+        /* 작은 복사 버튼 디자인 통일 */
         .btn-copy-sm { 
             background: var(--point-color); 
             color: white; 
@@ -63,7 +64,7 @@
             border-radius: 6px;
         }
 
-        /* BGM 버튼 */
+        /* BGM 버튼 스타일 */
         .bgm-btn {
             position: fixed; top: 15px; right: 15px; z-index: 9990;
             width: 42px; height: 42px; background: rgba(255, 255, 255, 0.85);
@@ -75,7 +76,7 @@
         .bgm-btn.playing i.fa-music { animation: spin 3s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* 슬라이더 및 텍스트 박스 */
+        /* 메인 슬라이더 */
         .hero-slider { height: 100vh; width: 100%; overflow: hidden; position: relative; background: #fff; }
         .hero-container { display: flex; height: 100%; width: 100%; will-change: transform; }
         .hero-item { min-width: 100%; height: 100%; position: relative; }
@@ -85,16 +86,14 @@
         .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 60px; color: white; text-align: center; pointer-events: none; z-index: 5; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
         .hero-names { font-size: 2.2rem; font-weight: 400; letter-spacing: 8px; margin-bottom: 15px; }
         
+        /* 메인 날짜 박스 수정 (흰색 배경, 검은 글씨, 곡률) */
         .hero-date { 
             font-size: 1.1rem; 
             letter-spacing: 1px; 
-            font-weight: 700; 
-            color: #000; 
-            background-color: rgba(255, 255, 255, 0.8); 
-            padding: 10px 20px; 
-            border-radius: 12px; 
-            display: inline-block;
-            text-shadow: none;
+            font-weight: 400;
+            color: #ffffff; 
+            text-shadow: 0 0 8px rgba(0, 0, 0, 0.6); 
+            margin-top: 10px;
         }
 
         /* 디데이 & 위치 */
@@ -105,7 +104,7 @@
         
         .map-link-area { width: 100%; display: block; margin: 20px auto; border: 1px solid #eee; background-color: #f4f4f4; background-size: cover; background-position: center; border-radius: 8px; overflow: hidden; }
 
-        /* 갤러리 */
+        /* 갤러리 펼치기/접기 */
         .gallery-wrap { position: relative; overflow: hidden; max-height: 5000px; transition: max-height 0.8s ease-in-out; }
         .gallery-wrap.limited { max-height: 330px; }
         .gallery-wrap.limited::after {
@@ -116,7 +115,7 @@
         .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer; background: #f0f0f0; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
 
-        /* 확대 뷰어 */
+        /* 확대 뷰어 모달 */
         #galleryViewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10001; align-items: center; justify-content: center; }
         .viewer-content { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
         .viewer-img { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
@@ -125,15 +124,24 @@
         .v-prev { left: 10px; } .v-next { right: 10px; }
         .viewer-count { position: absolute; bottom: 40px; color: #fff; font-size: 0.85rem; letter-spacing: 2px; }
 
-        /* 방명록 UI */
+        /* 방명록 입력 폼 수정 */
         .gb-card { background: white; padding: 30px 20px; border: 1px solid #eee; max-width: 450px; margin: 0 auto; box-sizing: border-box; }
         .gb-card input, .gb-card textarea { 
-            display: block; width: 100%; padding: 15px; border: 1px solid #eee; margin-bottom: 10px; 
-            font-family: inherit; font-size: 0.9rem; border-radius: 8px; outline: none; box-sizing: border-box; 
+            display: block;
+            width: 100%; 
+            padding: 15px; 
+            border: 1px solid #eee; 
+            margin-bottom: 10px; 
+            font-family: inherit; 
+            font-size: 0.9rem; 
+            border-radius: 8px; 
+            outline: none; 
+            box-sizing: border-box;
         }
+        
         #gb-list { margin-top: 20px; max-height: 400px; overflow-y: auto; border-top: 1px solid #f2f2f2; padding-right: 5px; }
         #gb-list::-webkit-scrollbar { width: 3px; }
-        #gb-list::-webkit-scrollbar-thumb { background: #ddd; border-radius: 3px; }
+        #gb-list::-webkit-scrollbar-thumb { background: #ddd; }
         .guest-item { border-bottom: 1px solid #f2f2f2; padding: 20px 0; text-align: left; }
         .guest-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 5px; display: block; }
         .guest-msg { font-size: 0.85rem; color: var(--deep-gray); line-height: 1.6; }
@@ -198,11 +206,13 @@
         <h3 style="font-weight: 700; font-size: 1.2rem;">메리빌리아 더프레스티지</h3>
         <div class="address-box">
             <span id="addr-text" style="color: #888; font-size: 0.85rem;">경기 수원시 권선구 세화로 116</span>
-            <button class="btn-copy-sm" onclick="copyToClipboard('addr-text')">복사</button>
+            <button class="btn-copy-sm" style="background: var(--point-color); color: white;" onclick="copyToClipboard('addr-text')">복사</button>
         </div>
+        
         <a href="https://naver.me/5apDP7nI" target="_blank" class="map-link-area" 
            style="background-image: url('./assets/map_preview.png'); width: 100%; aspect-ratio: 900 / 650; height: auto;">
         </a>
+
         <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
             <a href="https://naver.me/5apDP7nI" target="_blank" class="btn-point" style="flex: 1; margin: 0; padding: 12px;">네이버 지도</a>
             <a href="https://kko.to/EIt4OnhVm4" target="_blank" class="btn-point" style="flex: 1; margin: 0; padding: 12px;">카카오 네비</a>
@@ -262,6 +272,7 @@
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal()">×</span>
             <h3 style="font-weight: 700; border-bottom: 1px solid #000; padding-bottom: 10px; margin-bottom: 10px;">마음 전하실 곳</h3>
+            
             <div class="acc-group">
                 <p style="font-size: 0.85rem; color: #888; margin: 0 0 5px 0;">신랑 류승건</p>
                 <div class="acc-row"><span id="acc-groom" style="font-size: 1rem;">우리은행 1002-841-241285</span><button class="btn-copy-sm" onclick="copyToClipboard('acc-groom')">복사</button></div>
@@ -273,7 +284,9 @@
                 <p style="font-size: 0.85rem; color: #888; margin: 0 0 5px 0;">신랑측 아버지 류주형</p>
                 <div class="acc-row"><span id="acc-father" style="font-size: 1rem;">농협 352-0863-6634-83</span><button class="btn-copy-sm" onclick="copyToClipboard('acc-father')">복사</button></div>
             </div>
+
             <div style="width: 100%; height: 1px; background-color: #ddd; margin: 20px 0;"></div>
+
             <div class="acc-group">
                 <p style="font-size: 0.85rem; color: #888; margin: 0 0 5px 0;">신부 이지연</p>
                 <div class="acc-row"><span id="acc-bride" style="font-size: 1rem;">새마을금고 9003-1978-4884-1</span><button class="btn-copy-sm" onclick="copyToClipboard('acc-bride')">복사</button></div>
@@ -298,18 +311,28 @@
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"></script>
     
     <script>
+        // 전역변수 설정
+        let database;
+
+        // AOS 초기화
         window.onload = function() {
             try { AOS.init({ duration: 1200, once: true }); } 
             catch (e) { document.querySelectorAll('[data-aos]').forEach(el => el.classList.add('aos-animate')); }
         };
 
+        // BGM 로직
         const bgm = document.getElementById('bgm');
         const bgmBtn = document.getElementById('bgmBtn');
         let isBgmPlaying = false;
 
         function toggleBgm() {
-            if (isBgmPlaying) { bgm.pause(); bgmBtn.classList.remove('playing'); } 
-            else { bgm.play().catch(e => console.log('BGM Play Error')); bgmBtn.classList.add('playing'); }
+            if (isBgmPlaying) {
+                bgm.pause();
+                bgmBtn.classList.remove('playing');
+            } else {
+                bgm.play().catch(e => console.log('BGM Play Error'));
+                bgmBtn.classList.add('playing');
+            }
             isBgmPlaying = !isBgmPlaying;
         }
 
@@ -318,7 +341,8 @@
             document.body.removeEventListener('click', playOnFirstClick);
         }, { once: true });
 
-        // 슬라이더 및 기타 UI 로직...
+
+        // 슬라이더 로직
         let heroIdx = 1; const totalHero = 3; let isHeroMoving = false;
         const heroContainer = document.getElementById('heroSlider');
         if(heroContainer) heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`;
@@ -336,60 +360,151 @@
                 if (heroIdx === 0) { heroContainer.style.transition = 'none'; heroIdx = totalHero; heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`; }
                 else if (heroIdx === totalHero + 1) { heroContainer.style.transition = 'none'; heroIdx = 1; heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`; }
             });
+            let hStartX = 0;
+            heroContainer.addEventListener('touchstart', e => hStartX = e.touches[0].clientX, {passive: true});
+            heroContainer.addEventListener('touchend', e => {
+                const diffX = hStartX - e.changedTouches[0].clientX;
+                if (Math.abs(diffX) > 50) moveSlider(diffX > 0 ? 1 : -1);
+            });
         }
 
-        // 방명록 로직 (최신 반영)
-        function sanitize(str) { const temp = document.createElement('div'); temp.textContent = str; return temp.innerHTML; }
-        
-        function saveGuestMessage() {
-            let name = document.getElementById('gb_name').value.trim();
-            let msg = document.getElementById('gb_msg').value.trim();
-            if (name && msg) { 
-                database.ref('guestbook').push({ 
-                    name: sanitize(name), message: sanitize(msg), timestamp: Date.now() 
-                }).then(() => { 
-                    document.getElementById('gb_name').value = ''; 
-                    document.getElementById('gb_msg').value = ''; 
-                }); 
+        // 갤러리 로직
+        const galleryFiles = ['p01', 'p02', 'p03', 'p04', 'p05', 'p06', 'p11', 'p12', 'p13', 'p14', 'p15', 'p16', 'p17', 'p18', 'p19', 'p20', 'p21', 'p31', 'p32', 'p33', 'p34', 'p35', 'p36', 'p37', 'p39', 'p40', 'p51', 'p52', 'p53', 'p54', 'p56', 'p57', 'p58', 'p61', 'p62', 'p63', 'p64', 'p65'];
+        const totalGalleryImages = galleryFiles.length;
+        let gViewIdx = 0;
+
+        function initGallery() {
+            const grid = document.getElementById('galleryGrid');
+            if(!grid) return;
+            galleryFiles.forEach((name, idx) => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                item.setAttribute('onclick', `openViewer(${idx})`);
+                const ext = (name === 'p58') ? '.jpg' : '.png';
+                item.innerHTML = `<img src="./assets/p00/${name}${ext}" loading="lazy">`;
+                grid.appendChild(item);
+            });
+        }
+        initGallery();
+
+        function toggleGallery() {
+            const wrap = document.getElementById('galleryWrap');
+            const btn = document.getElementById('moreBtn');
+            if (wrap.classList.contains('limited')) {
+                wrap.classList.remove('limited');
+                btn.innerText = '사진 접기';
+            } else {
+                wrap.classList.add('limited');
+                btn.innerText = '사진 더보기';
+                document.getElementById('gallerySection').scrollIntoView({ behavior: 'smooth' });
             }
         }
 
-        // --- 수정된 방명록 데이터 로드 로직 ---
-        function loadGuestbook() {
-            const list = document.getElementById('gb-list');
-            if(!list) return;
+        function openViewer(idx) { gViewIdx = idx; updateViewer(); document.getElementById('galleryViewer').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+        function closeViewer() { document.getElementById('galleryViewer').style.display = 'none'; document.body.style.overflow = 'auto'; }
+        function changeViewImg(dir) { gViewIdx = (gViewIdx + dir + totalGalleryImages) % totalGalleryImages; updateViewer(); }
+        function updateViewer() {
+            const name = galleryFiles[gViewIdx];
+            const ext = (name === 'p58') ? '.jpg' : '.png';
+            document.getElementById('currentViewerImg').src = `./assets/p00/${name}${ext}`;
+            document.getElementById('viewerCount').innerText = `${gViewIdx + 1} / ${totalGalleryImages}`;
+        }
+           
+        let vStartX = 0;
+        document.getElementById('viewerContent').addEventListener('touchstart', e => vStartX = e.changedTouches[0].screenX, {passive: true});
+        document.getElementById('viewerContent').addEventListener('touchend', e => {
+            const diff = vStartX - e.changedTouches[0].screenX;
+            if (Math.abs(diff) > 50) changeViewImg(diff > 0 ? 1 : -1);
+        }, {passive: true});
+
+        // 유틸리티
+        function copyToClipboard(id) { const text = document.getElementById(id).innerText; navigator.clipboard.writeText(text).then(() => alert("복사되었습니다.")); }
+        function openModal() { document.getElementById('accModal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('accModal').style.display = 'none'; }
+        function sanitize(str) { const temp = document.createElement('div'); temp.textContent = str; return temp.innerHTML; }
+
+        // 카카오 공유 로직
+        if (!Kakao.isInitialized()) { Kakao.init('a5ea5495dd09ddffc0e6d746f448858b'); }
+        function shareKakao() {
+            Kakao.Share.sendCustom({
+                templateId: 133283,
+                templateArgs: {
+                    'title': '류승건 & 이지연 결혼식에 초대합니다',
+                    'description': '2026년 8월 15일 토요일 오후 12시\n메리빌리아 더프레스티지'
+                }
+            });
+        }
+
+        // 파이어베이스 연동 및 방명록, 카운트다운 로직
+        try {
+            const firebaseConfig = { 
+                apiKey: "AIzaSyD1LmVHTLYnecokZV67_hCDcM289fl3oiw", 
+                authDomain: "sg-jy-233e2.firebaseapp.com", 
+                databaseURL: "https://sg-jy-233e2-default-rtdb.asia-southeast1.firebasedatabase.app", 
+                projectId: "sg-jy-233e2", 
+                storageBucket: "sg-jy-233e2.firebasestorage.app", 
+                messagingSenderId: "217599075354", 
+                appId: "1:217599075354:web:c227474b5efc4fd280dda3" 
+            };
+            firebase.initializeApp(firebaseConfig);
+            database = firebase.database();
             
-            // 실시간 데이터베이스 연동
+            // 카운트다운
+            function updateCountdown() {
+                const target = new Date('2026-08-15T12:00:00').getTime();
+                const now = new Date().getTime();
+                const diff = target - now;
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                if(document.getElementById('days')) {
+                    document.getElementById('days').innerText = d < 10 ? '0'+d : d;
+                    document.getElementById('hours').innerText = h < 10 ? '0'+h : h;
+                    document.getElementById('mins').innerText = m < 10 ? '0'+m : m;
+                }
+            }
+            setInterval(updateCountdown, 1000); updateCountdown();
+
+            // 데이터 실시간 가져오기 (역순)
             database.ref('guestbook').on('value', (snapshot) => {
-                list.innerHTML = ''; // 리스트 초기화
+                const list = document.getElementById('gb-list'); if(!list) return;
+                list.innerHTML = '';
                 const messages = [];
-                snapshot.forEach(child => {
-                    messages.push(child.val());
-                });
-                // 데이터를 역순(최신순)으로 정렬
-                messages.sort((a, b) => b.timestamp - a.timestamp);
+                snapshot.forEach(child => { messages.push(child.val()); });
                 
-                messages.forEach(data => {
-                    const div = document.createElement('div');
-                    div.className = 'guest-item';
+                // 역순 정렬해서 보여주기
+                messages.reverse().forEach(data => {
+                    const div = document.createElement('div'); div.className = 'guest-item';
                     div.innerHTML = `<span class="guest-name">${data.name}</span><div class="guest-msg">${data.message}</div>`;
                     list.appendChild(div);
                 });
             });
-        }
+        } catch(e) { console.error(e); }
 
-        // 나머지 로직 ...
-        function copyToClipboard(id) { const text = document.getElementById(id).innerText; navigator.clipboard.writeText(text).then(() => alert("복사되었습니다.")); }
-        function openModal() { document.getElementById('accModal').style.display = 'flex'; }
-        function closeModal() { document.getElementById('accModal').style.display = 'none'; }
-        
-        // Firebase 및 기타 초기화
-        try {
-            const firebaseConfig = { /* ... */ };
-            if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-            const database = firebase.database();
-            loadGuestbook(); // 방명록 로드 함수 실행
-        } catch(e) {}
+        // 방명록 저장 로직 (전역 함수로 분리)
+        function saveGuestMessage() {
+            let nameInput = document.getElementById('gb_name');
+            let msgInput = document.getElementById('gb_msg');
+            let name = nameInput.value.trim();
+            let msg = msgInput.value.trim();
+
+            // 유효성 검사
+            if (!name && !msg) { alert("성함과 메시지를 기재해 주세요."); return; }
+            else if (!name) { alert("성함을 기재해 주세요."); return; }
+            else if (!msg) { alert("메시지를 기재해 주세요."); return; }
+
+            // 저장
+            if (database) {
+                database.ref('guestbook').push({ 
+                    name: sanitize(name), 
+                    message: sanitize(msg), 
+                    timestamp: Date.now() 
+                }).then(() => { 
+                    nameInput.value = ''; 
+                    msgInput.value = ''; 
+                });
+            }
+        }
     </script>
 </body>
 </html>
