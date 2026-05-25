@@ -32,36 +32,6 @@
         .section-title { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--point-black); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 30px; display: block; }
         .h-divider { width: 100%; height: 1px; background-color: var(--point-black); margin: 0; }
 
-        /* 통합 버튼 디자인 (마음 전하실 곳, 네이버 지도, 카카오 네비, 더보기 등) */
-        .btn-point { 
-            background: var(--point-color); 
-            color: white; 
-            border: none; 
-            padding: 15px; 
-            width: 100%; 
-            cursor: pointer; 
-            letter-spacing: 2px; 
-            font-weight: 700; 
-            font-family: inherit; 
-            font-size: 0.9rem; 
-            display: block; 
-            text-align: center; 
-            text-decoration: none;
-            box-sizing: border-box;
-        }
-
-        /* 복사 버튼 통합 디자인 */
-        .btn-copy-sm { 
-            background: var(--point-color); 
-            color: white; 
-            border: none; 
-            padding: 6px 12px; 
-            font-size: 0.75rem; 
-            cursor: pointer; 
-            font-family: inherit; 
-            border-radius: 2px;
-        }
-
         /* BGM 버튼 스타일 */
         .bgm-btn {
             position: fixed; top: 15px; right: 15px; z-index: 9990;
@@ -83,15 +53,19 @@
         .prev-btn { left: 10px; } .next-btn { right: 10px; }
         .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 60px; color: white; text-align: center; pointer-events: none; z-index: 5; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
         .hero-names { font-size: 2.2rem; font-weight: 400; letter-spacing: 8px; margin-bottom: 10px; }
-        .hero-date { font-size: 1.1rem; letter-spacing: 2px; opacity: 0.9; font-weight: 400; }
+        
+        /* 반투명 박스와 곡률이 추가된 날짜 스타일 */
+        .hero-date { font-size: 1.1rem; letter-spacing: 2px; font-weight: 400; background-color: rgba(0, 0, 0, 0.4); padding: 8px 16px; border-radius: 12px; display: inline-block; margin-top: 5px; }
 
         /* 디데이 & 위치 */
         .countdown-wrap { display: flex; justify-content: center; gap: 30px; margin: 30px 0; }
         .count-num { font-family: 'Montserrat', sans-serif; font-size: 1.8rem; font-weight: 300; }
         .count-label { font-size: 0.65rem; color: #999; letter-spacing: 2px; }
-        .address-box { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; width: 100%; }
+        .address-box { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; }
         
-        /* 지도 이미지 영역 수정 */
+        /* 버튼 곡률 추가 */
+        .btn-copy-sm { border: 1px solid #000; background: none; padding: 2px 8px; font-size: 0.7rem; cursor: pointer; font-family: inherit; border-radius: 4px; }
+        
         .map-link-area { width: 100%; display: block; margin: 20px auto; border: 1px solid #eee; background-color: #f4f4f4; background-size: cover; background-position: center; }
 
         /* 갤러리 펼치기/접기 */
@@ -104,6 +78,9 @@
         .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 0 10px; }
         .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer; background: #f0f0f0; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+        
+        /* 버튼 곡률 추가 */
+        .btn-more { margin: 20px auto; padding: 12px 30px; border: 1px solid #000; background: #fff; cursor: pointer; font-family: inherit; font-size: 0.85rem; display: block; border-radius: 8px; }
 
         /* 확대 뷰어 모달 */
         #galleryViewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10001; align-items: center; justify-content: center; }
@@ -114,37 +91,20 @@
         .v-prev { left: 10px; } .v-next { right: 10px; }
         .viewer-count { position: absolute; bottom: 40px; color: #fff; font-size: 0.85rem; letter-spacing: 2px; }
 
-        /* 방명록 입력 폼 수정 (레이아웃 깨짐 방지) */
-        .gb-card { background: white; padding: 30px 20px; border: 1px solid #eee; max-width: 450px; margin: 0 auto; box-sizing: border-box; }
-        .gb-card input, .gb-card textarea { 
-            display: block;
-            width: 100%; 
-            padding: 15px; 
-            border: 1px solid #eee; 
-            margin-bottom: 10px; 
-            font-family: inherit; 
-            font-size: 0.9rem; 
-            border-radius: 0; 
-            outline: none; 
-            box-sizing: border-box;
-        }
-        
-        /* 방명록 리스트 스크롤 수정 */
+        /* 마음 전하실 곳 & 방명록, 버튼 곡률 추가 */
+        .btn-point { background: var(--point-color); color: white; border: none; padding: 18px; width: 100%; cursor: pointer; letter-spacing: 2px; font-weight: 700; font-family: inherit; font-size: 0.9rem; border-radius: 8px; }
+        .gb-card { background: white; padding: 30px 20px; border: 1px solid #eee; max-width: 450px; margin: 0 auto; }
+        input, textarea { width: 100%; padding: 15px; border: 1px solid #eee; margin-bottom: 10px; font-family: inherit; font-size: 0.9rem; border-radius: 0; outline: none; }
         #gb-list { margin-top: 20px; max-height: 400px; overflow-y: auto; border-top: 1px solid #f2f2f2; padding-right: 5px; }
         #gb-list::-webkit-scrollbar { width: 3px; }
         #gb-list::-webkit-scrollbar-thumb { background: #ddd; }
         .guest-item { border-bottom: 1px solid #f2f2f2; padding: 20px 0; text-align: left; }
         .guest-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 5px; display: block; }
         .guest-msg { font-size: 0.85rem; color: var(--deep-gray); line-height: 1.6; }
-        
-        /* 계좌번호 모달 */
         .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
-        .modal-content { background: white; padding: 40px 25px; width: 90%; max-width: 400px; text-align: center; position: relative; max-height: 90vh; overflow-y: auto; }
+        .modal-content { background: white; padding: 40px 25px; width: 90%; max-width: 400px; text-align: center; position: relative; }
         .close-modal { position: absolute; right: 15px; top: 15px; font-size: 1.5rem; cursor: pointer; color: #999; }
         .btn-kakaopay { display: flex; align-items: center; justify-content: center; gap: 8px; background: #FEE500; color: #191919; text-align: center; padding: 12px; font-size: 0.85rem; font-weight: 700; text-decoration: none; border-radius: 6px; margin-top: 10px; }
-        .acc-group { text-align: left; padding: 15px 0; border-bottom: 1px solid #eee; }
-        .acc-group:last-child { border-bottom: none; }
-        .acc-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
     </style>
 </head>
 <body oncontextmenu="return false">
@@ -167,7 +127,7 @@
         <div class="hero-overlay">
             <div data-aos="fade-up" data-aos-duration="2000">
                 <h1 class="hero-names">류승건 & 이지연</h1>
-                <p class="hero-date">2026. 08. 15. 토요일 오후 12시</p>
+                <p class="hero-date">2026년 8월 15일 토요일 오후 12시</p>
             </div>
         </div>
     </div>
@@ -176,7 +136,7 @@
 
     <section class="section" data-aos="fade-up">
         <span class="section-title">Invitation</span>
-        <p style="font-size: 1.1rem; line-height: 2.4;">곁에 있을 때 가장 나다워지는 사람을 만났습니다.<br>서로의 결을 닮아가는 사랑으로<br>함께할 새날의 시작을 약속합니다.</p>
+        <p style="font-size: 1.1rem; line-height: 2.4;">곁에 있을 때 가장 나다워지는 사람을 만났습니다.<br>서로의 결을 닮아가는 사랑으로<br>함께 걸어갈 새날의 시작을 약속합니다.</p>
     </section>
 
     <div class="h-divider"></div>
@@ -199,14 +159,12 @@
             <span id="addr-text" style="color: #888; font-size: 0.85rem;">경기 수원시 권선구 세화로 116</span>
             <button class="btn-copy-sm" onclick="copyToClipboard('addr-text')">복사</button>
         </div>
-        
         <a href="https://naver.me/5apDP7nI" target="_blank" class="map-link-area" 
            style="background-image: url('./assets/map_preview.png'); width: 100%; aspect-ratio: 900 / 650; height: auto;">
         </a>
-
         <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
-            <a href="https://naver.me/5apDP7nI" target="_blank" class="btn-point" style="flex: 1; margin: 0; padding: 12px;">네이버 지도</a>
-            <a href="https://kko.to/EIt4OnhVm4" target="_blank" class="btn-point" style="flex: 1; margin: 0; padding: 12px;">카카오 네비</a>
+            <a href="https://naver.me/5apDP7nI" target="_blank" style="flex: 1; padding: 12px; border: 1px solid #ddd; font-size: 0.85rem; text-decoration: none; color: #333; background: #fff; text-align: center; border-radius: 8px;">네이버 지도</a>
+            <a href="https://kko.to/EIt4OnhVm4" target="_blank" style="flex: 1; padding: 12px; border: 1px solid #ddd; font-size: 0.85rem; text-decoration: none; color: #333; background: #fff; text-align: center; border-radius: 8px;">카카오내비</a>
         </div>
     </section>
 
@@ -217,7 +175,7 @@
         <div class="gallery-wrap limited" id="galleryWrap">
             <div class="gallery-grid" id="galleryGrid"></div>
         </div>
-        <button id="moreBtn" class="btn-point" style="max-width: 200px; margin: 20px auto; padding: 12px;" onclick="toggleGallery()">더보기 ▽</button>
+        <button id="moreBtn" class="btn-more" onclick="toggleGallery()">더보기 ▽</button>
     </section>
 
     <div id="galleryViewer">
@@ -250,43 +208,45 @@
         </div>
     </section>
 
+    <div class="h-divider"></div>
+
+    <section class="section" data-aos="fade-up" style="padding: 60px 30px;">
+        <span class="section-title">Share</span>
+        <p style="font-size: 0.9rem; margin-bottom: 25px;">소중한 분들께 초대장을 전해주세요.</p>
+        <button onclick="shareKakao()" class="btn-point" style="background-color: #FEE500; color: #191919; max-width: 300px; margin: 0 auto; display: flex; justify-content: center; align-items: center; gap: 8px;">
+            <img src="https://developers.kakao.com/tool/resource/static/img/button/kakaotalk-sharing/kakaotalk_sharing_btn_small.png" alt="카카오톡 공유" style="width: 20px;">
+            카카오톡 공유하기
+        </button>
+    </section>
+
     <div id="accModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal()">×</span>
-            <h3 style="font-weight: 700; border-bottom: 1px solid #000; padding-bottom: 10px; margin-bottom: 10px;">마음 전하실 곳</h3>
-            
-            <div class="acc-group">
+            <h3 style="font-weight: 700; border-bottom: 1px solid #000; padding-bottom: 10px; margin-bottom: 20px;">마음 전하실 곳</h3>
+            <div style="text-align: left; padding: 10px 0 15px; border-bottom: 1px solid #eee;">
                 <p style="font-size: 0.85rem; color: #888; margin: 0 0 5px 0;">신랑 류승건</p>
-                <div class="acc-row"><span id="acc-groom" style="font-size: 1rem;">우리 1002-841-241285</span><button class="btn-copy-sm" onclick="copyToClipboard('acc-groom')">복사</button></div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span id="acc-groom" style="font-size: 1rem;">우리 1002-841-241285</span>
+                    <button class="btn-copy-sm" onclick="copyToClipboard('acc-groom')">복사</button>
+                </div>
                 <a href="https://qr.kakaopay.com/FNfa3PrZO" target="_blank" class="btn-kakaopay">
                     <img src="https://developers.kakao.com/tool/resource/static/img/button/pay/payment_icon_yellow_small.png" alt="카카오페이" style="height: 18px;"> 카카오페이 송금
                 </a>
             </div>
-            <div class="acc-group" style="border-bottom: none; padding-bottom: 5px;">
-                <p style="font-size: 0.85rem; color: #888; margin: 0 0 5px 0;">신랑측 아버지 류주형</p>
-                <div class="acc-row"><span id="acc-father" style="font-size: 1rem;">농협 352-0863-6634-83</span><button class="btn-copy-sm" onclick="copyToClipboard('acc-father')">복사</button></div>
-            </div>
-
-            <div style="width: 100%; height: 1px; background-color: #ddd; margin: 20px 0;"></div>
-
-            <div class="acc-group">
+            <div style="text-align: left; padding: 15px 0 10px;">
                 <p style="font-size: 0.85rem; color: #888; margin: 0 0 5px 0;">신부 이지연</p>
-                <div class="acc-row"><span id="acc-bride" style="font-size: 1rem;">새마을 9003-1978-4884-1</span><button class="btn-copy-sm" onclick="copyToClipboard('acc-bride')">복사</button></div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span id="acc-bride" style="font-size: 1rem;">새마을 9003197848841</span>
+                    <button class="btn-copy-sm" onclick="copyToClipboard('acc-bride')">복사</button>
+                </div>
                 <a href="https://qr.kakaopay.com/Ej8bBn70Q" target="_blank" class="btn-kakaopay">
                     <img src="https://developers.kakao.com/tool/resource/static/img/button/pay/payment_icon_yellow_small.png" alt="카카오페이" style="height: 18px;"> 카카오페이 송금
                 </a>
             </div>
-            <div class="acc-group">
-                <p style="font-size: 0.85rem; color: #888; margin: 0 0 5px 0;">신부측 아버지 이광구</p>
-                <div class="acc-row"><span id="acc-father-in-law" style="font-size: 1rem;">농협 351-0504-8591-13</span><button class="btn-copy-sm" onclick="copyToClipboard('acc-father-in-law')">복사</button></div>
-            </div>
-            <div class="acc-group">
-                <p style="font-size: 0.85rem; color: #888; margin: 0 0 5px 0;">신부측 어머니 최지영</p>
-                <div class="acc-row"><span id="acc-mother-in-law" style="font-size: 1rem;">우리은행 1002-853-084582</span><button class="btn-copy-sm" onclick="copyToClipboard('acc-mother-in-law')">복사</button></div>
-            </div>
         </div>
     </div>
 
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
@@ -319,7 +279,8 @@
             document.body.removeEventListener('click', playOnFirstClick);
         }, { once: true });
 
-        // 메인 슬라이더 로직
+
+        // 슬라이더 로직
         let heroIdx = 1; const totalHero = 3; let isHeroMoving = false;
         const heroContainer = document.getElementById('heroSlider');
         if(heroContainer) heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`;
@@ -345,8 +306,8 @@
             });
         }
 
-        // 갤러리 로직 (p58은 jpg, 나머지는 png)
-        const galleryFiles = ['p01', 'p02', 'p03', 'p04', 'p05', 'p06', 'p11', 'p12', 'p13', 'p14', 'p15', 'p16', 'p17', 'p18', 'p19', 'p20', 'p21', 'p31', 'p32', 'p33', 'p34', 'p35', 'p36', 'p37', 'p39', 'p40', 'p51', 'p52', 'p53', 'p54', 'p56', 'p57', 'p58', 'p61', 'p62', 'p63', 'p64', 'p65'];
+        // 갤러리 로직
+        const galleryFiles = ['p01', 'p02', 'p03', 'p04', 'p05', 'p06', 'p11', 'p12', 'p13', 'p14', 'p15', 'p16', 'p17', 'p18', 'p19', 'p20', 'p21', 'p31', 'p32', 'p33', 'p34', 'p35', 'p36', 'p37', 'p39', 'p40', 'p61', 'p62', 'p63', 'p64', 'p65'];
         const totalGalleryImages = galleryFiles.length;
         let gViewIdx = 0;
 
@@ -357,8 +318,7 @@
                 const item = document.createElement('div');
                 item.className = 'gallery-item';
                 item.setAttribute('onclick', `openViewer(${idx})`);
-                const ext = (name === 'p58') ? '.jpg' : '.png';
-                item.innerHTML = `<img src="./assets/p00/${name}${ext}" loading="lazy">`;
+                item.innerHTML = `<img src="./assets/p00/${name}.png" loading="lazy">`;
                 grid.appendChild(item);
             });
         }
@@ -377,17 +337,26 @@
             }
         }
 
-        // 모달 및 뷰어 로직
-        function openViewer(idx) { gViewIdx = idx; updateViewer(); document.getElementById('galleryViewer').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
-        function closeViewer() { document.getElementById('galleryViewer').style.display = 'none'; document.body.style.overflow = 'auto'; }
-        function changeViewImg(dir) { gViewIdx = (gViewIdx + dir + totalGalleryImages) % totalGalleryImages; updateViewer(); }
+        // 확대 뷰어
+        function openViewer(idx) {
+            gViewIdx = idx; updateViewer();
+            document.getElementById('galleryViewer').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        function closeViewer() {
+            document.getElementById('galleryViewer').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        function changeViewImg(dir) {
+            gViewIdx = (gViewIdx + dir + totalGalleryImages) % totalGalleryImages;
+            updateViewer();
+        }
         function updateViewer() {
             const name = galleryFiles[gViewIdx];
-            const ext = (name === 'p58') ? '.jpg' : '.png';
-            document.getElementById('currentViewerImg').src = `./assets/p00/${name}${ext}`;
+            document.getElementById('currentViewerImg').src = `./assets/p00/${name}.png`;
             document.getElementById('viewerCount').innerText = `${gViewIdx + 1} / ${totalGalleryImages}`;
         }
-          
+        
         let vStartX = 0;
         document.getElementById('viewerContent').addEventListener('touchstart', e => vStartX = e.changedTouches[0].screenX, {passive: true});
         document.getElementById('viewerContent').addEventListener('touchend', e => {
@@ -395,27 +364,17 @@
             if (Math.abs(diff) > 50) changeViewImg(diff > 0 ? 1 : -1);
         }, {passive: true});
 
-        // 유틸리티
+        // 유틸리티 및 파이어베이스
         function copyToClipboard(id) { const text = document.getElementById(id).innerText; navigator.clipboard.writeText(text).then(() => alert("복사되었습니다.")); }
         function openModal() { document.getElementById('accModal').style.display = 'flex'; }
         function closeModal() { document.getElementById('accModal').style.display = 'none'; }
         function sanitize(str) { const temp = document.createElement('div'); temp.textContent = str; return temp.innerHTML; }
 
-        // 파이어베이스 연동 및 방명록, 카운트다운 로직
         try {
-            const firebaseConfig = { 
-                apiKey: "AIzaSyD1LmVHTLYnecokZV67_hCDcM289fl3oiw", 
-                authDomain: "sg-jy-233e2.firebaseapp.com", 
-                databaseURL: "https://sg-jy-233e2-default-rtdb.asia-southeast1.firebasedatabase.app", 
-                projectId: "sg-jy-233e2", 
-                storageBucket: "sg-jy-233e2.firebasestorage.app", 
-                messagingSenderId: "217599075354", 
-                appId: "1:217599075354:web:c227474b5efc4fd280dda3" 
-            };
+            const firebaseConfig = { apiKey: "AIzaSyD1LmVHTLYnecokZV67_hCDcM289fl3oiw", authDomain: "sg-jy-233e2.firebaseapp.com", databaseURL: "https://sg-jy-233e2-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "sg-jy-233e2", storageBucket: "sg-jy-233e2.firebasestorage.app", messagingSenderId: "217599075354", appId: "1:217599075354:web:c227474b5efc4fd280dda3" };
             firebase.initializeApp(firebaseConfig);
             const database = firebase.database();
             
-            // 디데이 카운트다운
             function updateCountdown() {
                 const target = new Date('2026-08-15T12:00:00').getTime();
                 const now = new Date().getTime();
@@ -431,47 +390,50 @@
             }
             setInterval(updateCountdown, 1000); updateCountdown();
 
-            // 방명록 저장
-            window.saveGuestMessage = function() {
+            function saveGuestMessage() {
                 let name = document.getElementById('gb_name').value.trim();
                 let msg = document.getElementById('gb_msg').value.trim();
-                if (!name && !msg) { alert("성함과 메시지를 기재해주세요."); return; }
-                if (!name) { alert("성함을 기재해주세요."); return; }
-                if (!msg) { alert("메시지를 기재해주세요."); return; }
-                
-                database.ref('guestbook').push({ 
-                    name: sanitize(name), 
-                    message: sanitize(msg), 
-                    timestamp: Date.now() 
-                }).then(() => { 
-                    document.getElementById('gb_name').value = ''; 
-                    document.getElementById('gb_msg').value = ''; 
-                });
+                if (name && msg) { database.ref('guestbook').push({ name: sanitize(name), message: sanitize(msg), timestamp: Date.now() }).then(() => { document.getElementById('gb_name').value = ''; document.getElementById('gb_msg').value = ''; }); }
             }
-            
-            // 방명록 불러오기 (리스트 증발 현상 완벽 해결)
             database.ref('guestbook').on('value', (snapshot) => {
-                const list = document.getElementById('gb-list');
-                if(!list) return;
-                
-                // 루프 바깥에서 한 번만 초기화하여 모든 데이터가 누적되도록 함
-                list.innerHTML = ''; 
-                const messages = [];
-                
+                const list = document.getElementById('gb-list'); if(!list) return;
+                list.innerHTML = '';
                 snapshot.forEach(child => {
-                    messages.push(child.val());
-                });
-                
-                // 최신순으로 정렬 후 렌더링
-                messages.reverse().forEach(data => {
-                    const div = document.createElement('div');
-                    div.className = 'guest-item';
+                    const data = child.val();
+                    const div = document.createElement('div'); div.className = 'guest-item';
                     div.innerHTML = `<span class="guest-name">${data.name}</span><div class="guest-msg">${data.message}</div>`;
-                    list.appendChild(div);
+                    list.prepend(div);
                 });
             });
-        } catch(e) {
-            console.error("Firebase 로드 오류:", e);
+        } catch(e) {}
+
+        // 카카오 공유 로직
+        if (!Kakao.isInitialized()) {
+            Kakao.init('a5ea5495dd09ddffc0e6d746f448858b');
+        }
+
+        function shareKakao() {
+            Kakao.Share.sendDefault({
+                objectType: 'feed',
+                content: {
+                    title: '류승건 & 이지연 결혼식에 초대합니다',
+                    description: '2026년 8월 15일 토요일 오후 12시\n메리빌리아 더프레스티지',
+                    imageUrl: 'https://example.com/main1.png', // 카카오톡 썸네일 이미지 URL
+                    link: {
+                        mobileWebUrl: window.location.href,
+                        webUrl: window.location.href,
+                    },
+                },
+                buttons: [
+                    {
+                        title: '청첩장 보기',
+                        link: {
+                            mobileWebUrl: window.location.href,
+                            webUrl: window.location.href,
+                        },
+                    },
+                ],
+            });
         }
     </script>
 </body>
