@@ -16,13 +16,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=YOUR_NAVER_CLIENT_ID"></script>
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=vox8crpza6"></script>
 
     <style>
         :root { 
-            --point-black: #000000; 
-            --point-color: #D1A7A7; 
-            --deep-gray: #333333; 
+            --point-black: #222222; 
+            --point-color: #D1A7A7; /* Dusty Rose */
+            --deep-gray: #444444; 
             --bg-white: #ffffff; 
         }
 
@@ -35,17 +35,17 @@
         html.aos-init .aos-animate { opacity: 1 !important; }
 
         .section { padding: 80px 30px; text-align: center; }
-        .section-title { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--point-black); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 20px; display: block; }
-        .h-divider { width: 100%; height: 1px; background-color: var(--point-black); margin: 0; }
+        .section-title { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: var(--point-color); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 25px; display: block; font-weight: 300; }
+        .h-divider { width: 100%; height: 1px; background-color: #f0f0f0; margin: 0; }
 
         /* BGM 버튼 */
         .bgm-btn {
             position: fixed; top: 15px; right: 15px; z-index: 9990;
-            width: 42px; height: 42px; background: rgba(255, 255, 255, 0.85);
-            border: 1px solid #ddd; border-radius: 50%; 
+            width: 44px; height: 44px; background: rgba(255, 255, 255, 0.9);
+            border: none; border-radius: 50%; 
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; color: var(--point-color); font-size: 1.1rem;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1); outline: none;
+            cursor: pointer; color: var(--point-color); font-size: 1.2rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); outline: none; transition: transform 0.3s;
         }
         .bgm-btn.playing i.fa-music { animation: spin 3s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
@@ -55,45 +55,57 @@
         .hero-container { display: flex; height: 100%; width: 100%; will-change: transform; }
         .hero-item { min-width: 100%; height: 100%; position: relative; }
         .hero-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
-        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.15); border: none; color: white; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; font-size: 1.2rem; }
-        .prev-btn { left: 10px; } .next-btn { right: 10px; }
-        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 80px; color: white; text-align: center; pointer-events: none; z-index: 5; text-shadow: 0 0 10px rgba(0,0,0,0.6); }
-        .hero-names { font-size: 2.2rem; font-weight: 400; letter-spacing: 8px; margin-bottom: 15px; }
-        .hero-date { font-size: 1.4rem; letter-spacing: 2px; opacity: 1; font-weight: 400; font-family: 'Montserrat', sans-serif; }
+        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.2); backdrop-filter: blur(5px); border: none; color: white; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; font-size: 1.1rem; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .prev-btn { left: 15px; } .next-btn { right: 15px; }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 10vh; color: white; text-align: center; pointer-events: none; z-index: 5; text-shadow: 0 2px 10px rgba(0,0,0,0.4); background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 40%); }
+        .hero-names { font-size: 2.2rem; font-weight: 300; letter-spacing: 8px; margin-bottom: 15px; }
+        .hero-date { font-size: 1.1rem; letter-spacing: 4px; font-weight: 300; font-family: 'Montserrat', sans-serif; }
 
         /* 디데이 */
-        .countdown-wrap { display: flex; justify-content: center; gap: 30px; margin: 30px 0; }
-        .count-num { font-family: 'Montserrat', sans-serif; font-size: 1.8rem; font-weight: 300; }
-        .count-label { font-size: 0.65rem; color: #999; letter-spacing: 2px; }
+        .countdown-wrap { display: flex; justify-content: center; gap: 35px; margin: 30px 0; }
+        .count-item { text-align: center; }
+        .count-num { font-family: 'Montserrat', sans-serif; font-size: 2rem; font-weight: 300; color: var(--point-color); }
+        .count-label { font-size: 0.65rem; color: #888; letter-spacing: 2px; display: block; margin-top: 5px; }
 
         /* 지도 영역 */
-        #map { width: 100%; height: 320px; border: 1px solid #eee; margin: 20px 0; background-color: #f9f9f9; }
-        .address-box { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; }
-        .btn-copy-sm { border: 1px solid #000; background: none; padding: 2px 8px; font-size: 0.7rem; cursor: pointer; font-family: inherit; }
+        #map { width: 100%; height: 350px; border-radius: 12px; margin: 20px 0; background-color: #f9f9f9; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .address-box { display: inline-flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 15px; background: #f9f9f9; padding: 10px 20px; border-radius: 20px; }
+        
+        /* 🎨 세련된 버튼 스타일 모음 */
+        .btn-copy-sm { background: #fff; border: 1px solid #ddd; padding: 4px 12px; font-size: 0.75rem; border-radius: 12px; cursor: pointer; color: #555; transition: all 0.2s; font-family: inherit; }
+        .btn-copy-sm:active { background: #f0f0f0; }
+
+        .btn-point { background: var(--point-color); color: white; border: none; padding: 16px 30px; width: 100%; cursor: pointer; letter-spacing: 2px; font-weight: 700; font-family: inherit; font-size: 0.95rem; border-radius: 14px; box-shadow: 0 6px 15px rgba(209, 167, 167, 0.4); transition: transform 0.2s, box-shadow 0.2s; }
+        .btn-point:active { transform: translateY(2px); box-shadow: 0 2px 8px rgba(209, 167, 167, 0.4); }
+
+        .btn-outline { flex: 1; padding: 14px; border: 1px solid #ddd; border-radius: 12px; font-size: 0.9rem; text-decoration: none; color: #333; background: #fff; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.02); transition: background 0.2s; }
+        .btn-outline:active { background: #f9f9f9; }
+
+        .btn-more { margin: 30px auto 10px; padding: 12px 30px; background: #fff; color: var(--deep-gray); border: 1px solid #ddd; border-radius: 30px; font-size: 0.85rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.04); font-family: inherit; letter-spacing: 1px; transition: background 0.3s; display: block; }
 
         /* 갤러리 */
         .gallery-wrap { position: relative; overflow: hidden; max-height: 5000px; transition: max-height 0.8s ease-in-out; }
         .gallery-wrap.limited { max-height: 330px; }
-        .gallery-wrap.limited::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to bottom, transparent, var(--bg-white)); pointer-events: none; }
-        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 0 10px; }
-        .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer; background: #f0f0f0; }
-        .gallery-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
-        .btn-more { margin: 20px auto; padding: 12px 30px; border: 1px solid #000; background: #fff; cursor: pointer; font-family: inherit; font-size: 0.85rem; display: block; }
+        .gallery-wrap.limited::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 80px; background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1)); pointer-events: none; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 0 5px; }
+        .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer; background: #f0f0f0; border-radius: 4px; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; transition: transform 0.3s; }
 
-        /* 확대 뷰어 모달 (누락되었던 부분 복구) */
-        #galleryViewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10001; align-items: center; justify-content: center; }
-        .viewer-content { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
-        .viewer-img { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
-        .viewer-close { position: absolute; top: 20px; right: 20px; color: #fff; font-size: 2.5rem; cursor: pointer; z-index: 10002; }
-        .viewer-nav { position: absolute; top: 50%; transform: translateY(-50%); color: #fff; font-size: 2.5rem; background: none; border: none; cursor: pointer; padding: 20px; z-index: 10002; opacity: 0.7; }
-        .v-prev { left: 10px; } .v-next { right: 10px; }
-        .viewer-count { position: absolute; bottom: 40px; color: #fff; font-size: 0.85rem; letter-spacing: 2px; }
+        /* 확대 뷰어 모달 */
+        #galleryViewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10001; align-items: center; justify-content: center; flex-direction: column; }
+        .viewer-content { width: 100%; height: 80%; display: flex; align-items: center; justify-content: center; position: relative; }
+        .viewer-img { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        .viewer-close { position: absolute; top: 20px; right: 20px; color: #fff; font-size: 2.5rem; cursor: pointer; z-index: 10002; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.1); border-radius: 50%; }
+        .viewer-nav { position: absolute; top: 50%; transform: translateY(-50%); color: #fff; font-size: 2rem; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px); border: none; cursor: pointer; width: 50px; height: 50px; border-radius: 50%; z-index: 10002; display: flex; align-items: center; justify-content: center; }
+        .v-prev { left: 15px; } .v-next { right: 15px; }
+        .viewer-count { position: absolute; bottom: -40px; color: #fff; font-size: 0.9rem; letter-spacing: 3px; font-family: 'Montserrat', sans-serif; }
 
-        /* 공통 버튼 디자인 */
-        .btn-point { background: var(--point-color); color: white; border: none; padding: 18px; width: 100%; cursor: pointer; letter-spacing: 2px; font-weight: 700; font-family: inherit; font-size: 0.9rem; }
-        .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
-        .modal-content { background: white; padding: 40px 25px; width: 90%; max-width: 400px; text-align: center; position: relative; }
-        .close-modal { position: absolute; right: 15px; top: 15px; font-size: 1.5rem; cursor: pointer; color: #999; }
+        /* 모달 (마음 전하실 곳) */
+        .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); align-items: center; justify-content: center; backdrop-filter: blur(3px); }
+        .modal-content { background: white; padding: 40px 30px; width: 90%; max-width: 400px; text-align: center; position: relative; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); animation: slideUp 0.3s ease-out; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .close-modal { position: absolute; right: 20px; top: 20px; font-size: 1.8rem; cursor: pointer; color: #aaa; }
     </style>
 </head>
 <body oncontextmenu="return false">
@@ -116,27 +128,25 @@
         <div class="hero-overlay">
             <div data-aos="fade-up" data-aos-duration="2000">
                 <h1 class="hero-names">류승건 & 이지연</h1>
-                <p class="hero-date">2026. 08. 15. SAT PM 12:00</p>
+                <p class="hero-date">2026. 08. 15. SAT 12:00</p>
             </div>
         </div>
     </div>
 
-    <div class="h-divider"></div>
-
     <section class="section" data-aos="fade-up">
         <span class="section-title">Invitation</span>
-        <p style="font-size: 1.1rem; line-height: 2.4;">곁에 있을 때 가장 나다워지는 사람을 만났습니다.<br>서로의 결을 닮아가는 사랑으로<br>함께 걸어갈 새날의 시작을 약속합니다.</p>
+        <p style="font-size: 1.1rem; line-height: 2.2; font-weight: 300;">곁에 있을 때 가장 나다워지는 사람을 만났습니다.<br><br>서로의 결을 닮아가는 사랑으로<br>함께 걸어갈 새날의 시작을 약속합니다.</p>
     </section>
 
     <div class="h-divider"></div>
 
     <section class="section" data-aos="fade-up">
         <span class="section-title">D-Day</span>
-        <p style="font-size: 1rem; color: #666; margin-top: -10px; margin-bottom: 10px;">2026년 8월 15일</p>
+        <p style="font-size: 1.05rem; color: #555; margin-top: -10px; margin-bottom: 10px;">2026년 8월 15일</p>
         <div class="countdown-wrap">
-            <div class="count-item"><span class="count-num" id="days">00</span><br><span class="count-label">DAYS</span></div>
-            <div class="count-item"><span class="count-num" id="hours">00</span><br><span class="count-label">HOURS</span></div>
-            <div class="count-item"><span class="count-num" id="mins">00</span><br><span class="count-label">MINS</span></div>
+            <div class="count-item"><span class="count-num" id="days">00</span><span class="count-label">DAYS</span></div>
+            <div class="count-item"><span class="count-num" id="hours">00</span><span class="count-label">HOURS</span></div>
+            <div class="count-item"><span class="count-num" id="mins">00</span><span class="count-label">MINS</span></div>
         </div>
     </section>
 
@@ -144,17 +154,17 @@
 
     <section class="section" data-aos="fade-up">
         <span class="section-title">Location</span>
-        <h3 style="font-weight: 700; font-size: 1.2rem; margin-bottom: 5px;">메리빌리아 더프레스티지</h3>
+        <h3 style="font-weight: 700; font-size: 1.3rem; margin-bottom: 15px;">메리빌리아 더프레스티지</h3>
         <div class="address-box">
-            <span id="addr-text" style="color: #888; font-size: 0.85rem;">경기 수원시 권선구 세화로 116</span>
+            <span id="addr-text" style="color: #666; font-size: 0.9rem;">경기 수원시 권선구 세화로 116</span>
             <button class="btn-copy-sm" onclick="copyToClipboard('addr-text')">복사</button>
         </div>
         
         <div id="map"></div>
 
-        <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
-            <a href="https://naver.me/5apDP7nI" target="_blank" style="flex: 1; padding: 12px; border: 1px solid #ddd; font-size: 0.85rem; text-decoration: none; color: #333; background: #fff; text-align: center;">네이버 지도</a>
-            <a href="https://kko.to/EIt4OnhVm4" target="_blank" style="flex: 1; padding: 12px; border: 1px solid #ddd; font-size: 0.85rem; text-decoration: none; color: #333; background: #fff; text-align: center;">카카오내비</a>
+        <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
+            <a href="https://naver.me/5apDP7nI" target="_blank" class="btn-outline">네이버 지도</a>
+            <a href="https://kko.to/EIt4OnhVm4" target="_blank" class="btn-outline">카카오내비</a>
         </div>
     </section>
 
@@ -165,7 +175,7 @@
         <div class="gallery-wrap limited" id="galleryWrap">
             <div class="gallery-grid" id="galleryGrid"></div>
         </div>
-        <button id="moreBtn" class="btn-more" onclick="toggleGallery()">더보기 ▽</button>
+        <button id="moreBtn" class="btn-more" onclick="toggleGallery()">사진 더보기 ▽</button>
     </section>
 
     <div id="galleryViewer">
@@ -180,92 +190,116 @@
 
     <div class="h-divider"></div>
 
-    <section class="section" data-aos="fade-up" style="padding: 60px 30px;">
+    <section class="section" data-aos="fade-up" style="padding: 80px 30px;">
         <span class="section-title">Account</span>
-        <p style="font-size: 0.9rem; margin-bottom: 25px;">축복해주시는 소중한 마음 잊지 않고<br>예쁘게 잘 살겠습니다.</p>
-        <button onclick="openModal()" class="btn-point" style="max-width: 300px; margin: 0 auto; display: block;">마음 전하실 곳</button>
+        <p style="font-size: 1rem; margin-bottom: 35px; color: #555; line-height: 1.8;">축복해주시는 소중한 마음 잊지 않고<br>예쁘게 잘 살겠습니다.</p>
+        <button onclick="openModal()" class="btn-point" style="max-width: 320px; margin: 0 auto; display: block;">마음 전하실 곳</button>
     </section>
 
     <div id="accModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal()">×</span>
-            <h3 style="font-weight: 700; border-bottom: 1px solid #000; padding-bottom: 10px; margin-bottom: 20px;">마음 전하실 곳</h3>
-            <div style="text-align: left; padding: 10px 0 15px; border-bottom: 1px solid #eee;">
-                <p style="font-weight: 700; margin: 0 0 10px 0; color: var(--point-color);">신랑 측 계좌</p>
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span id="acc-groom" style="font-size: 0.95rem; color: #333;">우리 1002-841-241285 (류승건)</span>
-                    <button class="btn-copy-sm" onclick="copyToClipboard('acc-groom')">복사</button>
+            <h3 style="font-weight: 700; border-bottom: 2px solid var(--point-color); padding-bottom: 15px; margin-bottom: 25px; color: #333;">마음 전하실 곳</h3>
+            <div style="text-align: left; padding: 10px 0 15px;">
+                <p style="font-weight: 700; margin: 0 0 12px 0; color: var(--point-color); font-size: 1.05rem;">신랑 측 계좌</p>
+                <div style="display: flex; justify-content: space-between; align-items: center; background: #f9f9f9; padding: 15px; border-radius: 12px; border: 1px solid #eee;">
+                    <div>
+                        <span style="font-size: 0.8rem; color: #888; display: block; margin-bottom: 4px;">우리은행 (류승건)</span>
+                        <span id="acc-groom" style="font-size: 1.05rem; color: #333; font-weight: 700;">1002-841-241285</span>
+                    </div>
+                    <button class="btn-copy-sm" onclick="copyToClipboard('acc-groom')" style="background: white;">복사</button>
                 </div>
             </div>
         </div>
+    </div>
+
+    <div style="padding: 50px 20px; text-align: center; background-color: #fafafa; border-top: 1px solid #eee;">
+        <button onclick="shareKakao()" style="display: inline-flex; align-items: center; justify-content: center; gap: 10px; background-color: #FEE500; color: #191919; border: none; padding: 16px 30px; border-radius: 14px; font-weight: 700; font-size: 1rem; cursor: pointer; font-family: inherit; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: transform 0.2s;">
+            <i class="fa-solid fa-comment" style="font-size: 1.2rem;"></i> 카카오톡으로 청첩장 보내기
+        </button>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js"></script>
     
     <script>
-        // 네이버 지도 초기화 함수
+        // 네이버 지도 초기화 
         function initMap() {
-            var lat = 37.265747; // 메리빌리아 위도
-            var lng = 126.999818; // 메리빌리아 경도
-            
+            var lat = 37.265747; 
+            var lng = 126.999818; 
             var map = new naver.maps.Map('map', {
                 center: new naver.maps.LatLng(lat, lng),
-                zoom: 16,
-                minZoom: 10,
-                zoomControl: true,
-                draggable: true,
-                scrollWheel: false
+                zoom: 16, minZoom: 10, zoomControl: true, draggable: true, scrollWheel: false
             });
-
             var marker = new naver.maps.Marker({
                 position: new naver.maps.LatLng(lat, lng),
                 map: map
             });
         }
 
-        // 페이지 로드 시 실행 (지도 및 AOS 애니메이션 안전하게 로딩)
         window.onload = function() {
-            // AOS 초기화
             try { AOS.init({ duration: 1200, once: true }); } 
             catch (e) { document.querySelectorAll('[data-aos]').forEach(el => el.classList.add('aos-animate')); }
 
-            // 네이버 지도 초기화 (스크립트가 로드된 경우에만)
-            if (typeof naver !== 'undefined') {
-                initMap();
-            } else {
-                console.warn("네이버 지도 Client ID가 올바르지 않거나 스크립트를 불러오지 못했습니다.");
-            }
+            if (typeof naver !== 'undefined') { initMap(); }
         };
 
-        // BGM 로직
+        // 카카오톡 공유 (Client ID 입력 필요시 변경)
+        if (!Kakao.isInitialized()) { Kakao.init('a5ea5495dd09ddffc0e6d746f448858b'); }
+        function shareKakao() { Kakao.Share.sendCustom({ templateId: 133283 }); }
+
+        // BGM 
         const bgm = document.getElementById('bgm');
         const bgmBtn = document.getElementById('bgmBtn');
         let isBgmPlaying = false;
         function toggleBgm() {
             if (isBgmPlaying) { bgm.pause(); bgmBtn.classList.remove('playing'); }
-            else { bgm.play().catch(e => console.log('BGM Play Error')); bgmBtn.classList.add('playing'); }
+            else { bgm.play().catch(e => console.log('BGM Error')); bgmBtn.classList.add('playing'); }
             isBgmPlaying = !isBgmPlaying;
         }
 
-        // 슬라이더 로직
+        // 메인 슬라이더 (자동 슬라이드 기능 추가)
         let heroIdx = 1; const totalHero = 3; let isHeroMoving = false;
         const heroContainer = document.getElementById('heroSlider');
+        let autoSlide;
+
         function moveSlider(dir) {
             if (isHeroMoving || !heroContainer) return;
             isHeroMoving = true; heroIdx += dir;
-            heroContainer.style.transition = 'transform 0.4s ease-out';
+            heroContainer.style.transition = 'transform 0.5s ease-in-out';
             heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`;
+            resetAutoSlide(); // 버튼 누르면 자동넘김 시간 초기화
         }
+
+        function startAutoSlide() {
+            autoSlide = setInterval(() => moveSlider(1), 3500); // 3.5초마다 자동 넘김
+        }
+        function resetAutoSlide() {
+            clearInterval(autoSlide);
+            startAutoSlide();
+        }
+
         if(heroContainer) {
+            heroContainer.style.transform = `translateX(-100%)`; // 초기 위치 설정
+            startAutoSlide(); // 자동 넘김 시작
+
             heroContainer.addEventListener('transitionend', () => {
                 isHeroMoving = false;
                 if (heroIdx === 0) { heroContainer.style.transition = 'none'; heroIdx = totalHero; heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`; }
                 else if (heroIdx === totalHero + 1) { heroContainer.style.transition = 'none'; heroIdx = 1; heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`; }
             });
+
+            // 터치 스와이프 기능
+            let hStartX = 0;
+            heroContainer.addEventListener('touchstart', e => { hStartX = e.touches[0].clientX; clearInterval(autoSlide); }, {passive: true});
+            heroContainer.addEventListener('touchend', e => {
+                const diffX = hStartX - e.changedTouches[0].clientX;
+                if (Math.abs(diffX) > 40) moveSlider(diffX > 0 ? 1 : -1);
+                else startAutoSlide();
+            });
         }
 
-        // 갤러리 로직 (누락되었던 부분 완벽 복구)
+        // 갤러리 기능
         const galleryFiles = ['p01', 'p02', 'p03', 'p04', 'p05', 'p06', 'p11', 'p12', 'p13', 'p14', 'p15', 'p16', 'p17', 'p18', 'p19', 'p20', 'p21', 'p31', 'p32', 'p33', 'p34', 'p35', 'p36', 'p37', 'p39', 'p40', 'p61', 'p62', 'p63', 'p64', 'p65'];
         const totalGalleryImages = galleryFiles.length;
         let gViewIdx = 0;
@@ -277,7 +311,7 @@
                 const item = document.createElement('div');
                 item.className = 'gallery-item';
                 item.setAttribute('onclick', `openViewer(${idx})`);
-                item.innerHTML = `<img src="./assets/p00/${name}.png" loading="lazy">`;
+                item.innerHTML = `<img src="./assets/p00/${name}.png" alt="갤러리 사진">`;
                 grid.appendChild(item);
             });
         }
@@ -288,22 +322,23 @@
             const btn = document.getElementById('moreBtn');
             if (wrap.classList.contains('limited')) {
                 wrap.classList.remove('limited');
-                btn.innerText = '접기 △';
+                btn.innerText = '사진 접기 △';
             } else {
                 wrap.classList.add('limited');
-                btn.innerText = '더보기 ▽';
+                btn.innerText = '사진 더보기 ▽';
                 document.getElementById('gallerySection').scrollIntoView({ behavior: 'smooth' });
             }
         }
 
+        // 갤러리 확대 뷰어
         function openViewer(idx) {
             gViewIdx = idx; updateViewer();
             document.getElementById('galleryViewer').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden'; // 뒤에 화면 스크롤 방지
         }
         function closeViewer() {
             document.getElementById('galleryViewer').style.display = 'none';
-            document.body.style.overflow = 'auto';
+            document.body.style.overflow = 'auto'; // 스크롤 원상복구
         }
         function changeViewImg(dir) {
             gViewIdx = (gViewIdx + dir + totalGalleryImages) % totalGalleryImages;
@@ -315,12 +350,12 @@
             document.getElementById('viewerCount').innerText = `${gViewIdx + 1} / ${totalGalleryImages}`;
         }
 
-        // 스와이프로 갤러리 이미지 넘기기
+        // 확대화면 스와이프 (손가락 넘기기)
         let vStartX = 0;
         document.getElementById('viewerContent').addEventListener('touchstart', e => vStartX = e.changedTouches[0].screenX, {passive: true});
         document.getElementById('viewerContent').addEventListener('touchend', e => {
             const diff = vStartX - e.changedTouches[0].screenX;
-            if (Math.abs(diff) > 50) changeViewImg(diff > 0 ? 1 : -1);
+            if (Math.abs(diff) > 40) changeViewImg(diff > 0 ? 1 : -1);
         }, {passive: true});
 
         // 디데이 계산
@@ -342,8 +377,11 @@
         }
         setInterval(updateCountdown, 1000); updateCountdown();
 
-        // 유틸리티
-        function copyToClipboard(id) { const text = document.getElementById(id).innerText; navigator.clipboard.writeText(text).then(() => alert("복사되었습니다.")); }
+        // 유틸리티 함수
+        function copyToClipboard(id) { 
+            const text = document.getElementById(id).innerText; 
+            navigator.clipboard.writeText(text).then(() => alert("계좌번호가 복사되었습니다.")); 
+        }
         function openModal() { document.getElementById('accModal').style.display = 'flex'; }
         function closeModal() { document.getElementById('accModal').style.display = 'none'; }
     </script>
