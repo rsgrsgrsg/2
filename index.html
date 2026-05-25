@@ -90,14 +90,11 @@
         .hero-date { 
             font-size: 1.1rem; 
             letter-spacing: 1px; 
-            font-weight: 700; 
-            color: white; /* 글자색을 흰색으로 변경 */
-            background-color: var(--point-color); /* 배경색을 버튼과 같은 포인트 컬러로 변경 */
-            padding: 10px 20px; 
-            border-radius: 8px; /* 버튼과 동일한 모서리 곡률(8px)로 변경 */
-            display: inline-block;
-            text-shadow: none;
-        }
+            font-weight: 400; /* 글자가 뭉개지지 않게 두께를 살짝 뺐습니다 */
+            color: #ffffff; /* 사진 위에서 잘 보이도록 흰색 텍스트로 변경 */
+            text-shadow: 0 0 8px rgba(0, 0, 0, 0.6); /* 배경 사진이 밝아도 글자가 묻히지 않게 텍스트 그림자 추가 */
+            margin-top: 10px;
+}
 
         /* 디데이 & 위치 */
         .countdown-wrap { display: flex; justify-content: center; gap: 30px; margin: 30px 0; }
