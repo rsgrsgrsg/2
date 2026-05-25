@@ -9,32 +9,26 @@
     
     <style>
         :root { --main-color: #D1A7A7; }
-        body { font-family: 'Noto Serif KR', serif; margin: 0; color: #333; }
-        .section { padding: 60px 20px; text-align: center; }
-        
-        /* 🎨 버튼 디자인 통일 (라운드 처리) */
-        .btn { display: inline-block; padding: 14px 28px; border-radius: 30px; border: 1px solid #ddd; background: #fff; color: #555; text-decoration: none; font-size: 0.9rem; margin: 5px; transition: 0.3s; cursor: pointer; }
-        .btn-point { background: var(--main-color); border: none; color: white; font-weight: bold; }
-        
-        /* 지도 & 방명록 */
-        #map { width: 100%; height: 300px; border-radius: 20px; margin: 20px 0; }
-        #gb-list { height: 250px; overflow-y: auto; text-align: left; padding: 15px; border: 1px solid #eee; border-radius: 15px; margin-top: 10px; background: #fdfdfd; }
+        body { font-family: 'Noto Serif KR', serif; margin: 0; line-height: 1.6; color: #333; }
+        .section { padding: 50px 20px; text-align: center; }
+        .btn { padding: 12px 25px; border-radius: 25px; border: 1px solid #ddd; background: #fff; margin: 5px; cursor: pointer; transition: 0.3s; }
+        .btn-point { background: var(--main-color); border: none; color: white; padding: 15px 40px; font-weight: bold; }
+        #map { width: 100%; height: 300px; border-radius: 15px; margin: 20px 0; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+        .gallery-item img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div style="height:100vh; position:relative; background:#000;">
-        <div id="heroSlider" style="height:100%; background:#eee;"></div>
-        <div style="position:absolute; bottom:15%; width:100%; color:white; text-align:center; text-shadow:0 2px 10px rgba(0,0,0,0.8);">
-            <h1 style="font-size:2.5rem; margin:0;">류승건 & 이지연</h1>
-            <p style="font-size:1.2rem; margin-top:10px;">2026년 8월 15일 토요일 오후 12시</p>
-        </div>
+    <div style="height:100vh; background:#eee; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; padding-bottom:10%;">
+        <h1 style="font-size:2.5rem; margin:0;">류승건 & 이지연</h1>
+        <p style="font-size:1.2rem; font-weight:bold; margin-top:10px;">2026년 8월 15일 토요일 오후 12시</p>
     </div>
 
     <section class="section">
         <h3>D-Day</h3>
         <p>2026년 8월 15일</p>
-        <div id="d-day" style="font-size:2rem; color:var(--main-color);">계산중...</div>
+        <div id="d-day" style="font-size:1.8rem; color:var(--main-color);">계산중...</div>
     </section>
 
     <section class="section">
@@ -46,16 +40,20 @@
 
     <section class="section">
         <h3>Gallery</h3>
-        <div id="galleryGrid" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:5px;"></div>
+        <div class="gallery-grid" id="galleryGrid"></div>
         <button class="btn" onclick="alert('더보기 기능')">사진 더보기</button>
     </section>
 
     <section class="section">
         <h3>Guestbook</h3>
-        <input type="text" id="gb_name" placeholder="성함" class="btn" style="width:100%; border-radius:10px;">
-        <textarea id="gb_msg" placeholder="축하 메시지" class="btn" style="width:100%; height:80px; border-radius:10px;"></textarea>
+        <input type="text" id="gb_name" placeholder="성함" class="btn" style="width:90%;">
+        <textarea id="gb_msg" placeholder="축하 메시지" class="btn" style="width:90%; height:80px;"></textarea>
         <button class="btn btn-point" onclick="saveGuestMessage()">메시지 남기기</button>
-        <div id="gb-list"></div>
+        <div id="gb-list" style="text-align:left; margin-top:20px;"></div>
+    </section>
+
+    <section class="section">
+        <button class="btn" onclick="shareKakao()"><i class="fa-solid fa-comment"></i> 카카오톡으로 청첩장 보내기</button>
     </section>
 
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
@@ -63,36 +61,35 @@
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js"></script>
 
     <script>
-        // 지도 동적 생성
+        // 지도 및 디데이 초기화
         window.onload = () => {
-            new naver.maps.Map('map', { 
-                center: new naver.maps.LatLng(37.265747, 126.999818), 
-                zoom: 16 
-            });
-            new naver.maps.Marker({ 
-                position: new naver.maps.LatLng(37.265747, 126.999818), 
-                map: new naver.maps.Map('map', { center: new naver.maps.LatLng(37.265747, 126.999818), zoom: 16 }) 
-            });
+            new naver.maps.Map('map', { center: new naver.maps.LatLng(37.265747, 126.999818), zoom: 16 });
             updateDday();
         };
 
-        // 방명록 리스트(스크롤 페이징)
-        const db = firebase.initializeApp({apiKey: "AIzaSyD1LmVHTLYnecokZV67_hCDcM289fl3oiw", databaseURL: "https://sg-jy-233e2-default-rtdb.asia-southeast1.firebasedatabase.app"}).database();
-        db.ref('guestbook').on('value', (snap) => {
-            const list = document.getElementById('gb-list'); list.innerHTML = '';
-            snap.forEach(c => list.innerHTML += `<div style="border-bottom:1px solid #eee; padding:10px;"><b>${c.val().name}</b><br>${c.val().msg}</div>`);
-        });
+        // 갤러리
+        const files = ['p01.png','p02.png','p03.png','p04.png','p05.png','p06.png','p11.png','p12.png','p13.png','p14.png','p15.png','p16.png','p17.png','p18.png','p19.png','p20.png','p21.png','p31.png','p32.png','p33.png','p34.png','p35.png','p36.png','p37.png','p39.png','p40.png','p51.png','p52.png','p53.png','p54.png','p56.png','p57.png','p58.jpg','p61.png','p62.png','p63.png','p64.png','p65.png'];
+        const grid = document.getElementById('galleryGrid');
+        files.forEach(f => grid.innerHTML += `<div class="gallery-item"><img src="./assets/p00/${f}" onclick="alert('확대 기능')"></div>`);
 
+        // 방명록 유효성 검사 (입력값 체크 로직 반영)
+        const db = firebase.initializeApp({apiKey: "AIzaSyD1LmVHTLYnecokZV67_hCDcM289fl3oiw", databaseURL: "https://sg-jy-233e2-default-rtdb.asia-southeast1.firebasedatabase.app"}).database();
         function saveGuestMessage() {
-            const name = document.getElementById('gb_name').value;
-            const msg = document.getElementById('gb_msg').value;
-            if(!name || !msg) return alert('입력하세요!');
+            const name = document.getElementById('gb_name').value.trim();
+            const msg = document.getElementById('gb_msg').value.trim();
+            if (!name && !msg) return alert('성함과 축하 메시지를 모두 입력해주세요.');
+            if (!name) return alert('성함을 입력해주세요.');
+            if (!msg) return alert('축하 메시지를 입력해주세요.');
             db.ref('guestbook').push({name, msg});
+            alert('등록 완료!');
         }
-        
+
+        // 카카오
+        Kakao.init('a5ea5495dd09ddffc0e6d746f448858b');
+        function shareKakao() { Kakao.Share.sendCustom({ templateId: 133283 }); }
         function updateDday() {
             const d = Math.floor((new Date('2026-08-15') - new Date()) / (1000*60*60*24));
-            document.getElementById('d-day').innerText = `${d}일 남았습니다.`;
+            document.getElementById('d-day').innerText = `결혼식까지 ${d}일 남았습니다.`;
         }
     </script>
 </body>
