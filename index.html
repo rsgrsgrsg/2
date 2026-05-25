@@ -9,70 +9,35 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;400;700&family=Montserrat:wght@100;300;400&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="./assets/app.png"> 
     
     <style>
         :root { --point-black: #000000; --point-color: #D1A7A7; --deep-gray: #333333; --bg-white: #ffffff; }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; }
-        input, textarea, [id*="acc-"], [id*="addr-"] { -webkit-user-select: text; user-select: text; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Noto Serif KR', serif; margin: 0; color: var(--point-black); background: var(--bg-white); line-height: 1.8; word-break: keep-all; }
-
-        /* AOS 안전장치 */
-        [data-aos] { opacity: 1 !important; transform: none !important; transition: none !important; }
-        
+        [data-aos] { opacity: 1 !important; transform: translate(0) scale(1) !important; transition: none !important; }
         .section { padding: 80px 30px; text-align: center; }
         .section-title { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--point-black); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 30px; display: block; }
         .h-divider { width: 100%; height: 1px; background-color: var(--point-black); margin: 0; }
-
-        .btn-point { background: var(--point-color); color: white; border: none; padding: 15px; width: 100%; cursor: pointer; letter-spacing: 2px; font-weight: 700; font-family: inherit; font-size: 0.9rem; display: block; text-align: center; text-decoration: none; border-radius: 8px; }
-        .btn-copy-sm { background: var(--point-color); color: white; border: none; padding: 6px 12px; font-size: 0.75rem; cursor: pointer; font-family: inherit; border-radius: 6px; }
-
+        .btn-point { background: var(--point-color); color: white; border: none; padding: 15px; width: 100%; cursor: pointer; letter-spacing: 2px; font-weight: 700; font-size: 0.9rem; display: block; text-align: center; text-decoration: none; border-radius: 8px; }
+        .btn-copy-sm { background: var(--point-color); color: white; border: none; padding: 6px 12px; font-size: 0.75rem; cursor: pointer; border-radius: 6px; }
         .bgm-btn { position: fixed; top: 15px; right: 15px; z-index: 9990; width: 42px; height: 42px; background: rgba(255, 255, 255, 0.85); border: 1px solid #ddd; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--point-color); font-size: 1.1rem; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-        .bgm-btn.playing i.fa-music { animation: spin 3s linear infinite; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
         .hero-slider { height: 100vh; width: 100%; overflow: hidden; position: relative; }
-        .hero-container { display: flex; height: 100%; width: 100%; }
+        .hero-container { display: flex; height: 100%; width: 100%; transition: transform 0.4s ease-out; }
         .hero-item { min-width: 100%; height: 100%; position: relative; }
         .hero-item img { width: 100%; height: 100%; object-fit: cover; }
-        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 60px; color: white; text-align: center; z-index: 5; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
-        .hero-names { font-size: 2.2rem; font-weight: 400; letter-spacing: 8px; margin-bottom: 15px; }
-        .hero-date { font-size: 1.3rem; line-height: 1.6; letter-spacing: 1px; color: #ffffff; text-shadow: 0 0 8px rgba(0, 0, 0, 0.6); margin-top: 10px; }
-        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.15); border: none; color: white; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; font-size: 1.2rem; }
-        .prev-btn { left: 10px; } .next-btn { right: 10px; }
-
-        .countdown-wrap { display: flex; justify-content: center; gap: 30px; margin: 30px 0; }
-        .count-num { font-family: 'Montserrat', sans-serif; font-size: 1.8rem; }
-        .count-label { font-size: 0.65rem; color: #999; letter-spacing: 2px; }
-        .address-box { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; width: 100%; }
-        .map-link-area { width: 100%; display: block; margin: 20px auto; border: 1px solid #eee; background-color: #f4f4f4; background-size: cover; background-position: center; border-radius: 8px; overflow: hidden; }
-
-        .gallery-wrap { position: relative; overflow: hidden; max-height: 5000px; transition: max-height 0.8s ease-in-out; }
+        .hero-overlay { position: absolute; bottom: 60px; left: 0; width: 100%; color: white; text-align: center; z-index: 5; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
+        .hero-date { font-size: 1.3rem; line-height: 1.6; color: #ffffff; }
+        .gallery-wrap { position: relative; overflow: hidden; max-height: 5000px; transition: max-height 0.8s; }
         .gallery-wrap.limited { max-height: 330px; }
         .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 0 10px; }
         .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
-
-        #galleryViewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10001; align-items: center; justify-content: center; }
-        .viewer-content { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
-        .viewer-img { max-width: 100%; max-height: 100%; object-fit: contain; }
-        .viewer-close { position: absolute; top: 20px; right: 20px; color: #fff; font-size: 2.5rem; cursor: pointer; z-index: 10002; }
-        .viewer-nav { position: absolute; top: 50%; transform: translateY(-50%); color: #fff; font-size: 2.5rem; background: none; border: none; cursor: pointer; padding: 20px; z-index: 10002; }
-        .v-prev { left: 10px; } .v-next { right: 10px; }
-        .viewer-count { position: absolute; bottom: 40px; color: #fff; font-size: 0.85rem; letter-spacing: 2px; }
-
-        .gb-card { background: white; padding: 30px 20px; border: 1px solid #eee; max-width: 450px; margin: 0 auto; }
-        .gb-card input, .gb-card textarea { display: block; width: 100%; padding: 15px; border: 1px solid #eee; margin-bottom: 10px; border-radius: 8px; }
-        #gb-list { margin-top: 20px; max-height: 400px; overflow-y: auto; border-top: 1px solid #f2f2f2; }
-        .guest-item { border-bottom: 1px solid #f2f2f2; padding: 20px 0; text-align: left; }
-        .guest-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 5px; display: block; }
-        .guest-msg { font-size: 0.85rem; color: var(--deep-gray); line-height: 1.6; }
-
         .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
-        .modal-content { background: white; padding: 40px 25px; width: 90%; max-width: 400px; text-align: center; border-radius: 12px; position: relative; }
-        .close-modal { position: absolute; right: 15px; top: 15px; font-size: 1.5rem; cursor: pointer; color: #999; }
-        .btn-kakaopay { display: flex; align-items: center; justify-content: center; gap: 8px; background: #FEE500; color: #191919; text-align: center; padding: 12px; font-size: 0.85rem; font-weight: 700; text-decoration: none; border-radius: 8px; margin-top: 10px; }
+        .modal-content { background: white; padding: 30px; width: 90%; max-width: 400px; border-radius: 12px; position: relative; }
+        .btn-kakaopay { display: flex; align-items: center; justify-content: center; gap: 8px; background: #FEE500; color: #191919; padding: 12px; font-weight: 700; text-decoration: none; border-radius: 8px; margin-top: 10px; }
         .acc-group { text-align: left; padding: 15px 0; border-bottom: 1px solid #eee; }
-        .acc-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+        .acc-row { display: flex; justify-content: space-between; align-items: center; }
     </style>
 </head>
 <body oncontextmenu="return false">
@@ -86,81 +51,39 @@
             <div class="hero-item"><img src="./assets/main1.png"></div>
             <div class="hero-item"><img src="./assets/main2.png"></div>
         </div>
-        <button class="nav-btn prev-btn" onclick="moveSlider(-1)">&#10094;</button>
-        <button class="nav-btn next-btn" onclick="moveSlider(1)">&#10095;</button>
         <div class="hero-overlay">
-            <div data-aos="fade-up" data-aos-duration="2000">
-                <h1 class="hero-names">류승건 & 이지연</h1>
-                <p class="hero-date">2026년 8월 15일<br>토요일 오후 12시</p>
-            </div>
+            <h1 class="hero-names">류승건 & 이지연</h1>
+            <p class="hero-date">2026년 8월 15일<br>토요일 오후 12시</p>
         </div>
     </div>
 
     <div class="h-divider"></div>
 
-    <section class="section" data-aos="fade-up">
+    <section class="section">
         <span class="section-title">Invitation</span>
-        <p style="font-size: 1.1rem; line-height: 2.4;">곁에 있을 때 가장 나다워지는 사람을 만났습니다.<br>서로의 결을 닮아가는 사랑으로<br>함께할 새날의 시작을 약속합니다.</p>
+        <p>곁에 있을 때 가장 나다워지는 사람을 만났습니다.<br>서로의 결을 닮아가는 사랑으로 함께할 새날의 시작을 약속합니다.</p>
     </section>
 
     <div class="h-divider"></div>
 
-    <section class="section" data-aos="fade-up">
-        <span class="section-title">D-Day</span>
-        <div class="countdown-wrap">
-            <div class="count-item"><span class="count-num" id="days">00</span><br><span class="count-label">DAYS</span></div>
-            <div class="count-item"><span class="count-num" id="hours">00</span><br><span class="count-label">HOURS</span></div>
-            <div class="count-item"><span class="count-num" id="mins">00</span><br><span class="count-label">MINS</span></div>
-        </div>
-    </section>
-
-    <div class="h-divider"></div>
-
-    <section class="section" data-aos="fade-up">
-        <span class="section-title">Location</span>
-        <h3 style="font-weight: 700; font-size: 1.2rem;">메리빌리아 더프레스티지</h3>
-        <div class="address-box">
-            <span id="addr-text" style="color: #888; font-size: 0.85rem;">경기 수원시 권선구 세화로 116</span>
-            <button class="btn-copy-sm" onclick="copyToClipboard('addr-text')">복사</button>
-        </div>
-        <a href="https://naver.me/5apDP7nI" target="_blank" class="map-link-area" style="background-image: url('./assets/map_preview.png'); width: 100%; aspect-ratio: 900 / 650; height: auto;"></a>
-        <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
-            <a href="https://naver.me/5apDP7nI" target="_blank" class="btn-point" style="flex: 1; margin: 0; padding: 12px;">네이버 지도</a>
-            <a href="https://kko.to/EIt4OnhVm4" target="_blank" class="btn-point" style="flex: 1; margin: 0; padding: 12px;">카카오 네비</a>
-        </div>
-    </section>
-
-    <div class="h-divider"></div>
-
-    <section class="section" data-aos="fade-up" id="gallerySection">
+    <section class="section" id="gallerySection">
         <span class="section-title">Gallery</span>
         <div class="gallery-wrap limited" id="galleryWrap">
             <div class="gallery-grid" id="galleryGrid"></div>
         </div>
-        <button id="moreBtn" class="btn-point" style="max-width: 200px; margin: 20px auto; padding: 12px;" onclick="toggleGallery()">사진 더보기</button>
+        <button id="moreBtn" class="btn-point" style="max-width: 200px; margin: 20px auto;" onclick="toggleGallery()">사진 더보기</button>
     </section>
-
-    <div id="galleryViewer">
-        <span class="viewer-close" onclick="closeViewer()">×</span>
-        <div class="viewer-content" id="viewerContent">
-            <button class="viewer-nav v-prev" onclick="changeViewImg(-1)">&#10094;</button>
-            <img src="" class="viewer-img" id="currentViewerImg">
-            <button class="viewer-nav v-next" onclick="changeViewImg(1)">&#10095;</button>
-            <div class="viewer-count" id="viewerCount">1 / 1</div>
-        </div>
-    </div>
 
     <div class="h-divider"></div>
 
-    <section class="section" data-aos="fade-up" style="padding: 60px 30px;">
+    <section class="section">
         <span class="section-title">Account</span>
-        <p style="font-size: 0.9rem; margin-bottom: 25px;">축복해주시는 소중한 마음 잊지 않고<br>예쁘게 잘 살겠습니다.</p>
-        <button onclick="openModal()" class="btn-point" style="max-width: 300px; margin: 0 auto; display: block;">마음 전하실 곳</button>
+        <button onclick="document.getElementById('accModal').style.display='flex'" class="btn-point" style="max-width: 300px; margin: 0 auto;">마음 전하실 곳</button>
     </section>
 
     <div class="h-divider"></div>
 
-    <section class="section" data-aos="fade-up">
+    <section class="section">
         <span class="section-title">Guestbook</span>
         <div class="gb-card">
             <input type="text" id="gb_name" placeholder="성함">
@@ -170,36 +93,19 @@
         </div>
     </section>
 
-    <div class="h-divider"></div>
-
-    <section class="section" data-aos="fade-up" style="padding: 60px 30px;">
-        <p style="font-size: 0.9rem; margin-bottom: 25px;">소중한 분들께 초대장을 전해주세요.</p>
-        <button onclick="shareKakao()" class="btn-point" style="background-color: #FEE500; color: #191919; max-width: 300px; margin: 0 auto;">카카오톡 공유하기</button>
-    </section>
-
     <div id="accModal" class="modal">
         <div class="modal-content">
-            <span class="close-modal" onclick="closeModal()">×</span>
+            <span onclick="document.getElementById('accModal').style.display='none'" style="float:right; cursor:pointer;">×</span>
             <h3>마음 전하실 곳</h3>
             <div class="acc-group">
                 <p>신랑 류승건</p>
                 <div class="acc-row"><span id="acc-groom">우리은행 1002-841-241285</span><button class="btn-copy-sm" onclick="copyToClipboard('acc-groom')">복사</button></div>
-            </div>
-            <div class="acc-group">
-                <p>신랑측 아버지 류주형</p>
-                <div class="acc-row"><span id="acc-father">농협 352-0863-6634-83</span><button class="btn-copy-sm" onclick="copyToClipboard('acc-father')">복사</button></div>
+                <a href="https://qr.kakaopay.com/FNfa3PrZO" class="btn-kakaopay">카카오페이 송금</a>
             </div>
             <div class="acc-group">
                 <p>신부 이지연</p>
                 <div class="acc-row"><span id="acc-bride">새마을금고 9003-1978-4884-1</span><button class="btn-copy-sm" onclick="copyToClipboard('acc-bride')">복사</button></div>
-            </div>
-            <div class="acc-group">
-                <p>신부측 아버지 이광구</p>
-                <div class="acc-row"><span id="acc-father-in-law">농협 351-0504-8591-13</span><button class="btn-copy-sm" onclick="copyToClipboard('acc-father-in-law')">복사</button></div>
-            </div>
-            <div class="acc-group">
-                <p>신부측 어머니 최지영</p>
-                <div class="acc-row"><span id="acc-mother-in-law">우리은행 1002-853-084582</span><button class="btn-copy-sm" onclick="copyToClipboard('acc-mother-in-law')">복사</button></div>
+                <a href="https://qr.kakaopay.com/Ej8bBn70Q" class="btn-kakaopay">카카오페이 송금</a>
             </div>
         </div>
     </div>
@@ -207,83 +113,52 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
-    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"></script>
-    
     <script>
-        let database;
-        window.onload = function() { try { AOS.init({ duration: 1200, once: true }); } catch (e) {} };
+        // 1. 슬라이더 로직
+        let heroIdx = 0;
+        function moveSlider(dir) {
+            const container = document.getElementById('heroSlider');
+            heroIdx = (heroIdx + dir + 3) % 3;
+            container.style.transform = `translateX(-${heroIdx * 100}%)`;
+        }
 
-        function toggleBgm() { /* 기존 로직 */ }
-        function moveSlider(dir) { /* 기존 로직 */ }
-        function toggleGallery() { /* 기존 로직 */ }
-        function openViewer(idx) { /* ... */ }
-        function closeViewer() { /* ... */ }
-        function changeViewImg(dir) { /* ... */ }
-        function updateViewer() { /* ... */ }
+        // 2. 갤러리 이미지 로드
+        const galleryFiles = ['p01', 'p02', 'p03', 'p04', 'p05', 'p06', 'p11', 'p12', 'p13', 'p14', 'p15', 'p16', 'p17', 'p18', 'p19', 'p20', 'p21', 'p31', 'p32', 'p33', 'p34', 'p35', 'p36', 'p37', 'p39', 'p40', 'p51', 'p52', 'p53', 'p54', 'p56', 'p57', 'p58', 'p61', 'p62', 'p63', 'p64', 'p65'];
+        const grid = document.getElementById('galleryGrid');
+        galleryFiles.forEach(name => {
+            const ext = (name === 'p58') ? '.jpg' : '.png';
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
+            item.innerHTML = `<img src="./assets/p00/${name}${ext}">`;
+            grid.appendChild(item);
+        });
 
-        // [수정된 복사 로직]
+        function toggleGallery() {
+            const wrap = document.getElementById('galleryWrap');
+            const btn = document.getElementById('moreBtn');
+            wrap.classList.toggle('limited');
+            btn.innerText = wrap.classList.contains('limited') ? '사진 더보기' : '사진 접기';
+        }
+
+        // 3. 복사 로직
         function copyToClipboard(id) {
             const fullText = document.getElementById(id).innerText;
             const accountNumber = fullText.split(' ').pop();
-            navigator.clipboard.writeText(accountNumber).then(() => alert("계좌번호(" + accountNumber + ")가 복사되었습니다."));
-        }
-        
-        function openModal() { document.getElementById('accModal').style.display = 'flex'; }
-        function closeModal() { document.getElementById('accModal').style.display = 'none'; }
-        function sanitize(str) { const temp = document.createElement('div'); temp.textContent = str; return temp.innerHTML; }
-
-        if (!Kakao.isInitialized()) { Kakao.init('a5ea5495dd09ddffc0e6d746f448858b'); }
-        function shareKakao() {
-            Kakao.Share.sendCustom({
-                templateId: 133283,
-                templateArgs: { 'title': '류승건 & 이지연 결혼식에 초대합니다', 'description': '2026년 8월 15일 토요일 오후 12시\n메리빌리아 더프레스티지' }
-            });
+            navigator.clipboard.writeText(accountNumber).then(() => alert("계좌번호가 복사되었습니다."));
         }
 
-        try {
-            const firebaseConfig = { apiKey: "AIzaSyD1LmVHTLYnecokZV67_hCDcM289fl3oiw", authDomain: "sg-jy-233e2.firebaseapp.com", databaseURL: "https://sg-jy-233e2-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "sg-jy-233e2", storageBucket: "sg-jy-233e2.firebasestorage.app", messagingSenderId: "217599075354", appId: "1:217599075354:web:c227474b5efc4fd280dda3" };
-            firebase.initializeApp(firebaseConfig);
-            database = firebase.database();
-            
-            function updateCountdown() {
-                const target = new Date('2026-08-15T12:00:00').getTime();
-                const now = new Date().getTime();
-                const diff = target - now;
-                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                if(document.getElementById('days')) {
-                    document.getElementById('days').innerText = d < 10 ? '0'+d : d;
-                    document.getElementById('hours').innerText = h < 10 ? '0'+h : h;
-                    document.getElementById('mins').innerText = m < 10 ? '0'+m : m;
-                }
-            }
-            setInterval(updateCountdown, 1000); updateCountdown();
-
-            database.ref('guestbook').on('value', (snapshot) => {
-                const list = document.getElementById('gb-list'); if(!list) return;
-                list.innerHTML = '';
-                const messages = [];
-                snapshot.forEach(child => { messages.push(child.val()); });
-                messages.reverse().forEach(data => {
-                    const div = document.createElement('div'); div.className = 'guest-item';
-                    div.innerHTML = `<span class="guest-name">${data.name}</span><div class="guest-msg">${data.message}</div>`;
-                    list.appendChild(div);
-                });
-            });
-        } catch(e) { console.error(e); }
+        // 4. Firebase
+        const firebaseConfig = { apiKey: "AIzaSyD1LmVHTLYnecokZV67_hCDcM289fl3oiw", authDomain: "sg-jy-233e2.firebaseapp.com", databaseURL: "https://sg-jy-233e2-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "sg-jy-233e2", storageBucket: "sg-jy-233e2.firebasestorage.app", messagingSenderId: "217599075354", appId: "1:217599075354:web:c227474b5efc4fd280dda3" };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
 
         function saveGuestMessage() {
-            let name = document.getElementById('gb_name').value.trim();
-            let msg = document.getElementById('gb_msg').value.trim();
-            if (!name) { alert("성함을 기재해 주세요."); return; }
-            if (!msg) { alert("메시지를 기재해 주세요."); return; }
-            if (database) {
-                database.ref('guestbook').push({ name: sanitize(name), message: sanitize(msg), timestamp: Date.now() }).then(() => {
-                    document.getElementById('gb_name').value = '';
-                    document.getElementById('gb_msg').value = '';
-                });
-            }
+            const name = document.getElementById('gb_name').value.trim();
+            const msg = document.getElementById('gb_msg').value.trim();
+            if(!name || !msg) return alert("내용을 입력하세요");
+            database.ref('guestbook').push({ name, message: msg, timestamp: Date.now() });
+            document.getElementById('gb_name').value = '';
+            document.getElementById('gb_msg').value = '';
         }
     </script>
 </body>
