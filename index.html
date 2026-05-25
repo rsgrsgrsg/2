@@ -2,125 +2,74 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>류승건 & 이지연 결혼식</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=vox8crpza6"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
     <style>
         :root { --point-color: #D1A7A7; }
-        body { font-family: 'Noto Serif KR', serif; margin: 0; color: #333; }
-        .section { padding: 60px 30px; text-align: center; }
-        
-        /* 버튼 UI: 곡선 모서리 디자인 */
-        .btn-ui { padding: 16px 30px; border-radius: 50px; border: 1px solid #ddd; background: #fff; cursor: pointer; transition: 0.3s; margin: 5px; font-weight: 600; }
-        .btn-point { background: var(--point-color); color: white; border: none; box-shadow: 0 4px 10px rgba(209, 167, 167, 0.3); }
-        
-        /* 갤러리 */
-        .gallery-wrap { max-height: 400px; overflow: hidden; transition: 0.5s; }
-        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
-        .gallery-item img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 15px; cursor: pointer; }
-        
-        /* 방명록 페이징(스크롤) */
-        #gb-list { height: 250px; overflow-y: auto; text-align: left; padding: 15px; border: 1px solid #eee; border-radius: 20px; margin-top: 15px; }
-        
-        /* 모달 */
-        .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:9999; }
-        .modal-content { background:white; padding:40px; border-radius:30px; width:80%; max-width:400px; text-align:center; }
+        body { font-family: 'Nanum Pen Script', cursive; margin: 0; color: #444; font-size: 1.3rem; }
+        .section { padding: 40px 20px; text-align: center; }
+        .btn-ui { padding: 12px 25px; border-radius: 30px; border: 1px solid #ddd; background: #fff; cursor: pointer; margin: 5px; font-family: 'Nanum Pen Script'; font-size: 1.1rem; }
+        .btn-point { background: var(--point-color); color: white; border: none; }
+        .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:9999; }
+        .modal-content { background:white; padding:30px; border-radius:20px; width:85%; max-width:400px; text-align:center; }
     </style>
 </head>
 <body>
 
     <div style="height:100vh; position:relative;">
         <img id="mainSliderImg" src="./assets/main1.png" style="width:100%; height:100%; object-fit:cover;">
-        <div style="position:absolute; bottom:15%; width:100%; color:white; text-align:center; text-shadow:0 2px 10px rgba(0,0,0,0.8);">
-            <h1 style="font-size:2.5rem; margin:0;">류승건 & 이지연</h1>
-            <p style="font-size:1.2rem; font-weight:bold;">2026년 8월 15일 토요일 오후 12시</p>
-        </div>
     </div>
 
     <section class="section">
-        <h3>D-Day</h3>
-        <p>2026년 8월 15일</p>
-        <div id="d-day-result" style="font-size:1.8rem; color:var(--point-color); font-weight:bold;"></div>
+        <h3>우리 결혼식까지</h3>
+        <div id="d-day-timer" style="font-size:2rem; color:var(--point-color);"></div>
     </section>
 
     <section class="section">
-        <h3>Location</h3>
-        <div id="map"></div>
-    </section>
-
-    <section class="section">
-        <h3>Gallery</h3>
-        <div id="galleryWrap" class="gallery-wrap">
-            <div class="gallery-grid" id="galleryGrid"></div>
-        </div>
-        <button class="btn-ui" id="moreBtn" onclick="toggleGallery()">더보기</button>
+        <h3>오시는 길</h3>
+        <div id="map" style="width:100%; height:250px; border-radius:15px; margin-bottom:15px;"></div>
+        <button class="btn-ui" onclick="window.open('https://map.naver.com/')">네이버 지도</button>
+        <button class="btn-ui" onclick="window.open('https://kakaonavi.kakao.com/')">카카오 내비</button>
     </section>
 
     <section class="section">
         <button class="btn-ui btn-point" onclick="document.getElementById('accModal').style.display='flex'">마음 전하실 곳</button>
-        <div style="margin-top:40px;">
-            <input type="text" id="gb_name" class="btn-ui" placeholder="성함" style="width:90%;">
-            <textarea id="gb_msg" class="btn-ui" placeholder="축하 메시지" style="width:90%; height:80px;"></textarea>
-            <button class="btn-ui btn-point" onclick="saveGuestMessage()" style="width:90%;">메시지 남기기</button>
-            <div id="gb-list"></div>
-        </div>
     </section>
 
     <div id="accModal" class="modal" onclick="this.style.display='none'">
         <div class="modal-content" onclick="event.stopPropagation()">
             <h3>마음 전하실 곳</h3>
-            <p>신랑 류승건: 우리 1002-841-241285</p>
+            <div style="text-align:left; font-size:1.1rem;">
+                <p><b>[신랑측]</b><br>류승건: 우리 1002-841-241285<br>아버지: OO은행 123-456<br>어머니: OO은행 789-012</p>
+                <p><b>[신부측]</b><br>이지연: OO은행 111-222<br>아버지: OO은행 333-444<br>어머니: OO은행 555-666</p>
+                <p><a href="https://qr.kakaopay.com/...">카카오페이 송금하기</a></p>
+            </div>
             <button class="btn-ui" onclick="document.getElementById('accModal').style.display='none'">닫기</button>
         </div>
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
-
     <script>
-        // 초기화
+        // 디데이 카운트다운
+        function updateTimer() {
+            const target = new Date('2026-08-15T12:00:00');
+            const now = new Date();
+            const diff = target - now;
+            
+            const d = Math.floor(diff / (1000*60*60*24));
+            const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+            const m = Math.floor((diff % (1000*60*60)) / (1000*60));
+            
+            document.getElementById('d-day-timer').innerText = `${d}일 ${h}시간 ${m}분 남았습니다.`;
+        }
+        setInterval(updateTimer, 60000);
+        updateTimer();
+
+        // 지도 초기화
         window.onload = () => {
             new naver.maps.Map('map', { center: new naver.maps.LatLng(37.265747, 126.999818), zoom: 16 });
-            
-            // 갤러리 로드
-            const files = ['p01.png','p02.png','p03.png','p04.png','p05.png','p06.png','p11.png','p12.png','p13.png','p14.png','p15.png','p16.png','p17.png','p18.png','p19.png','p20.png','p21.png','p31.png','p32.png','p33.png','p34.png','p35.png','p36.png','p37.png','p39.png','p40.png','p51.png','p52.png','p53.png','p54.png','p56.png','p57.png','p58.jpg','p61.png','p62.png','p63.png','p64.png','p65.png'];
-            const grid = document.getElementById('galleryGrid');
-            files.forEach(f => grid.innerHTML += `<div class="gallery-item"><img src="./assets/p00/${f}"></div>`);
-
-            // 메인 슬라이더
-            let idx = 1;
-            setInterval(() => {
-                idx = idx >= 3 ? 1 : idx + 1;
-                document.getElementById('mainSliderImg').src = `./assets/main${idx}.png`;
-            }, 3000);
-
-            // 디데이
-            const diff = Math.floor((new Date() - new Date('2026-08-15')) / (1000*60*60*24));
-            document.getElementById('d-day-result').innerText = diff >= 0 ? `결혼식 후 ${diff}일 지났습니다.` : `결혼식까지 ${Math.abs(diff)}일 남았습니다.`;
         };
-
-        // 방명록
-        const db = firebase.initializeApp({apiKey: "AIzaSyD1LmVHTLYnecokZV67_hCDcM289fl3oiw", databaseURL: "https://sg-jy-233e2-default-rtdb.asia-southeast1.firebasedatabase.app"}).database();
-        function saveGuestMessage() {
-            const n = document.getElementById('gb_name').value.trim();
-            const m = document.getElementById('gb_msg').value.trim();
-            if (!n && !m) return alert('성함과 축하 메시지를 입력해주세요.');
-            if (!n) return alert('성함을 입력해주세요.');
-            if (!m) return alert('축하 메시지를 입력해주세요.');
-            db.ref('guestbook').push({name: n, msg: m});
-            alert('등록 완료!');
-        }
-
-        // 갤러리 토글
-        function toggleGallery() {
-            const wrap = document.getElementById('galleryWrap');
-            const btn = document.getElementById('moreBtn');
-            const isOpen = wrap.style.maxHeight !== '400px';
-            wrap.style.maxHeight = isOpen ? '400px' : '2000px';
-            btn.innerText = isOpen ? '더보기' : '접기';
-        }
     </script>
 </body>
 </html>
