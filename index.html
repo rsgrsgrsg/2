@@ -63,6 +63,9 @@
         .btn-copy-sm { border: 1px solid #000; background: none; padding: 2px 8px; font-size: 0.7rem; cursor: pointer; font-family: inherit; }
         .map-link-area { width: 100%; display: block; margin: 20px auto; border: 1px solid #eee; background-color: #f4f4f4; background-size: cover; background-position: center; }
 
+        /* 버튼 공통 스타일 추가 (디자인 통일) */
+        .btn-common { border: 1px solid #000; background: #fff; padding: 12px 20px; cursor: pointer; font-family: inherit; font-size: 0.85rem; text-decoration: none; color: #000; display: block; width: 100%; text-align: center; }
+
         /* 갤러리 펼치기/접기 */
         .gallery-wrap { position: relative; overflow: hidden; max-height: 5000px; transition: max-height 0.8s ease-in-out; }
         .gallery-wrap.limited { max-height: 330px; }
@@ -73,7 +76,7 @@
         .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 0 10px; }
         .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer; background: #f0f0f0; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
-        .btn-common { margin: 20px auto; padding: 12px 30px; border: 1px solid #000; background: #fff; cursor: pointer; font-family: inherit; font-size: 0.85rem; display: block; width: fit-content; text-decoration: none; color: #000; }
+        .btn-more { margin: 20px auto; padding: 12px 30px; border: 1px solid #000; background: #fff; cursor: pointer; font-family: inherit; font-size: 0.85rem; display: block; }
 
         /* 확대 뷰어 모달 */
         #galleryViewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10001; align-items: center; justify-content: center; }
@@ -88,7 +91,7 @@
         .btn-point { background: var(--point-color); color: white; border: none; padding: 18px; width: 100%; cursor: pointer; letter-spacing: 2px; font-weight: 700; font-family: inherit; font-size: 0.9rem; }
         .gb-card { background: white; padding: 30px 20px; border: 1px solid #eee; max-width: 450px; margin: 0 auto; }
         input, textarea { width: 100%; padding: 15px; border: 1px solid #eee; margin-bottom: 10px; font-family: inherit; font-size: 0.9rem; border-radius: 0; outline: none; }
-        #gb-list { margin-top: 20px; max-height: 250px; overflow-y: auto; border-top: 1px solid #f2f2f2; padding-right: 5px; }
+        #gb-list { margin-top: 20px; max-height: 400px; overflow-y: auto; border-top: 1px solid #f2f2f2; padding-right: 5px; }
         #gb-list::-webkit-scrollbar { width: 3px; }
         #gb-list::-webkit-scrollbar-thumb { background: #ddd; }
         .guest-item { border-bottom: 1px solid #f2f2f2; padding: 20px 0; text-align: left; }
@@ -97,6 +100,7 @@
         .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
         .modal-content { background: white; padding: 40px 25px; width: 90%; max-width: 400px; text-align: center; position: relative; }
         .close-modal { position: absolute; right: 15px; top: 15px; font-size: 1.5rem; cursor: pointer; color: #999; }
+        .btn-kakaopay { display: flex; align-items: center; justify-content: center; gap: 8px; background: #FEE500; color: #191919; text-align: center; padding: 12px; font-size: 0.85rem; font-weight: 700; text-decoration: none; border-radius: 6px; margin-top: 10px; }
         .acc-group { text-align: left; padding: 15px 0; border-bottom: 1px solid #eee; }
         .acc-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
     </style>
@@ -156,9 +160,9 @@
         <a href="https://naver.me/5apDP7nI" target="_blank" class="map-link-area" 
             style="background-image: url('./assets/map_preview.png'); width: 100%; aspect-ratio: 900 / 650; height: auto;">
         </a>
-        <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
-            <a href="https://naver.me/5apDP7nI" target="_blank" class="btn-common" style="margin:0; flex:1;">네이버 지도</a>
-            <a href="https://kko.to/EIt4OnhVm4" target="_blank" class="btn-common" style="margin:0; flex:1;">카카오내비</a>
+        <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px; flex-direction: column;">
+            <a href="https://naver.me/5apDP7nI" target="_blank" class="btn-common">네이버 지도</a>
+            <a href="https://kko.to/EIt4OnhVm4" target="_blank" class="btn-common">카카오 네비</a>
         </div>
     </section>
 
@@ -206,26 +210,27 @@
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal()">×</span>
             <h3 style="font-weight: 700; border-bottom: 1px solid #000; padding-bottom: 10px; margin-bottom: 20px;">마음 전하실 곳</h3>
-            
             <div class="acc-group">
                 <p style="font-size: 0.85rem; color: #888; margin: 0 0 5px 0;">신랑 류승건</p>
-                <div class="acc-row"><span id="acc-groom" style="font-size: 0.95rem;">우리 1002-841-241285</span><button class="btn-copy-sm" onclick="copyToClipboard('acc-groom')">복사</button></div>
+                <div class="acc-row"><span id="acc-groom" style="font-size: 1rem;">우리 1002-841-241285</span><button class="btn-copy-sm" onclick="copyToClipboard('acc-groom')">복사</button></div>
+                <a href="https://qr.kakaopay.com/FNfa3PrZO" target="_blank" class="btn-kakaopay"><img src="https://developers.kakao.com/tool/resource/static/img/button/pay/payment_icon_yellow_small.png" alt="카카오페이" style="height: 18px;"> 카카오페이 송금</a>
             </div>
             <div class="acc-group">
                 <p style="font-size: 0.85rem; color: #888; margin: 0 0 5px 0;">신랑측 아버지 류주형</p>
-                <div class="acc-row"><span id="acc-father" style="font-size: 0.95rem;">농협 352-0863-6634-83</span><button class="btn-copy-sm" onclick="copyToClipboard('acc-father')">복사</button></div>
+                <div class="acc-row"><span id="acc-father" style="font-size: 1rem;">농협 352-0863-6634-83</span><button class="btn-copy-sm" onclick="copyToClipboard('acc-father')">복사</button></div>
             </div>
             <div class="acc-group">
                 <p style="font-size: 0.85rem; color: #888; margin: 0 0 5px 0;">신부 이지연</p>
-                <div class="acc-row"><span id="acc-bride" style="font-size: 0.95rem;">새마을금고 9003-1978-4884-1</span><button class="btn-copy-sm" onclick="copyToClipboard('acc-bride')">복사</button></div>
+                <div class="acc-row"><span id="acc-bride" style="font-size: 1rem;">새마을 9003-1978-4884-1</span><button class="btn-copy-sm" onclick="copyToClipboard('acc-bride')">복사</button></div>
+                <a href="https://qr.kakaopay.com/Ej8bBn70Q" target="_blank" class="btn-kakaopay"><img src="https://developers.kakao.com/tool/resource/static/img/button/pay/payment_icon_yellow_small.png" alt="카카오페이" style="height: 18px;"> 카카오페이 송금</a>
             </div>
             <div class="acc-group">
                 <p style="font-size: 0.85rem; color: #888; margin: 0 0 5px 0;">신부측 아버지 이광구</p>
-                <div class="acc-row"><span id="acc-father-in-law" style="font-size: 0.95rem;">농협 351-0504-8591-13</span><button class="btn-copy-sm" onclick="copyToClipboard('acc-father-in-law')">복사</button></div>
+                <div class="acc-row"><span id="acc-father-in-law" style="font-size: 1rem;">농협 351-0504-8591-13</span><button class="btn-copy-sm" onclick="copyToClipboard('acc-father-in-law')">복사</button></div>
             </div>
             <div class="acc-group">
                 <p style="font-size: 0.85rem; color: #888; margin: 0 0 5px 0;">신부측 어머니 최지영</p>
-                <div class="acc-row"><span id="acc-mother-in-law" style="font-size: 0.95rem;">우리은행 1002-853-084582</span><button class="btn-copy-sm" onclick="copyToClipboard('acc-mother-in-law')">복사</button></div>
+                <div class="acc-row"><span id="acc-mother-in-law" style="font-size: 1rem;">우리은행 1002-853-084582</span><button class="btn-copy-sm" onclick="copyToClipboard('acc-mother-in-law')">복사</button></div>
             </div>
         </div>
     </div>
@@ -245,8 +250,13 @@
         let isBgmPlaying = false;
 
         function toggleBgm() {
-            if (isBgmPlaying) { bgm.pause(); bgmBtn.classList.remove('playing'); } 
-            else { bgm.play().catch(e => console.log('BGM Play Error')); bgmBtn.classList.add('playing'); }
+            if (isBgmPlaying) {
+                bgm.pause();
+                bgmBtn.classList.remove('playing');
+            } else {
+                bgm.play().catch(e => console.log('BGM Play Error'));
+                bgmBtn.classList.add('playing');
+            }
             isBgmPlaying = !isBgmPlaying;
         }
 
@@ -311,9 +321,19 @@
             }
         }
 
-        function openViewer(idx) { gViewIdx = idx; updateViewer(); document.getElementById('galleryViewer').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
-        function closeViewer() { document.getElementById('galleryViewer').style.display = 'none'; document.body.style.overflow = 'auto'; }
-        function changeViewImg(dir) { gViewIdx = (gViewIdx + dir + totalGalleryImages) % totalGalleryImages; updateViewer(); }
+        function openViewer(idx) {
+            gViewIdx = idx; updateViewer();
+            document.getElementById('galleryViewer').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        function closeViewer() {
+            document.getElementById('galleryViewer').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        function changeViewImg(dir) {
+            gViewIdx = (gViewIdx + dir + totalGalleryImages) % totalGalleryImages;
+            updateViewer();
+        }
         function updateViewer() {
             const name = galleryFiles[gViewIdx];
             const ext = (name === 'p58') ? '.jpg' : '.png';
@@ -359,14 +379,17 @@
                 if (!name && !msg) { alert("성함과 메시지를 기재해주세요."); return; }
                 if (!name) { alert("성함을 기재해주세요."); return; }
                 if (!msg) { alert("메시지를 기재해주세요."); return; }
-                database.ref('guestbook').push({ name: sanitize(name), message: sanitize(msg), timestamp: Date.now() }).then(() => { document.getElementById('gb_name').value = ''; document.getElementById('gb_msg').value = ''; });
+                database.ref('guestbook').push({ name: sanitize(name), message: sanitize(msg), timestamp: Date.now() }).then(() => { 
+                    document.getElementById('gb_name').value = ''; 
+                    document.getElementById('gb_msg').value = ''; 
+                });
             }
             database.ref('guestbook').on('value', (snapshot) => {
                 const list = document.getElementById('gb-list'); if(!list) return;
                 list.innerHTML = '';
-                const items = [];
-                snapshot.forEach(child => items.unshift(child.val()));
-                items.forEach(data => {
+                const guests = [];
+                snapshot.forEach(child => guests.push(child.val()));
+                guests.reverse().forEach(data => {
                     const div = document.createElement('div'); div.className = 'guest-item';
                     div.innerHTML = `<span class="guest-name">${data.name}</span><div class="guest-msg">${data.message}</div>`;
                     list.appendChild(div);
