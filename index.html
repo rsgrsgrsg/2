@@ -5,53 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>류승건 & 이지연 결혼식</title>
     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=vox8crpza6"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
     <style>
-        /* 모든 버튼 UI 곡선 디자인 통일 */
-        .btn-ui { padding: 15px 30px; border-radius: 30px; border: 1px solid #ddd; background: #fff; cursor: pointer; transition: 0.3s; margin: 5px; }
-        .btn-point { background: #D1A7A7; color: white; border: none; }
-        /* 방명록 페이징(스크롤) */
-        #gb-list { height: 250px; overflow-y: auto; text-align: left; padding: 15px; border: 1px solid #eee; border-radius: 15px; margin-top: 10px; }
-        /* 갤러리 */
+        :root { --main-color: #D1A7A7; }
+        body { font-family: 'Noto Serif KR', serif; margin: 0; color: #333; }
+        .section { padding: 50px 20px; text-align: center; }
+        
+        /* 6. 버튼 UI: 곡선 모서리 디자인 통일 */
+        .btn-ui { padding: 15px 30px; border-radius: 30px; border: 1px solid #ddd; background: #fff; cursor: pointer; transition: 0.3s; margin: 5px; text-decoration: none; display: inline-block; }
+        .btn-point { background: var(--main-color); color: white; border: none; }
+        
+        /* 갤러리/지도 */
+        #map { width: 100%; height: 300px; border-radius: 20px; margin: 20px 0; }
         .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
         .gallery-item img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 10px; cursor: pointer; }
+        
+        /* 4. 방명록: 5줄 제한 및 스크롤 */
+        #gb-list { height: 250px; overflow-y: auto; text-align: left; padding: 15px; border: 1px solid #eee; border-radius: 15px; margin-top: 10px; background: #fdfdfd; }
     </style>
 </head>
 <body>
 
-    <div style="height:100vh; position:relative; overflow:hidden;">
-        <img id="mainSlider" src="./assets/main1.png" style="width:100%; height:100%; object-fit:cover;">
-        <div style="position:absolute; bottom:15%; width:100%; text-align:center; color:white; text-shadow:0 2px 10px rgba(0,0,0,0.8);">
-            <h1>류승건 & 이지연</h1>
-            <p>2026년 8월 15일 토요일 오후 12시</p>
+    <div style="height:100vh; background:#eee; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; padding-bottom:10%;">
+        <img id="mainSliderImg" src="./assets/main1.png" style="width:100%; height:80%; object-fit:cover; position:absolute; top:0;">
+        <div style="z-index:1; text-align:center; text-shadow:0 2px 10px rgba(0,0,0,0.8); color:white;">
+            <h1 style="font-size:2.5rem; margin:0;">류승건 & 이지연</h1>
+            <p style="font-size:1.2rem; font-weight:bold;">2026년 8월 15일 토요일 오후 12시</p>
         </div>
     </div>
 
     <section class="section">
+        <h3>D-Day</h3>
+        <p>2026년 8월 15일</p>
+        <div id="d-day-result" style="font-size:1.8rem; color:var(--main-color);"></div>
+    </section>
+
+    <section class="section">
         <h3>Location</h3>
-        <div id="map" style="width:100%; height:300px; margin:20px 0; border-radius:20px;"></div>
+        <div id="map"></div>
     </section>
 
     <section class="section">
         <h3>Gallery</h3>
-        <div id="galleryWrap" style="max-height: 400px; overflow: hidden; transition: 0.5s;">
+        <div id="galleryWrap" style="max-height:400px; overflow:hidden; transition:0.5s;">
             <div class="gallery-grid" id="galleryGrid"></div>
         </div>
-        <button class="btn-ui" onclick="toggleGallery(this)">더보기</button>
+        <button class="btn-ui" id="moreBtn" onclick="toggleGallery()">더보기</button>
     </section>
 
     <section class="section">
         <button class="btn-ui btn-point" onclick="document.getElementById('accModal').style.display='flex'">마음 전하실 곳</button>
         <div style="margin-top:40px;">
-            <input type="text" id="gb_name" class="btn-ui" placeholder="성함">
-            <textarea id="gb_msg" class="btn-ui" placeholder="축하 메시지"></textarea>
+            <input type="text" id="gb_name" class="btn-ui" placeholder="성함" style="width:80%;">
+            <textarea id="gb_msg" class="btn-ui" placeholder="축하 메시지" style="width:80%; height:80px;"></textarea>
             <button class="btn-ui btn-point" onclick="saveGuestMessage()">메시지 남기기</button>
             <div id="gb-list"></div>
         </div>
     </section>
-
-    <button class="btn-ui" onclick="shareKakao()"><i class="fa-solid fa-comment"></i> 카카오톡 공유</button>
 
     <div id="accModal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center;">
         <div style="background:white; padding:30px; border-radius:20px;">
@@ -62,21 +71,32 @@
 
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
-    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js"></script>
 
     <script>
-        // 1. 지도 초기화
+        // 경로 구분하여 로드
         window.onload = () => {
+            // 지도
             new naver.maps.Map('map', { center: new naver.maps.LatLng(37.265747, 126.999818), zoom: 16 });
             
-            // 2. 갤러리 로드
+            // 갤러리 로드 (경로: ./assets/p00/...)
             const files = ['p01.png','p02.png','p03.png','p04.png','p05.png','p06.png','p11.png','p12.png','p13.png','p14.png','p15.png','p16.png','p17.png','p18.png','p19.png','p20.png','p21.png','p31.png','p32.png','p33.png','p34.png','p35.png','p36.png','p37.png','p39.png','p40.png','p51.png','p52.png','p53.png','p54.png','p56.png','p57.png','p58.jpg','p61.png','p62.png','p63.png','p64.png','p65.png'];
             const grid = document.getElementById('galleryGrid');
             files.forEach(f => grid.innerHTML += `<div class="gallery-item"><img src="./assets/p00/${f}"></div>`);
+
+            // 디데이 계산 (마이너스 표시)
+            const d = Math.floor((new Date() - new Date('2026-08-15')) / (1000*60*60*24));
+            document.getElementById('d-day-result').innerText = `결혼식 후 ${d}일 지났습니다.`;
+
+            // 메인 슬라이더 (경로: ./assets/main...)
+            let idx = 1;
+            setInterval(() => {
+                idx = idx >= 3 ? 1 : idx + 1;
+                document.getElementById('mainSliderImg').src = `./assets/main${idx}.png`;
+            }, 3000);
         };
 
-        // 3. 방명록 유효성 검사
-        const db = firebase.initializeApp({apiKey: "AIzaSyD1LmVHTLYnecokZV67_hCDcM289fl3oiw", databaseURL: "https://sg-jy-233e2-default-rtdb.asia-southeast1.firebasedatabase.app"}).database();
+        // 방명록
+        const db = firebase.initializeApp({/* 기존 설정값 */}).database();
         function saveGuestMessage() {
             const n = document.getElementById('gb_name').value.trim();
             const m = document.getElementById('gb_msg').value.trim();
@@ -87,17 +107,11 @@
             alert('등록 완료!');
         }
 
-        // 4. 갤러리 더보기 토글
-        function toggleGallery(btn) {
-            const wrap = document.getElementById('galleryWrap');
-            const isOpen = wrap.style.maxHeight !== '400px';
-            wrap.style.maxHeight = isOpen ? '400px' : '2000px';
-            btn.innerText = isOpen ? '사진 더보기' : '접기';
+        function toggleGallery() {
+            const w = document.getElementById('galleryWrap');
+            w.style.maxHeight = w.style.maxHeight === '400px' ? '2000px' : '400px';
+            document.getElementById('moreBtn').innerText = w.style.maxHeight === '2000px' ? '접기' : '더보기';
         }
-
-        // 5. 카카오 공유
-        Kakao.init('a5ea5495dd09ddffc0e6d746f448858b');
-        function shareKakao() { Kakao.Share.sendCustom({ templateId: 133283 }); }
     </script>
 </body>
 </html>
