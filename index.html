@@ -12,7 +12,7 @@
     <meta property="og:image" content="https://sg-jy.space/assets/main3.png">
     <meta property="og:url" content="https://sg-jy.space/">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;400;700&family=Montserrat:wght@100;300;400&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;400;700&family=Montserrat:wght@100;300;400;500&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
@@ -50,16 +50,16 @@
         .bgm-btn.playing i.fa-music { animation: spin 3s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* 메인 슬라이더 */
-        .hero-slider { height: 100vh; width: 100%; overflow: hidden; position: relative; background: #fff; }
+        /* 메인 슬라이더 & 텍스트 (가독성 강화) */
+        .hero-slider { height: 100vh; width: 100%; overflow: hidden; position: relative; background: #000; }
         .hero-container { display: flex; height: 100%; width: 100%; will-change: transform; }
         .hero-item { min-width: 100%; height: 100%; position: relative; }
-        .hero-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+        .hero-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; opacity: 0.85; }
         .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.2); backdrop-filter: blur(5px); border: none; color: white; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; font-size: 1.1rem; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .prev-btn { left: 15px; } .next-btn { right: 15px; }
-        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 10vh; color: white; text-align: center; pointer-events: none; z-index: 5; text-shadow: 0 2px 10px rgba(0,0,0,0.4); background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 40%); }
-        .hero-names { font-size: 2.2rem; font-weight: 300; letter-spacing: 8px; margin-bottom: 15px; }
-        .hero-date { font-size: 1.1rem; letter-spacing: 4px; font-weight: 300; font-family: 'Montserrat', sans-serif; }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 12vh; color: white; text-align: center; pointer-events: none; z-index: 5; background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 40%); }
+        .hero-names { font-size: 2.4rem; font-weight: 700; letter-spacing: 8px; margin-bottom: 12px; text-shadow: 0 2px 8px rgba(0,0,0,0.8); }
+        .hero-date { font-size: 1.15rem; letter-spacing: 1.5px; font-weight: 400; font-family: 'Noto Serif KR', serif; text-shadow: 0 2px 6px rgba(0,0,0,0.8); }
 
         /* 디데이 */
         .countdown-wrap { display: flex; justify-content: center; gap: 35px; margin: 30px 0; }
@@ -71,16 +71,13 @@
         #map { width: 100%; height: 350px; border-radius: 12px; margin: 20px 0; background-color: #f9f9f9; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         .address-box { display: inline-flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 15px; background: #f9f9f9; padding: 10px 20px; border-radius: 20px; }
         
-        /* 🎨 세련된 버튼 스타일 모음 */
+        /* 세련된 버튼 스타일 */
         .btn-copy-sm { background: #fff; border: 1px solid #ddd; padding: 4px 12px; font-size: 0.75rem; border-radius: 12px; cursor: pointer; color: #555; transition: all 0.2s; font-family: inherit; }
         .btn-copy-sm:active { background: #f0f0f0; }
-
         .btn-point { background: var(--point-color); color: white; border: none; padding: 16px 30px; width: 100%; cursor: pointer; letter-spacing: 2px; font-weight: 700; font-family: inherit; font-size: 0.95rem; border-radius: 14px; box-shadow: 0 6px 15px rgba(209, 167, 167, 0.4); transition: transform 0.2s, box-shadow 0.2s; }
         .btn-point:active { transform: translateY(2px); box-shadow: 0 2px 8px rgba(209, 167, 167, 0.4); }
-
         .btn-outline { flex: 1; padding: 14px; border: 1px solid #ddd; border-radius: 12px; font-size: 0.9rem; text-decoration: none; color: #333; background: #fff; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.02); transition: background 0.2s; }
         .btn-outline:active { background: #f9f9f9; }
-
         .btn-more { margin: 30px auto 10px; padding: 12px 30px; background: #fff; color: var(--deep-gray); border: 1px solid #ddd; border-radius: 30px; font-size: 0.85rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.04); font-family: inherit; letter-spacing: 1px; transition: background 0.3s; display: block; }
 
         /* 갤러리 */
@@ -91,7 +88,7 @@
         .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer; background: #f0f0f0; border-radius: 4px; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; transition: transform 0.3s; }
 
-        /* 확대 뷰어 모달 */
+        /* 갤러리 뷰어 */
         #galleryViewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10001; align-items: center; justify-content: center; flex-direction: column; }
         .viewer-content { width: 100%; height: 80%; display: flex; align-items: center; justify-content: center; position: relative; }
         .viewer-img { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; animation: fadeIn 0.3s; }
@@ -101,11 +98,22 @@
         .v-prev { left: 15px; } .v-next { right: 15px; }
         .viewer-count { position: absolute; bottom: -40px; color: #fff; font-size: 0.9rem; letter-spacing: 3px; font-family: 'Montserrat', sans-serif; }
 
-        /* 모달 (마음 전하실 곳) */
+        /* 모달 */
         .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); align-items: center; justify-content: center; backdrop-filter: blur(3px); }
         .modal-content { background: white; padding: 40px 30px; width: 90%; max-width: 400px; text-align: center; position: relative; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); animation: slideUp 0.3s ease-out; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         .close-modal { position: absolute; right: 20px; top: 20px; font-size: 1.8rem; cursor: pointer; color: #aaa; }
+
+        /* 방명록 스타일 추가 */
+        .gb-card { background: white; padding: 30px 20px; border: 1px solid #eee; max-width: 450px; margin: 0 auto; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+        input, textarea { width: 100%; padding: 15px; border: 1px solid #ddd; margin-bottom: 15px; font-family: inherit; font-size: 0.95rem; border-radius: 8px; outline: none; transition: border-color 0.3s; }
+        input:focus, textarea:focus { border-color: var(--point-color); }
+        #gb-list { margin-top: 20px; max-height: 300px; overflow-y: auto; border-top: 1px solid #f2f2f2; padding-right: 5px; }
+        #gb-list::-webkit-scrollbar { width: 4px; }
+        #gb-list::-webkit-scrollbar-thumb { background: #ddd; border-radius: 4px; }
+        .guest-item { border-bottom: 1px solid #f2f2f2; padding: 15px 0; text-align: left; animation: fadeIn 0.5s; }
+        .guest-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 5px; display: block; color: var(--point-color); }
+        .guest-msg { font-size: 0.9rem; color: var(--deep-gray); line-height: 1.6; }
     </style>
 </head>
 <body oncontextmenu="return false">
@@ -128,14 +136,14 @@
         <div class="hero-overlay">
             <div data-aos="fade-up" data-aos-duration="2000">
                 <h1 class="hero-names">류승건 & 이지연</h1>
-                <p class="hero-date">2026. 08. 15. SAT 12:00</p>
+                <p class="hero-date">2026년 8월 15일 토요일 오후 12시</p>
             </div>
         </div>
     </div>
 
     <section class="section" data-aos="fade-up">
         <span class="section-title">Invitation</span>
-        <p style="font-size: 1.1rem; line-height: 2.2; font-weight: 300;">곁에 있을 때 가장 나다워지는 사람을 만났습니다.<br><br>서로의 결을 닮아가는 사랑으로<br>함께 걸어갈 새날의 시작을 약속합니다.</p>
+        <p style="font-size: 1.1rem; line-height: 2.2; font-weight: 300;">곁에 있을 때 가장 나다워지는 사람을 만났습니다.<br>서로의 결을 닮아가는 사랑으로<br>함께 걸어갈 새날의 시작을 약속합니다.</p>
     </section>
 
     <div class="h-divider"></div>
@@ -190,6 +198,18 @@
 
     <div class="h-divider"></div>
 
+    <section class="section" data-aos="fade-up">
+        <span class="section-title">Guestbook</span>
+        <div class="gb-card">
+            <input type="text" id="gb_name" placeholder="성함">
+            <textarea id="gb_msg" rows="3" placeholder="축하 메시지를 남겨주세요"></textarea>
+            <button onclick="saveGuestMessage()" class="btn-point" style="border-radius: 8px;">메시지 남기기</button>
+            <div id="gb-list"></div>
+        </div>
+    </section>
+
+    <div class="h-divider"></div>
+
     <section class="section" data-aos="fade-up" style="padding: 80px 30px;">
         <span class="section-title">Account</span>
         <p style="font-size: 1rem; margin-bottom: 35px; color: #555; line-height: 1.8;">축복해주시는 소중한 마음 잊지 않고<br>예쁘게 잘 살겠습니다.</p>
@@ -221,9 +241,11 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
     
     <script>
-        // 네이버 지도 초기화 
+        // 네이버 지도
         function initMap() {
             var lat = 37.265747; 
             var lng = 126.999818; 
@@ -240,11 +262,10 @@
         window.onload = function() {
             try { AOS.init({ duration: 1200, once: true }); } 
             catch (e) { document.querySelectorAll('[data-aos]').forEach(el => el.classList.add('aos-animate')); }
-
             if (typeof naver !== 'undefined') { initMap(); }
         };
 
-        // 카카오톡 공유 (Client ID 입력 필요시 변경)
+        // 카카오톡 공유
         if (!Kakao.isInitialized()) { Kakao.init('a5ea5495dd09ddffc0e6d746f448858b'); }
         function shareKakao() { Kakao.Share.sendCustom({ templateId: 133283 }); }
 
@@ -258,7 +279,7 @@
             isBgmPlaying = !isBgmPlaying;
         }
 
-        // 메인 슬라이더 (자동 슬라이드 기능 추가)
+        // 메인 슬라이더
         let heroIdx = 1; const totalHero = 3; let isHeroMoving = false;
         const heroContainer = document.getElementById('heroSlider');
         let autoSlide;
@@ -268,28 +289,20 @@
             isHeroMoving = true; heroIdx += dir;
             heroContainer.style.transition = 'transform 0.5s ease-in-out';
             heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`;
-            resetAutoSlide(); // 버튼 누르면 자동넘김 시간 초기화
+            resetAutoSlide(); 
         }
 
-        function startAutoSlide() {
-            autoSlide = setInterval(() => moveSlider(1), 3500); // 3.5초마다 자동 넘김
-        }
-        function resetAutoSlide() {
-            clearInterval(autoSlide);
-            startAutoSlide();
-        }
+        function startAutoSlide() { autoSlide = setInterval(() => moveSlider(1), 3500); }
+        function resetAutoSlide() { clearInterval(autoSlide); startAutoSlide(); }
 
         if(heroContainer) {
-            heroContainer.style.transform = `translateX(-100%)`; // 초기 위치 설정
-            startAutoSlide(); // 자동 넘김 시작
-
+            heroContainer.style.transform = `translateX(-100%)`; 
+            startAutoSlide(); 
             heroContainer.addEventListener('transitionend', () => {
                 isHeroMoving = false;
                 if (heroIdx === 0) { heroContainer.style.transition = 'none'; heroIdx = totalHero; heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`; }
                 else if (heroIdx === totalHero + 1) { heroContainer.style.transition = 'none'; heroIdx = 1; heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`; }
             });
-
-            // 터치 스와이프 기능
             let hStartX = 0;
             heroContainer.addEventListener('touchstart', e => { hStartX = e.touches[0].clientX; clearInterval(autoSlide); }, {passive: true});
             heroContainer.addEventListener('touchend', e => {
@@ -299,19 +312,26 @@
             });
         }
 
-        // 갤러리 기능
-        const galleryFiles = ['p01', 'p02', 'p03', 'p04', 'p05', 'p06', 'p11', 'p12', 'p13', 'p14', 'p15', 'p16', 'p17', 'p18', 'p19', 'p20', 'p21', 'p31', 'p32', 'p33', 'p34', 'p35', 'p36', 'p37', 'p39', 'p40', 'p61', 'p62', 'p63', 'p64', 'p65'];
+        // 갤러리 확장자 처리 완벽 반영 (.png 및 .jpg 섞어 쓰기)
+        const galleryFiles = [
+            'p01.png', 'p02.png', 'p03.png', 'p04.png', 'p05.png', 'p06.png', 
+            'p11.png', 'p12.png', 'p13.png', 'p14.png', 'p15.png', 'p16.png', 'p17.png', 'p18.png', 'p19.png', 'p20.png', 'p21.png', 
+            'p31.png', 'p32.png', 'p33.png', 'p34.png', 'p35.png', 'p36.png', 'p37.png', 'p39.png', 'p40.png', 
+            'p51.png', 'p52.png', 'p53.png', 'p54.png', 'p56.png', 'p57.png', 'p58.jpg', 
+            'p61.png', 'p62.png', 'p63.png', 'p64.png', 'p65.png'
+        ];
         const totalGalleryImages = galleryFiles.length;
         let gViewIdx = 0;
 
         function initGallery() {
             const grid = document.getElementById('galleryGrid');
             if(!grid) return;
-            galleryFiles.forEach((name, idx) => {
+            galleryFiles.forEach((fileName, idx) => {
                 const item = document.createElement('div');
                 item.className = 'gallery-item';
                 item.setAttribute('onclick', `openViewer(${idx})`);
-                item.innerHTML = `<img src="./assets/p00/${name}.png" alt="갤러리 사진">`;
+                // 확장자가 파일명에 이미 들어있으므로 바로 사용합니다
+                item.innerHTML = `<img src="./assets/p00/${fileName}" alt="갤러리 사진" loading="lazy">`;
                 grid.appendChild(item);
             });
         }
@@ -321,36 +341,32 @@
             const wrap = document.getElementById('galleryWrap');
             const btn = document.getElementById('moreBtn');
             if (wrap.classList.contains('limited')) {
-                wrap.classList.remove('limited');
-                btn.innerText = '사진 접기 △';
+                wrap.classList.remove('limited'); btn.innerText = '사진 접기 △';
             } else {
-                wrap.classList.add('limited');
-                btn.innerText = '사진 더보기 ▽';
+                wrap.classList.add('limited'); btn.innerText = '사진 더보기 ▽';
                 document.getElementById('gallerySection').scrollIntoView({ behavior: 'smooth' });
             }
         }
 
-        // 갤러리 확대 뷰어
         function openViewer(idx) {
             gViewIdx = idx; updateViewer();
             document.getElementById('galleryViewer').style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // 뒤에 화면 스크롤 방지
+            document.body.style.overflow = 'hidden'; 
         }
         function closeViewer() {
             document.getElementById('galleryViewer').style.display = 'none';
-            document.body.style.overflow = 'auto'; // 스크롤 원상복구
+            document.body.style.overflow = 'auto'; 
         }
         function changeViewImg(dir) {
             gViewIdx = (gViewIdx + dir + totalGalleryImages) % totalGalleryImages;
             updateViewer();
         }
         function updateViewer() {
-            const name = galleryFiles[gViewIdx];
-            document.getElementById('currentViewerImg').src = `./assets/p00/${name}.png`;
+            const fileName = galleryFiles[gViewIdx];
+            document.getElementById('currentViewerImg').src = `./assets/p00/${fileName}`;
             document.getElementById('viewerCount').innerText = `${gViewIdx + 1} / ${totalGalleryImages}`;
         }
 
-        // 확대화면 스와이프 (손가락 넘기기)
         let vStartX = 0;
         document.getElementById('viewerContent').addEventListener('touchstart', e => vStartX = e.changedTouches[0].screenX, {passive: true});
         document.getElementById('viewerContent').addEventListener('touchend', e => {
@@ -365,25 +381,4 @@
             const diff = target - now;
             let d = 0, h = 0, m = 0;
             if (diff > 0) {
-                d = Math.floor(diff / (1000 * 60 * 60 * 24));
-                h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            }
-            if(document.getElementById('days')) {
-                document.getElementById('days').innerText = d < 10 ? '0'+d : d;
-                document.getElementById('hours').innerText = h < 10 ? '0'+h : h;
-                document.getElementById('mins').innerText = m < 10 ? '0'+m : m;
-            }
-        }
-        setInterval(updateCountdown, 1000); updateCountdown();
-
-        // 유틸리티 함수
-        function copyToClipboard(id) { 
-            const text = document.getElementById(id).innerText; 
-            navigator.clipboard.writeText(text).then(() => alert("계좌번호가 복사되었습니다.")); 
-        }
-        function openModal() { document.getElementById('accModal').style.display = 'flex'; }
-        function closeModal() { document.getElementById('accModal').style.display = 'none'; }
-    </script>
-</body>
-</html>
+                d = Math.floor(diff / (1000 * 60 *
