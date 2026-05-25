@@ -1,4 +1,3 @@
-html
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -17,12 +16,10 @@ html
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a5ea5495dd09ddffc0e6d746f448858b"></script>
-
     <style>
         :root { 
             --point-black: #000000; 
-            --point-color: #D1A7A7; /* Dusty Rose 색상 */
+            --point-color: #D1A7A7; /* Dusty Rose 색상 유지 */
             --deep-gray: #333333; 
             --bg-white: #ffffff; 
         }
@@ -30,65 +27,48 @@ html
         /* 보안 및 기본 설정 */
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; }
         input, textarea, [id*="acc-"], [id*="addr-"] { -webkit-user-select: text; user-select: text; }
-        body { font-family: 'Noto Serif KR', serif; margin: 0; color: var(--point-black); background: #fdfbfb; line-height: 1.8; word-break: keep-all; overflow-x: hidden; }
+        body { font-family: 'Noto Serif KR', serif; margin: 0; color: var(--point-black); background: var(--bg-white); line-height: 1.8; word-break: keep-all; }
 
-        /* AOS 및 모션 애니메이션 */
+        /* AOS 안전장치 */
         [data-aos] { opacity: 1 !important; transform: translate(0) scale(1) !important; transition: none !important; }
         html.aos-init [data-aos] { opacity: 0; }
         html.aos-init .aos-animate { opacity: 1 !important; }
 
-        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
-        @keyframes pulse-btn { 0% { box-shadow: 0 0 0 0 rgba(209, 167, 167, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(209, 167, 167, 0); } 100% { box-shadow: 0 0 0 0 rgba(209, 167, 167, 0); } }
-        @keyframes subtle-zoom { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
-        @keyframes fall { 0% { transform: translateY(-10vh) rotate(0deg) scale(0.8); opacity: 1; } 100% { transform: translateY(110vh) rotate(360deg) scale(1.2); opacity: 0.3; } }
+        .section { padding: 80px 30px; text-align: center; }
+        .section-title { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--point-black); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 30px; display: block; }
+        .h-divider { width: 100%; height: 1px; background-color: var(--point-black); margin: 0; }
 
-        /* 꽃잎 컨테이너 - 사진보다 앞(z-index:9999) */
-        #particles-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; overflow: hidden; }
-        .petal { position: absolute; background-color: var(--point-color); opacity: 0.6; border-radius: 50% 0 50% 50%; width: 12px; height: 12px; }
-
-        .section { padding: 90px 30px; text-align: center; position: relative; z-index: 20; background: var(--bg-white); border-radius: 40px; margin: 20px 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
-        .section-title { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: var(--point-color); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 30px; display: block; font-weight: 700; animation: float 3s ease-in-out infinite; }
-        .h-divider { width: 50px; height: 2px; background-color: var(--point-color); margin: 0 auto; border-radius: 2px; opacity: 0.5; margin-bottom: 30px; }
-
-        /* BGM 버튼 */
+        /* BGM 버튼 스타일 */
         .bgm-btn {
             position: fixed; top: 15px; right: 15px; z-index: 9990;
-            width: 42px; height: 42px; background: rgba(255, 255, 255, 0.95);
+            width: 42px; height: 42px; background: rgba(255, 255, 255, 0.85);
             border: 1px solid #ddd; border-radius: 50%; 
             display: flex; align-items: center; justify-content: center;
             cursor: pointer; color: var(--point-color); font-size: 1.1rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1); outline: none; transition: transform 0.3s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1); outline: none;
         }
         .bgm-btn.playing i.fa-music { animation: spin 3s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
         /* 메인 슬라이더 */
-        .hero-slider { height: 100vh; width: 100%; overflow: hidden; position: relative; background: #fff; z-index: 20; }
+        .hero-slider { height: 100vh; width: 100%; overflow: hidden; position: relative; background: #fff; }
         .hero-container { display: flex; height: 100%; width: 100%; will-change: transform; }
-        .hero-item { min-width: 100%; height: 100%; position: relative; overflow: hidden; }
-        .hero-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; animation: subtle-zoom 15s infinite alternate ease-in-out; }
-        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.15); border: none; color: white; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; font-size: 1.2rem; backdrop-filter: blur(2px); }
+        .hero-item { min-width: 100%; height: 100%; position: relative; }
+        .hero-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.15); border: none; color: white; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; font-size: 1.2rem; }
         .prev-btn { left: 10px; } .next-btn { right: 10px; }
-        
-        /* 메인 오버레이 (텍스트 삭제 요청 반영, 날짜 텍스트 키움) */
-        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 60px; color: white; text-align: center; pointer-events: none; z-index: 25; background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 40%); }
-        .hero-names { font-size: 2.2rem; font-weight: 700; letter-spacing: 8px; margin-bottom: 15px; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
-        .hero-date { font-size: 1.6rem; letter-spacing: 2px; font-weight: 400; background: rgba(0,0,0,0.2); padding: 5px 20px; border-radius: 20px; backdrop-filter: blur(5px); }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 60px; color: white; text-align: center; pointer-events: none; z-index: 5; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
+        .hero-names { font-size: 2.2rem; font-weight: 400; letter-spacing: 8px; margin-bottom: 10px; }
+        .hero-date { font-size: 1.1rem; letter-spacing: 2px; opacity: 0.9; font-weight: 400; }
 
         /* 디데이 & 위치 */
-        .wedding-date-label { font-size: 1.1rem; color: var(--point-color); margin-bottom: 5px; font-weight: 700; letter-spacing: 2px; }
-        .countdown-wrap { display: flex; justify-content: center; gap: 30px; margin: 20px 0 30px; background: #fdfaf9; padding: 25px 0; border-radius: 20px; }
-        .count-item { width: 60px; }
-        .count-num { font-family: 'Montserrat', sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--point-color); display: block; margin-bottom: 5px; }
-        .count-label { font-size: 0.65rem; color: #777; letter-spacing: 2px; }
-        
-        .address-box { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 20px; background: #f7f7f7; padding: 10px 20px; border-radius: 30px; }
-        .btn-copy-sm { border: none; background: #e0e0e0; padding: 4px 12px; font-size: 0.75rem; cursor: pointer; border-radius: 12px; font-weight: 700; }
-        
-        /* 버튼 및 폼 */
-        .btn-point { background: var(--point-color); color: white; border: none; padding: 16px; width: 100%; cursor: pointer; letter-spacing: 2px; font-weight: 700; font-family: inherit; font-size: 0.95rem; border-radius: 30px; box-shadow: 0 5px 15px rgba(209, 167, 167, 0.4); text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
-        .pulse-btn { animation: pulse-btn 2s infinite; }
-        
+        .countdown-wrap { display: flex; justify-content: center; gap: 30px; margin: 30px 0; }
+        .count-num { font-family: 'Montserrat', sans-serif; font-size: 1.8rem; font-weight: 300; }
+        .count-label { font-size: 0.65rem; color: #999; letter-spacing: 2px; }
+        .address-box { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; }
+        .btn-copy-sm { border: 1px solid #000; background: none; padding: 2px 8px; font-size: 0.7rem; cursor: pointer; font-family: inherit; }
+        .map-link-area { width: 100%; display: block; margin: 20px auto; border: 1px solid #eee; background-color: #f4f4f4; background-size: cover; background-position: center; }
+
         /* 갤러리 펼치기/접기 */
         .gallery-wrap { position: relative; overflow: hidden; max-height: 5000px; transition: max-height 0.8s ease-in-out; }
         .gallery-wrap.limited { max-height: 330px; }
@@ -96,46 +76,37 @@ html
             content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 60px;
             background: linear-gradient(to bottom, transparent, var(--bg-white)); pointer-events: none;
         }
-        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 0; }
-        .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer; background: #f0f0f0; border-radius: 8px; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 0 10px; }
+        .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer; background: #f0f0f0; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
-        .btn-more { margin: 20px auto; padding: 14px 30px; border: none; background: #f5f5f5; border-radius: 30px; cursor: pointer; font-family: inherit; font-size: 0.9rem; display: block; font-weight: 700; color: #555; }
+        .btn-more { margin: 20px auto; padding: 12px 30px; border: 1px solid #000; background: #fff; cursor: pointer; font-family: inherit; font-size: 0.85rem; display: block; }
 
-        /* 확대 뷰어 모달 (복구) */
-        #galleryViewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10001; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+        /* 확대 뷰어 모달 */
+        #galleryViewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10001; align-items: center; justify-content: center; }
         .viewer-content { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
-        .viewer-img { max-width: 95%; max-height: 90%; object-fit: contain; pointer-events: none; border-radius: 10px; }
+        .viewer-img { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
         .viewer-close { position: absolute; top: 20px; right: 20px; color: #fff; font-size: 2.5rem; cursor: pointer; z-index: 10002; }
         .viewer-nav { position: absolute; top: 50%; transform: translateY(-50%); color: #fff; font-size: 2.5rem; background: none; border: none; cursor: pointer; padding: 20px; z-index: 10002; opacity: 0.7; }
         .v-prev { left: 10px; } .v-next { right: 10px; }
-        .viewer-count { position: absolute; bottom: 40px; color: #fff; font-size: 0.9rem; letter-spacing: 2px; font-weight: 700; }
+        .viewer-count { position: absolute; bottom: 40px; color: #fff; font-size: 0.85rem; letter-spacing: 2px; }
 
-        /* 방명록 */
-        .gb-card { background: white; padding: 0; margin: 0 auto; }
-        input, textarea { width: 100%; padding: 18px; border: 1px solid #eaeaea; margin-bottom: 12px; font-family: inherit; font-size: 0.95rem; border-radius: 15px; outline: none; background: #fafafa; }
-        input:focus, textarea:focus { border-color: var(--point-color); background: #fff; }
-        #gb-list { margin-top: 30px; max-height: 400px; overflow-y: auto; padding-right: 5px; }
-        #gb-list::-webkit-scrollbar { width: 4px; }
-        #gb-list::-webkit-scrollbar-thumb { background: var(--point-color); border-radius: 4px; }
-        .guest-item { background: #fdfaf9; padding: 20px; border-radius: 15px; margin-bottom: 15px; text-align: left; }
-        .guest-name { font-weight: 700; font-size: 0.95rem; margin-bottom: 8px; display: block; color: var(--point-color); }
-        .guest-msg { font-size: 0.9rem; color: var(--deep-gray); line-height: 1.6; }
-
-        /* 계좌 모달 */
-        .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); align-items: center; justify-content: center; }
-        .modal-content { background: white; padding: 40px 25px; width: 90%; max-width: 400px; text-align: center; position: relative; border-radius: 25px; font-family: 'Noto Serif KR', serif; } /* 청첩장 폰트 통일 */
-        .close-modal { position: absolute; right: 20px; top: 20px; font-size: 1.8rem; cursor: pointer; color: #999; }
-        
-        /* 신랑/신부 구분선 */
-        .modal-divider { width: 100%; height: 1px; background-color: #eaeaea; margin: 25px 0; position: relative; }
-        .modal-divider::after { content: '♡'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 0 10px; color: var(--point-color); font-size: 0.8rem; }
-
-        .btn-kakaopay { display: flex; align-items: center; justify-content: center; gap: 8px; background: #FEE500; color: #191919; text-align: center; padding: 12px; font-size: 0.85rem; font-weight: 700; text-decoration: none; border-radius: 12px; margin-top: 15px; }
+        /* 마음 전하실 곳 & 방명록 */
+        .btn-point { background: var(--point-color); color: white; border: none; padding: 18px; width: 100%; cursor: pointer; letter-spacing: 2px; font-weight: 700; font-family: inherit; font-size: 0.9rem; }
+        .gb-card { background: white; padding: 30px 20px; border: 1px solid #eee; max-width: 450px; margin: 0 auto; }
+        input, textarea { width: 100%; padding: 15px; border: 1px solid #eee; margin-bottom: 10px; font-family: inherit; font-size: 0.9rem; border-radius: 0; outline: none; }
+        #gb-list { margin-top: 20px; max-height: 400px; overflow-y: auto; border-top: 1px solid #f2f2f2; padding-right: 5px; }
+        #gb-list::-webkit-scrollbar { width: 3px; }
+        #gb-list::-webkit-scrollbar-thumb { background: #ddd; }
+        .guest-item { border-bottom: 1px solid #f2f2f2; padding: 20px 0; text-align: left; }
+        .guest-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 5px; display: block; }
+        .guest-msg { font-size: 0.85rem; color: var(--deep-gray); line-height: 1.6; }
+        .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
+        .modal-content { background: white; padding: 40px 25px; width: 90%; max-width: 400px; text-align: center; position: relative; }
+        .close-modal { position: absolute; right: 15px; top: 15px; font-size: 1.5rem; cursor: pointer; color: #999; }
+        .btn-kakaopay { display: flex; align-items: center; justify-content: center; gap: 8px; background: #FEE500; color: #191919; text-align: center; padding: 12px; font-size: 0.85rem; font-weight: 700; text-decoration: none; border-radius: 6px; margin-top: 10px; }
     </style>
 </head>
 <body oncontextmenu="return false">
-
-    <div id="particles-container"></div>
 
     <audio id="bgm" src="./assets/bgm.mp3" loop></audio>
     <button id="bgmBtn" class="bgm-btn" onclick="toggleBgm()">
@@ -153,57 +124,57 @@ html
         <button class="nav-btn prev-btn" onclick="moveSlider(-1)">&#10094;</button>
         <button class="nav-btn next-btn" onclick="moveSlider(1)">&#10095;</button>
         <div class="hero-overlay">
-            <div data-aos="zoom-out-up" data-aos-duration="1500" data-aos-easing="ease-out-cubic">
+            <div data-aos="fade-up" data-aos-duration="2000">
                 <h1 class="hero-names">류승건 & 이지연</h1>
-                <p class="hero-date">2026. 08. 15.</p>
-                <p style="font-size: 1.1rem; letter-spacing: 2px; margin-top: 5px;">토요일 오후 12시</p>
-                <div style="margin-top: 20px; animation: float 2s infinite;">
-                    <i class="fa-solid fa-chevron-down" style="color: rgba(255,255,255,0.7); font-size: 1.5rem;"></i>
-                </div>
+                <p class="hero-date">2026. 08. 15. 토요일 오후 12시</p>
             </div>
         </div>
     </div>
 
-    <section class="section" data-aos="fade-up" data-aos-duration="1000" data-aos-easing="ease-out-back">
+    <div class="h-divider"></div>
+
+    <section class="section" data-aos="fade-up">
         <span class="section-title">Invitation</span>
-        <div class="h-divider"></div>
-        <p style="font-size: 1.1rem; line-height: 2.2; font-weight: 300;">
-            곁에 있을 때 가장 나다워지는 사람을 만났습니다. 서로의 결을 닮아가는 사랑으로<br>함께 걸어갈 새날의 시작을 약속합니다.
-        </p>
+        <p style="font-size: 1.1rem; line-height: 2.4;">곁에 있을 때 가장 나다워지는 사람을 만났습니다.<br>서로의 결을 닮아가는 사랑으로<br>함께 걸어갈 새날의 시작을 약속합니다.</p>
     </section>
 
-    <section class="section" data-aos="zoom-in" data-aos-duration="1000" data-aos-easing="ease-out-back">
+    <div class="h-divider"></div>
+
+    <section class="section" data-aos="fade-up">
         <span class="section-title">D-Day</span>
-        <p class="wedding-date-label">2026년 08월 15일</p>
         <div class="countdown-wrap">
-            <div class="count-item"><span class="count-num" id="days">00</span><span class="count-label">DAYS</span></div>
-            <div class="count-item"><span class="count-num" id="hours">00</span><span class="count-label">HOURS</span></div>
-            <div class="count-item"><span class="count-num" id="mins">00</span><span class="count-label">MINS</span></div>
+            <div class="count-item"><span class="count-num" id="days">00</span><br><span class="count-label">DAYS</span></div>
+            <div class="count-item"><span class="count-num" id="hours">00</span><br><span class="count-label">HOURS</span></div>
+            <div class="count-item"><span class="count-num" id="mins">00</span><br><span class="count-label">MINS</span></div>
         </div>
     </section>
 
-    <section class="section" data-aos="fade-up" data-aos-duration="1000" data-aos-easing="ease-out-back">
+    <div class="h-divider"></div>
+
+    <section class="section" data-aos="fade-up">
         <span class="section-title">Location</span>
-        <h3 style="font-weight: 700; font-size: 1.4rem; color: var(--point-color); margin-bottom: 10px;">메리빌리아 더프레스티지</h3>
+        <h3 style="font-weight: 700; font-size: 1.2rem;">메리빌리아 더프레스티지</h3>
         <div class="address-box">
-            <span id="addr-text" style="color: #555; font-size: 0.9rem;">경기 수원시 권선구 세화로 116</span>
+            <span id="addr-text" style="color: #888; font-size: 0.85rem;">경기 수원시 권선구 세화로 116</span>
             <button class="btn-copy-sm" onclick="copyToClipboard('addr-text')">복사</button>
         </div>
-        
-        <div id="map" style="width: 100%; height: 300px; border-radius: 15px; margin: 20px auto; border: 1px solid #eee;"></div>
-        
+        <a href="https://naver.me/5apDP7nI" target="_blank" class="map-link-area" 
+           style="background-image: url('./assets/map_preview.png'); width: 100%; aspect-ratio: 900 / 650; height: auto;">
+        </a>
         <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
-            <a href="https://naver.me/5apDP7nI" target="_blank" class="btn-point" style="flex: 1; padding: 14px;">네이버 지도</a>
-            <a href="https://kko.to/EIt4OnhVm4" target="_blank" class="btn-point" style="flex: 1; padding: 14px;">카카오 네비</a>
+            <a href="https://naver.me/5apDP7nI" target="_blank" style="flex: 1; padding: 12px; border: 1px solid #ddd; font-size: 0.85rem; text-decoration: none; color: #333; background: #fff; text-align: center;">네이버 지도</a>
+            <a href="https://kko.to/EIt4OnhVm4" target="_blank" style="flex: 1; padding: 12px; border: 1px solid #ddd; font-size: 0.85rem; text-decoration: none; color: #333; background: #fff; text-align: center;">카카오내비</a>
         </div>
     </section>
 
-    <section class="section" data-aos="fade-up" data-aos-duration="1000" id="gallerySection">
+    <div class="h-divider"></div>
+
+    <section class="section" data-aos="fade-up" id="gallerySection">
         <span class="section-title">Gallery</span>
         <div class="gallery-wrap limited" id="galleryWrap">
             <div class="gallery-grid" id="galleryGrid"></div>
         </div>
-        <button id="moreBtn" class="btn-more" onclick="toggleGallery()">사진 더보기 ▾</button>
+        <button id="moreBtn" class="btn-more" onclick="toggleGallery()">더보기 ▽</button>
     </section>
 
     <div id="galleryViewer">
@@ -216,24 +187,28 @@ html
         </div>
     </div>
 
-    <section class="section" data-aos="flip-up" data-aos-duration="1200" style="background: #fff8f8;">
+    <div class="h-divider"></div>
+
+    <section class="section" data-aos="fade-up" style="padding: 60px 30px;">
         <span class="section-title">Account</span>
-        <p style="font-size: 1rem; margin-bottom: 25px; line-height: 2;">축복해주시는 소중한 마음 잊지 않고<br>예쁘게 잘 살겠습니다.</p>
-        <button onclick="openModal()" class="btn-point" style="max-width: 300px; margin: 0 auto; display: flex;">마음 전하실 곳</button>
+        <p style="font-size: 0.9rem; margin-bottom: 25px;">축복해주시는 소중한 마음 잊지 않고<br>예쁘게 잘 살겠습니다.</p>
+        <button onclick="openModal()" class="btn-point" style="max-width: 300px; margin: 0 auto; display: block;">마음 전하실 곳</button>
     </section>
 
-    <section class="section" data-aos="fade-up" data-aos-duration="1000">
+    <div class="h-divider"></div>
+
+    <section class="section" data-aos="fade-up">
         <span class="section-title">Guestbook</span>
         <div class="gb-card">
             <input type="text" id="gb_name" placeholder="성함">
             <textarea id="gb_msg" rows="3" placeholder="축하 메시지를 남겨주세요"></textarea>
-            <button onclick="saveGuestMessage()" class="btn-point pulse-btn" style="width: 100%;">메시지 남기기</button>
+            <button onclick="saveGuestMessage()" class="btn-point">메시지 남기기</button>
             <div id="gb-list"></div>
         </div>
     </section>
 
-    <div style="padding: 40px 20px 70px; text-align: center; position: relative; z-index: 20;">
-        <button onclick="shareKakao()" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background-color: #FEE500; color: #191919; border: none; padding: 15px 30px; border-radius: 30px; font-weight: 700; font-size: 0.95rem; cursor: pointer; font-family: inherit; box-shadow: 0 5px 15px rgba(254, 229, 0, 0.3);">
+    <div style="padding: 60px 20px; text-align: center; background-color: #f9f9f9; border-top: 1px solid #eee;">
+        <button onclick="shareKakao()" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; background-color: #FEE500; color: #191919; border: none; padding: 15px 30px; border-radius: 12px; font-weight: 700; font-size: 0.95rem; cursor: pointer; font-family: inherit;">
             <i class="fa-solid fa-comment" style="font-size: 1.1rem;"></i> 카카오톡으로 청첩장 보내기
         </button>
     </div>
@@ -241,20 +216,18 @@ html
     <div id="accModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal()">×</span>
-            <h3 style="font-weight: 700; border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 20px; color: var(--point-color);">마음 전하실 곳</h3>
+            <h3 style="font-weight: 700; border-bottom: 1px solid #000; padding-bottom: 10px; margin-bottom: 20px;">마음 전하실 곳</h3>
             
-            <div style="text-align: left;">
-                <p style="font-weight: 700; margin: 0 0 15px 0; font-size: 1.1rem;">신랑 측</p>
-                
+            <div style="text-align: left; padding: 10px 0 15px; border-bottom: 1px solid #eee;">
+                <p style="font-weight: 700; margin: 0 0 10px 0; color: var(--point-color);">신랑 측</p>
                 <p style="font-size: 0.85rem; color: #888; margin: 0 0 5px 0;">신랑 아버지 류주형</p>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                    <span id="acc-groom-father" style="font-size: 1rem; font-weight: 700;">농협 352-0863-6634-83</span>
+                    <span id="acc-groom-father" style="font-size: 1rem;">농협 352-0863-6634-83</span>
                     <button class="btn-copy-sm" onclick="copyToClipboard('acc-groom-father')">복사</button>
                 </div>
-
                 <p style="font-size: 0.85rem; color: #888; margin: 0 0 5px 0;">신랑 류승건</p>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                    <span id="acc-groom" style="font-size: 1rem; font-weight: 700;">우리 1002-841-241285</span>
+                    <span id="acc-groom" style="font-size: 1rem;">우리 1002-841-241285</span>
                     <button class="btn-copy-sm" onclick="copyToClipboard('acc-groom')">복사</button>
                 </div>
                 <a href="https://qr.kakaopay.com/FNfa3PrZO" target="_blank" class="btn-kakaopay">
@@ -262,26 +235,21 @@ html
                 </a>
             </div>
             
-            <div class="modal-divider"></div>
-            
-            <div style="text-align: left;">
-                <p style="font-weight: 700; margin: 0 0 15px 0; font-size: 1.1rem;">신부 측</p>
-                
+            <div style="text-align: left; padding: 15px 0 10px;">
+                <p style="font-weight: 700; margin: 0 0 10px 0; color: var(--point-color);">신부 측</p>
                 <p style="font-size: 0.85rem; color: #888; margin: 0 0 5px 0;">신부 아버지 이광구</p>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                    <span id="acc-bride-father" style="font-size: 1rem; font-weight: 700;">농협 351-0504-8591-13</span>
+                    <span id="acc-bride-father" style="font-size: 1rem;">농협 351-0504-8591-13</span>
                     <button class="btn-copy-sm" onclick="copyToClipboard('acc-bride-father')">복사</button>
                 </div>
-
                 <p style="font-size: 0.85rem; color: #888; margin: 0 0 5px 0;">신부 어머니 최지영</p>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                    <span id="acc-bride-mother" style="font-size: 1rem; font-weight: 700;">우리 1002-853-084582</span>
+                    <span id="acc-bride-mother" style="font-size: 1rem;">우리 1002-853-084582</span>
                     <button class="btn-copy-sm" onclick="copyToClipboard('acc-bride-mother')">복사</button>
                 </div>
-
                 <p style="font-size: 0.85rem; color: #888; margin: 0 0 5px 0;">신부 이지연</p>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                    <span id="acc-bride" style="font-size: 1rem; font-weight: 700;">새마을 9003-1978-4884-1</span>
+                    <span id="acc-bride" style="font-size: 1rem;">새마을 9003-1978-4884-1</span>
                     <button class="btn-copy-sm" onclick="copyToClipboard('acc-bride')">복사</button>
                 </div>
                 <a href="https://qr.kakaopay.com/Ej8bBn70Q" target="_blank" class="btn-kakaopay">
@@ -297,37 +265,7 @@ html
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js"></script>
     
     <script>
-        // --- 1. 실시간 카카오 지도 초기화 ---
-        function initKakaoMap() {
-            var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-                mapOption = { 
-                    center: new kakao.maps.LatLng(37.26555, 126.9942), // 세화로 116 중심좌표
-                    level: 3 // 지도의 확대 레벨
-                };
-            var map = new kakao.maps.Map(mapContainer, mapOption); 
-            var marker = new kakao.maps.Marker({
-                position: map.getCenter()
-            });
-            marker.setMap(map);
-        }
-        kakao.maps.load(initKakaoMap);
-
-        // --- 2. 흩날리는 꽃잎 효과 ---
-        function createPetal() {
-            const container = document.getElementById('particles-container');
-            const petal = document.createElement('div');
-            petal.classList.add('petal');
-            petal.style.left = Math.random() * 100 + 'vw';
-            petal.style.animationDuration = Math.random() * 5 + 7 + 's';
-            petal.style.opacity = Math.random() * 0.5 + 0.2;
-            petal.style.transform = `scale(${Math.random() * 0.6 + 0.4})`;
-            petal.style.animation = `fall ${petal.style.animationDuration} linear forwards`;
-            container.appendChild(petal);
-            setTimeout(() => { petal.remove(); }, parseFloat(petal.style.animationDuration) * 1000);
-        }
-        setInterval(createPetal, 600);
-
-        // --- 3. 카카오 공유 ---
+        // ✅ 카카오 SDK 초기화 및 공유
         if (!Kakao.isInitialized()) {
             Kakao.init('a5ea5495dd09ddffc0e6d746f448858b');
         }
@@ -335,13 +273,13 @@ html
             Kakao.Share.sendCustom({ templateId: 133283 });
         }
 
-        // --- 4. AOS 초기화 ---
+        // AOS 초기화
         window.onload = function() {
-            try { AOS.init({ duration: 1200, once: false }); } 
+            try { AOS.init({ duration: 1200, once: true }); } 
             catch (e) { document.querySelectorAll('[data-aos]').forEach(el => el.classList.add('aos-animate')); }
         };
 
-        // --- 5. BGM 로직 ---
+        // BGM 로직
         const bgm = document.getElementById('bgm');
         const bgmBtn = document.getElementById('bgmBtn');
         let isBgmPlaying = false;
@@ -356,12 +294,13 @@ html
             }
             isBgmPlaying = !isBgmPlaying;
         }
+
         document.body.addEventListener('click', function playOnFirstClick() {
             if(!isBgmPlaying) toggleBgm();
             document.body.removeEventListener('click', playOnFirstClick);
         }, { once: true });
 
-        // --- 6. 슬라이더 로직 (터치 포함) ---
+        // 슬라이더 로직
         let heroIdx = 1; const totalHero = 3; let isHeroMoving = false;
         const heroContainer = document.getElementById('heroSlider');
         if(heroContainer) heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`;
@@ -387,7 +326,7 @@ html
             });
         }
 
-        // --- 7. 전체 갤러리 로직 (원본 파일 전체 복구) ---
+        // 갤러리 로직
         const galleryFiles = ['p01', 'p02', 'p03', 'p04', 'p05', 'p06', 'p11', 'p12', 'p13', 'p14', 'p15', 'p16', 'p17', 'p18', 'p19', 'p20', 'p21', 'p31', 'p32', 'p33', 'p34', 'p35', 'p36', 'p37', 'p39', 'p40', 'p61', 'p62', 'p63', 'p64', 'p65'];
         const totalGalleryImages = galleryFiles.length;
         let gViewIdx = 0;
@@ -410,14 +349,15 @@ html
             const btn = document.getElementById('moreBtn');
             if (wrap.classList.contains('limited')) {
                 wrap.classList.remove('limited');
-                btn.innerText = '사진 접기 ▴';
+                btn.innerText = '접기 △';
             } else {
                 wrap.classList.add('limited');
-                btn.innerText = '사진 더보기 ▾';
+                btn.innerText = '더보기 ▽';
                 document.getElementById('gallerySection').scrollIntoView({ behavior: 'smooth' });
             }
         }
 
+        // 확대 뷰어
         function openViewer(idx) {
             gViewIdx = idx; updateViewer();
             document.getElementById('galleryViewer').style.display = 'flex';
@@ -444,48 +384,45 @@ html
             if (Math.abs(diff) > 50) changeViewImg(diff > 0 ? 1 : -1);
         }, {passive: true});
 
-        // --- 8. 유틸리티 및 파이어베이스 ---
+        // 유틸리티
         function copyToClipboard(id) { const text = document.getElementById(id).innerText; navigator.clipboard.writeText(text).then(() => alert("복사되었습니다.")); }
         function openModal() { document.getElementById('accModal').style.display = 'flex'; }
         function closeModal() { document.getElementById('accModal').style.display = 'none'; }
         function sanitize(str) { const temp = document.createElement('div'); temp.textContent = str; return temp.innerHTML; }
 
+        // ✅ 디데이 계산 타이머 (결혼식이 지나면 음수가 나오지 않게 예외 처리 포함)
+        function updateCountdown() {
+            const target = new Date('2026-08-15T12:00:00').getTime();
+            const now = new Date().getTime();
+            const diff = target - now;
+
+            let d = 0, h = 0, m = 0;
+            if (diff > 0) {
+                d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            }
+
+            if(document.getElementById('days')) {
+                document.getElementById('days').innerText = d < 10 ? '0'+d : d;
+                document.getElementById('hours').innerText = h < 10 ? '0'+h : h;
+                document.getElementById('mins').innerText = m < 10 ? '0'+m : m;
+            }
+        }
+        setInterval(updateCountdown, 1000); 
+        updateCountdown();
+
+        // 파이어베이스 및 방명록 설정
+        let database;
         try {
             const firebaseConfig = { apiKey: "AIzaSyD1LmVHTLYnecokZV67_hCDcM289fl3oiw", authDomain: "sg-jy-233e2.firebaseapp.com", databaseURL: "https://sg-jy-233e2-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "sg-jy-233e2", storageBucket: "sg-jy-233e2.firebasestorage.app", messagingSenderId: "217599075354", appId: "1:217599075354:web:c227474b5efc4fd280dda3" };
             firebase.initializeApp(firebaseConfig);
-            const database = firebase.database();
+            database = firebase.database();
             
-            function updateCountdown() {
-                const target = new Date('2026-08-15T12:00:00').getTime();
-                const now = new Date().getTime();
-                const diff = target - now;
-                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                if(document.getElementById('days')) {
-                    document.getElementById('days').innerText = d < 10 ? '0'+d : d;
-                    document.getElementById('hours').innerText = h < 10 ? '0'+h : h;
-                    document.getElementById('mins').innerText = m < 10 ? '0'+m : m;
-                }
-            }
-            setInterval(updateCountdown, 1000); updateCountdown();
-
-            window.saveGuestMessage = function() {
-                let name = document.getElementById('gb_name').value.trim();
-                let msg = document.getElementById('gb_msg').value.trim();
-                if (name && msg) { 
-                    database.ref('guestbook').push({ name: sanitize(name), message: sanitize(msg), timestamp: Date.now() })
-                    .then(() => { 
-                        document.getElementById('gb_name').value = ''; 
-                        document.getElementById('gb_msg').value = ''; 
-                        alert('메시지가 등록되었습니다!'); 
-                    }); 
-                } else {
-                    alert('성함과 메시지를 모두 입력해주세요.');
-                }
-            }
+            // 데이터베이스 읽어오기
             database.ref('guestbook').on('value', (snapshot) => {
-                const list = document.getElementById('gb-list'); if(!list) return;
+                const list = document.getElementById('gb-list'); 
+                if(!list) return;
                 list.innerHTML = '';
                 snapshot.forEach(child => {
                     const data = child.val();
@@ -494,9 +431,28 @@ html
                     list.prepend(div);
                 });
             });
-        } catch(e) { console.error("Firebase Init Error", e); }
+        } catch(e) { console.log('Firebase Init Error'); }
+
+        // ✅ 스코프 오류 수정: 버튼이 인식할 수 있도록 전역 함수로 분리
+        window.saveGuestMessage = function() {
+            if (!database) { alert('데이터베이스에 연결되지 않았습니다.'); return; }
+            let name = document.getElementById('gb_name').value.trim();
+            let msg = document.getElementById('gb_msg').value.trim();
+            
+            if (name && msg) { 
+                database.ref('guestbook').push({ 
+                    name: sanitize(name), 
+                    message: sanitize(msg), 
+                    timestamp: Date.now() 
+                }).then(() => { 
+                    document.getElementById('gb_name').value = ''; 
+                    document.getElementById('gb_msg').value = ''; 
+                    alert("축하 메시지가 등록되었습니다.");
+                }); 
+            } else {
+                alert("성함과 축하 메시지를 모두 입력해주세요.");
+            }
+        };
     </script>
 </body>
 </html>
-
-```
