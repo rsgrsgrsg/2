@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -34,7 +33,7 @@
         .section-title { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--point-black); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 30px; display: block; }
         .h-divider { width: 100%; height: 1px; background-color: var(--point-black); margin: 0; }
 
-        /* 통합 버튼 디자인 (곡률 및 디자인 통일) */
+        /* 통합 버튼 디자인 */
         .btn-point { 
             background: var(--point-color); 
             color: white; 
@@ -53,7 +52,7 @@
             border-radius: 8px;
         }
 
-        /* 작은 복사 버튼 디자인 통일 */
+        /* 작은 복사 버튼 디자인 */
         .btn-copy-sm { 
             background: var(--point-color); 
             color: white; 
@@ -87,15 +86,14 @@
         .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 60px; color: white; text-align: center; pointer-events: none; z-index: 5; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
         .hero-names { font-size: 2.2rem; font-weight: 400; letter-spacing: 8px; margin-bottom: 15px; }
         
-        /* 메인 날짜 박스 수정 (흰색 배경, 검은 글씨, 곡률) */
         .hero-date { 
-            font-size: 1.1rem; 
+            font-size: 1.5rem; 
             letter-spacing: 1px; 
-            font-weight: 400; /* 글자가 뭉개지지 않게 두께를 살짝 뺐습니다 */
-            color: #ffffff; /* 사진 위에서 잘 보이도록 흰색 텍스트로 변경 */
-            text-shadow: 0 0 8px rgba(0, 0, 0, 0.6); /* 배경 사진이 밝아도 글자가 묻히지 않게 텍스트 그림자 추가 */
+            font-weight: 400; 
+            color: #ffffff; 
+            text-shadow: 0 0 8px rgba(0, 0, 0, 0.6); 
             margin-top: 10px;
-}
+        }
 
         /* 디데이 & 위치 */
         .countdown-wrap { display: flex; justify-content: center; gap: 30px; margin: 30px 0; }
@@ -105,7 +103,7 @@
         
         .map-link-area { width: 100%; display: block; margin: 20px auto; border: 1px solid #eee; background-color: #f4f4f4; background-size: cover; background-position: center; border-radius: 8px; overflow: hidden; }
 
-        /* 갤러리 펼치기/접기 */
+        /* 갤러리 */
         .gallery-wrap { position: relative; overflow: hidden; max-height: 5000px; transition: max-height 0.8s ease-in-out; }
         .gallery-wrap.limited { max-height: 330px; }
         .gallery-wrap.limited::after {
@@ -138,6 +136,7 @@
             border-radius: 8px; 
             outline: none; 
             box-sizing: border-box;
+            text-align: center; /* 추가: 입력 내용 가운데 정렬 */
         }
         
         #gb-list { margin-top: 20px; max-height: 400px; overflow-y: auto; border-top: 1px solid #f2f2f2; padding-right: 5px; }
@@ -177,7 +176,7 @@
         <div class="hero-overlay">
             <div data-aos="fade-up" data-aos-duration="2000">
                 <h1 class="hero-names">류승건 & 이지연</h1>
-                <p class="hero-date">2026년 8월 15일 토요일 오후 12시</p>
+                <p class="hero-date">2026. 8. 15.<br>토요일 오후 12시</p>
             </div>
         </div>
     </div>
@@ -186,7 +185,7 @@
 
     <section class="section" data-aos="fade-up">
         <span class="section-title">Invitation</span>
-        <p style="font-size: 1.1rem; line-height: 2.4;">곁에 있을 때 가장 나다워지는 사람을 만났습니다.<br>서로의 결을 닮아가는 사랑으로<br>함께할 새날의 시작을 약속합니다.</p>
+        <p style="font-size: 1.1rem; line-height: 2.4;">곁에 있을 때 가장 나다워지는 사람을 만났습니다.<br>서로의 결을 닮아가며<br>함께할 새날의 시작을 약속합니다.</p>
     </section>
 
     <div class="h-divider"></div>
@@ -204,10 +203,10 @@
 
     <section class="section" data-aos="fade-up">
         <span class="section-title">Location</span>
-        <h3 style="font-weight: 700; font-size: 1.2rem;">메리빌리아 더프레스티지</h3>
+        <h3 style="font-weight: 700; font-size: 1.2rem;">메리빌리아 더 프레스티지<br>가든홀</h3>
         <div class="address-box">
             <span id="addr-text" style="color: #888; font-size: 0.85rem;">경기 수원시 권선구 세화로 116</span>
-            <button class="btn-copy-sm" style="background: var(--point-color); color: white;" onclick="copyToClipboard('addr-text')">복사</button>
+            <button class="btn-copy-sm" style="background: var(--point-color); color: white;" onclick="copyToClipboard('경기 수원시 권선구 세화로 116')">복사</button>
         </div>
         
         <a href="https://naver.me/5apDP7nI" target="_blank" class="map-link-area" 
@@ -253,8 +252,11 @@
     <section class="section" data-aos="fade-up">
         <span class="section-title">Guestbook</span>
         <div class="gb-card">
+            <div style="font-size: 0.75rem; color: #888; margin-bottom: 20px; text-align: center; line-height: 1.5; border: 1px solid #f2f2f2; padding: 15px; border-radius: 8px; background-color: #fafafa;">
+                축하와 격려의 따뜻한 메시지를 남겨주세요.
+            </div>
             <input type="text" id="gb_name" placeholder="성함">
-            <textarea id="gb_msg" rows="3" placeholder="축하 메시지를 남겨주세요"></textarea>
+            <textarea id="gb_msg" rows="3" placeholder="축하 메시지"></textarea>
             <button onclick="saveGuestMessage()" class="btn-point">메시지 남기기</button>
             <div id="gb-list"></div>
         </div>
@@ -276,32 +278,32 @@
             
             <div class="acc-group">
                 <p style="font-size: 0.85rem; color: #888; margin: 0 0 5px 0;">신랑 류승건</p>
-                <div class="acc-row"><span id="acc-groom" style="font-size: 1rem;">우리은행 1002-841-241285</span><button class="btn-copy-sm" onclick="copyToClipboard('acc-groom')">복사</button></div>
+                <div class="acc-row"><span>우리은행 1002-841-241285</span><button class="btn-copy-sm" onclick="copyToClipboard('1002-841-241285')">복사</button></div>
                 <a href="https://qr.kakaopay.com/FNfa3PrZO" target="_blank" class="btn-kakaopay">
                     <img src="https://developers.kakao.com/tool/resource/static/img/button/pay/payment_icon_yellow_small.png" alt="카카오페이" style="height: 18px;"> 카카오페이 송금
                 </a>
             </div>
             <div class="acc-group">
                 <p style="font-size: 0.85rem; color: #888; margin: 0 0 5px 0;">신랑측 아버지 류주형</p>
-                <div class="acc-row"><span id="acc-father" style="font-size: 1rem;">농협 352-0863-6634-83</span><button class="btn-copy-sm" onclick="copyToClipboard('acc-father')">복사</button></div>
+                <div class="acc-row"><span>농협 352-0863-6634-83</span><button class="btn-copy-sm" onclick="copyToClipboard('352-0863-6634-83')">복사</button></div>
             </div>
 
             <div style="width: 100%; height: 1px; background-color: #ddd; margin: 20px 0;"></div>
 
             <div class="acc-group">
                 <p style="font-size: 0.85rem; color: #888; margin: 0 0 5px 0;">신부 이지연</p>
-                <div class="acc-row"><span id="acc-bride" style="font-size: 1rem;">새마을금고 9003-1978-4884-1</span><button class="btn-copy-sm" onclick="copyToClipboard('acc-bride')">복사</button></div>
+                <div class="acc-row"><span>새마을금고 9003-1978-4884-1</span><button class="btn-copy-sm" onclick="copyToClipboard('9003-1978-4884-1')">복사</button></div>
                 <a href="https://qr.kakaopay.com/Ej8bBn70Q" target="_blank" class="btn-kakaopay">
                     <img src="https://developers.kakao.com/tool/resource/static/img/button/pay/payment_icon_yellow_small.png" alt="카카오페이" style="height: 18px;"> 카카오페이 송금
                 </a>
             </div>
             <div class="acc-group">
                 <p style="font-size: 0.85rem; color: #888; margin: 0 0 5px 0;">신부측 아버지 이광구</p>
-                <div class="acc-row"><span id="acc-father-in-law" style="font-size: 1rem;">농협 351-0504-8591-13</span><button class="btn-copy-sm" onclick="copyToClipboard('acc-father-in-law')">복사</button></div>
+                <div class="acc-row"><span>농협 351-0504-8591-13</span><button class="btn-copy-sm" onclick="copyToClipboard('351-0504-8591-13')">복사</button></div>
             </div>
             <div class="acc-group">
                 <p style="font-size: 0.85rem; color: #888; margin: 0 0 5px 0;">신부측 어머니 최지영</p>
-                <div class="acc-row"><span id="acc-mother-in-law" style="font-size: 1rem;">우리은행 1002-853-084582</span><button class="btn-copy-sm" onclick="copyToClipboard('acc-mother-in-law')">복사</button></div>
+                <div class="acc-row"><span>우리은행 1002-853-084582</span><button class="btn-copy-sm" onclick="copyToClipboard('1002-853-084582')">복사</button></div>
             </div>
         </div>
     </div>
@@ -312,189 +314,74 @@
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"></script>
     
     <script>
-        // AOS 초기화
-        window.onload = function() {
-            try { AOS.init({ duration: 1200, once: true }); } 
-            catch (e) { document.querySelectorAll('[data-aos]').forEach(el => el.classList.add('aos-animate')); }
-        };
+        window.onload = function() { try { AOS.init({ duration: 1200, once: true }); } catch (e) { document.querySelectorAll('[data-aos]').forEach(el => el.classList.add('aos-animate')); } };
+        const bgm = document.getElementById('bgm'); const bgmBtn = document.getElementById('bgmBtn'); let isBgmPlaying = false;
+        function toggleBgm() { if (isBgmPlaying) { bgm.pause(); bgmBtn.classList.remove('playing'); } else { bgm.play().catch(e => console.log('BGM Play Error')); bgmBtn.classList.add('playing'); } isBgmPlaying = !isBgmPlaying; }
+        document.body.addEventListener('click', function playOnFirstClick() { if(!isBgmPlaying) toggleBgm(); document.body.removeEventListener('click', playOnFirstClick); }, { once: true });
 
-        // BGM 로직
-        const bgm = document.getElementById('bgm');
-        const bgmBtn = document.getElementById('bgmBtn');
-        let isBgmPlaying = false;
-
-        function toggleBgm() {
-            if (isBgmPlaying) {
-                bgm.pause();
-                bgmBtn.classList.remove('playing');
-            } else {
-                bgm.play().catch(e => console.log('BGM Play Error'));
-                bgmBtn.classList.add('playing');
-            }
-            isBgmPlaying = !isBgmPlaying;
-        }
-
-        document.body.addEventListener('click', function playOnFirstClick() {
-            if(!isBgmPlaying) toggleBgm();
-            document.body.removeEventListener('click', playOnFirstClick);
-        }, { once: true });
-
-
-        // 슬라이더 로직
         let heroIdx = 1; const totalHero = 3; let isHeroMoving = false;
         const heroContainer = document.getElementById('heroSlider');
         if(heroContainer) heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`;
-
-        function moveSlider(dir) {
-            if (isHeroMoving || !heroContainer) return;
-            isHeroMoving = true;
-            heroIdx += dir;
-            heroContainer.style.transition = 'transform 0.4s ease-out';
-            heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`;
-        }
+        function moveSlider(dir) { if (isHeroMoving || !heroContainer) return; isHeroMoving = true; heroIdx += dir; heroContainer.style.transition = 'transform 0.4s ease-out'; heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`; }
         if(heroContainer) {
-            heroContainer.addEventListener('transitionend', () => {
-                isHeroMoving = false;
-                if (heroIdx === 0) { heroContainer.style.transition = 'none'; heroIdx = totalHero; heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`; }
-                else if (heroIdx === totalHero + 1) { heroContainer.style.transition = 'none'; heroIdx = 1; heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`; }
-            });
-            let hStartX = 0;
-            heroContainer.addEventListener('touchstart', e => hStartX = e.touches[0].clientX, {passive: true});
-            heroContainer.addEventListener('touchend', e => {
-                const diffX = hStartX - e.changedTouches[0].clientX;
-                if (Math.abs(diffX) > 50) moveSlider(diffX > 0 ? 1 : -1);
-            });
+            heroContainer.addEventListener('transitionend', () => { isHeroMoving = false; if (heroIdx === 0) { heroContainer.style.transition = 'none'; heroIdx = totalHero; heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`; } else if (heroIdx === totalHero + 1) { heroContainer.style.transition = 'none'; heroIdx = 1; heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`; } });
+            let hStartX = 0; heroContainer.addEventListener('touchstart', e => hStartX = e.touches[0].clientX, {passive: true});
+            heroContainer.addEventListener('touchend', e => { const diffX = hStartX - e.changedTouches[0].clientX; if (Math.abs(diffX) > 50) moveSlider(diffX > 0 ? 1 : -1); });
         }
 
-        // 갤러리 로직 (p58은 jpg, 나머지는 png)
         const galleryFiles = ['p01', 'p02', 'p03', 'p04', 'p05', 'p06', 'p11', 'p12', 'p13', 'p14', 'p15', 'p16', 'p17', 'p18', 'p19', 'p20', 'p21', 'p31', 'p32', 'p33', 'p34', 'p35', 'p36', 'p37', 'p39', 'p40', 'p51', 'p52', 'p53', 'p54', 'p56', 'p57', 'p58', 'p61', 'p62', 'p63', 'p64', 'p65'];
-        const totalGalleryImages = galleryFiles.length;
-        let gViewIdx = 0;
-
-        function initGallery() {
-            const grid = document.getElementById('galleryGrid');
-            if(!grid) return;
-            galleryFiles.forEach((name, idx) => {
-                const item = document.createElement('div');
-                item.className = 'gallery-item';
-                item.setAttribute('onclick', `openViewer(${idx})`);
-                const ext = (name === 'p58') ? '.jpg' : '.png';
-                item.innerHTML = `<img src="./assets/p00/${name}${ext}" loading="lazy">`;
-                grid.appendChild(item);
-            });
-        }
+        const totalGalleryImages = galleryFiles.length; let gViewIdx = 0;
+        function initGallery() { const grid = document.getElementById('galleryGrid'); if(!grid) return; galleryFiles.forEach((name, idx) => { const item = document.createElement('div'); item.className = 'gallery-item'; item.setAttribute('onclick', `openViewer(${idx})`); const ext = (name === 'p58') ? '.jpg' : '.png'; item.innerHTML = `<img src="./assets/p00/${name}${ext}" loading="lazy">`; grid.appendChild(item); }); }
         initGallery();
-
-        function toggleGallery() {
-            const wrap = document.getElementById('galleryWrap');
-            const btn = document.getElementById('moreBtn');
-            if (wrap.classList.contains('limited')) {
-                wrap.classList.remove('limited');
-                btn.innerText = '사진 접기';
-            } else {
-                wrap.classList.add('limited');
-                btn.innerText = '사진 더보기';
-                document.getElementById('gallerySection').scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-
-        // 모달 및 뷰어 로직
+        function toggleGallery() { const wrap = document.getElementById('galleryWrap'); const btn = document.getElementById('moreBtn'); if (wrap.classList.contains('limited')) { wrap.classList.remove('limited'); btn.innerText = '사진 접기'; } else { wrap.classList.add('limited'); btn.innerText = '사진 더보기'; document.getElementById('gallerySection').scrollIntoView({ behavior: 'smooth' }); } }
         function openViewer(idx) { gViewIdx = idx; updateViewer(); document.getElementById('galleryViewer').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
         function closeViewer() { document.getElementById('galleryViewer').style.display = 'none'; document.body.style.overflow = 'auto'; }
         function changeViewImg(dir) { gViewIdx = (gViewIdx + dir + totalGalleryImages) % totalGalleryImages; updateViewer(); }
-        function updateViewer() {
-            const name = galleryFiles[gViewIdx];
-            const ext = (name === 'p58') ? '.jpg' : '.png';
-            document.getElementById('currentViewerImg').src = `./assets/p00/${name}${ext}`;
-            document.getElementById('viewerCount').innerText = `${gViewIdx + 1} / ${totalGalleryImages}`;
-        }
-          
+        function updateViewer() { const name = galleryFiles[gViewIdx]; const ext = (name === 'p58') ? '.jpg' : '.png'; document.getElementById('currentViewerImg').src = `./assets/p00/${name}${ext}`; document.getElementById('viewerCount').innerText = `${gViewIdx + 1} / ${totalGalleryImages}`; }
         let vStartX = 0;
         document.getElementById('viewerContent').addEventListener('touchstart', e => vStartX = e.changedTouches[0].screenX, {passive: true});
-        document.getElementById('viewerContent').addEventListener('touchend', e => {
-            const diff = vStartX - e.changedTouches[0].screenX;
-            if (Math.abs(diff) > 50) changeViewImg(diff > 0 ? 1 : -1);
-        }, {passive: true});
+        document.getElementById('viewerContent').addEventListener('touchend', e => { const diff = vStartX - e.changedTouches[0].screenX; if (Math.abs(diff) > 50) changeViewImg(diff > 0 ? 1 : -1); }, {passive: true});
 
-        // 유틸리티
-        function copyToClipboard(id) { const text = document.getElementById(id).innerText; navigator.clipboard.writeText(text).then(() => alert("복사되었습니다.")); }
+        function showToast(msg) {
+            const toast = document.createElement('div');
+            toast.innerText = msg;
+            toast.style.position = 'fixed'; toast.style.bottom = '20px'; toast.style.left = '50%'; toast.style.transform = 'translateX(-50%)';
+            toast.style.backgroundColor = 'rgba(0,0,0,0.8)'; toast.style.color = 'white'; toast.style.padding = '10px 20px'; toast.style.borderRadius = '5px'; toast.style.zIndex = '99999';
+            document.body.appendChild(toast); setTimeout(() => { toast.remove(); }, 2000);
+        }
+        function copyToClipboard(val) {
+            let textToCopy = val;
+            const element = document.getElementById(val);
+            if (element) textToCopy = element.innerText;
+            navigator.clipboard.writeText(textToCopy).then(() => { showToast("복사되었습니다."); });
+        }
         function openModal() { document.getElementById('accModal').style.display = 'flex'; }
         function closeModal() { document.getElementById('accModal').style.display = 'none'; }
         function sanitize(str) { const temp = document.createElement('div'); temp.textContent = str; return temp.innerHTML; }
 
-        // 카카오 공유 로직
-        if (!Kakao.isInitialized()) {
-            Kakao.init('a5ea5495dd09ddffc0e6d746f448858b');
-        }
+        if (!Kakao.isInitialized()) Kakao.init('a5ea5495dd09ddffc0e6d746f448858b');
+        function shareKakao() { Kakao.Share.sendCustom({ templateId: 133283, templateArgs: { 'title': '류승건 & 이지연 결혼식에 초대합니다', 'description': '2026년 8월 15일 토요일 오후 12시\n메리빌리아 더프레스티지' } }); }
 
-// 기존의 shareKakao() 함수를 아래 코드로 완전히 교체합니다.
-
-function shareKakao() {
-    Kakao.Share.sendCustom({
-        templateId: 133283, // 💡 123456 대신 카카오 디벨로퍼스에서 확인한 본인의 '템플릿 ID(숫자)'를 입력하세요.
-        
-        // 템플릿 빌더에서 사용자 정의 인자(변수)를 설정했다면 아래처럼 값을 넘겨줄 수 있습니다. 
-        // 변수를 따로 설정하지 않았다면 templateArgs 부분은 삭제하셔도 됩니다.
-        templateArgs: {
-            'title': '류승건 & 이지연 결혼식에 초대합니다',
-            'description': '2026년 8월 15일 토요일 오후 12시\n메리빌리아 더프레스티지'
-        }
-    });
-}
-
-        // 파이어베이스 연동 및 방명록, 카운트다운 로직
         try {
-            const firebaseConfig = { 
-                apiKey: "AIzaSyD1LmVHTLYnecokZV67_hCDcM289fl3oiw", 
-                authDomain: "sg-jy-233e2.firebaseapp.com", 
-                databaseURL: "https://sg-jy-233e2-default-rtdb.asia-southeast1.firebasedatabase.app", 
-                projectId: "sg-jy-233e2", 
-                storageBucket: "sg-jy-233e2.firebasestorage.app", 
-                messagingSenderId: "217599075354", 
-                appId: "1:217599075354:web:c227474b5efc4fd280dda3" 
-            };
+            const firebaseConfig = { apiKey: "AIzaSyD1LmVHTLYnecokZV67_hCDcM289fl3oiw", authDomain: "sg-jy-233e2.firebaseapp.com", databaseURL: "https://sg-jy-233e2-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "sg-jy-233e2", storageBucket: "sg-jy-233e2.firebasestorage.app", messagingSenderId: "217599075354", appId: "1:217599075354:web:c227474b5efc4fd280dda3" };
             firebase.initializeApp(firebaseConfig);
             const database = firebase.database();
-            
             function updateCountdown() {
                 const target = new Date('2026-08-15T12:00:00').getTime();
-                const now = new Date().getTime();
-                const diff = target - now;
-                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                if(document.getElementById('days')) {
-                    document.getElementById('days').innerText = d < 10 ? '0'+d : d;
-                    document.getElementById('hours').innerText = h < 10 ? '0'+h : h;
-                    document.getElementById('mins').innerText = m < 10 ? '0'+m : m;
-                }
+                const now = new Date().getTime(); const diff = target - now;
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24)); const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                if(document.getElementById('days')) { document.getElementById('days').innerText = d < 10 ? '0'+d : d; document.getElementById('hours').innerText = h < 10 ? '0'+h : h; document.getElementById('mins').innerText = m < 10 ? '0'+m : m; }
             }
             setInterval(updateCountdown, 1000); updateCountdown();
-
             function saveGuestMessage() {
-                let name = document.getElementById('gb_name').value.trim();
-                let msg = document.getElementById('gb_msg').value.trim();
-                if (name && msg) { 
-                    database.ref('guestbook').push({ 
-                        name: sanitize(name), 
-                        message: sanitize(msg), 
-                        timestamp: Date.now() 
-                    }).then(() => { 
-                        document.getElementById('gb_name').value = ''; 
-                        document.getElementById('gb_msg').value = ''; 
-                    }); 
-                }
+                let name = document.getElementById('gb_name').value.trim(); let msg = document.getElementById('gb_msg').value.trim();
+                if (!name) { showToast("성함을 입력해주세요."); document.getElementById('gb_name').focus(); return; }
+                if (!msg) { showToast("축하 메시지를 입력해주세요."); document.getElementById('gb_msg').focus(); return; }
+                database.ref('guestbook').push({ name: sanitize(name), message: sanitize(msg), timestamp: Date.now() }).then(() => { showToast("소중한 메시지가 등록되었습니다."); document.getElementById('gb_name').value = ''; document.getElementById('gb_msg').value = ''; }); 
             }
             database.ref('guestbook').on('value', (snapshot) => {
-                const list = document.getElementById('gb-list'); if(!list) return;
-                list.innerHTML = '';
-                const messages = [];
-                snapshot.forEach(child => { messages.push(child.val()); });
-                messages.reverse().forEach(data => {
-                    const div = document.createElement('div'); div.className = 'guest-item';
-                    div.innerHTML = `<span class="guest-name">${data.name}</span><div class="guest-msg">${data.message}</div>`;
-                    list.appendChild(div);
-                });
+                const list = document.getElementById('gb-list'); if(!list) return; list.innerHTML = ''; const messages = []; snapshot.forEach(child => { messages.push(child.val()); });
+                messages.reverse().forEach(data => { const div = document.createElement('div'); div.className = 'guest-item'; div.innerHTML = `<span class="guest-name">${data.name}</span><div class="guest-msg">${data.message}</div>`; list.appendChild(div); });
             });
         } catch(e) {}
     </script>
