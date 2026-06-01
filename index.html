@@ -25,7 +25,7 @@
         
         /* 전체 화면 배경과 카드형 컨테이너 */
         body { font-family: 'Noto Serif KR', serif; margin: 0; color: var(--point-black); background: #eee; line-height: 1.8; word-break: keep-all; }
-        .page-container { max-width: 600px; margin: 0 auto; background: var(--bg-white); box-shadow: 0 0 20px rgba(0,0,0,0.1); }
+        .page-container { max-width: 600px; margin: 0 auto; background: var(--bg-white); box-shadow: 0 0 20px rgba(0,0,0,0.1); min-height: 100vh; overflow: hidden; position: relative; }
 
         /* AOS 안전장치 */
         [data-aos] { opacity: 1 !important; transform: translate(0) scale(1) !important; transition: none !important; }
@@ -227,7 +227,7 @@
             부산 → 예식장: 오전 <strong>07시 00분</strong><br>
             예식장 → 부산: 오후 <strong>14시 30분</strong>
         </div>
-        <img src="./assets/bus.png" alt="대절버스" style="width: 100%; max-width: 300px; margin-bottom: 20px; border-radius: 12px; display: block; margin-left: auto; margin-right: auto;">
+        <img src="./assets/bus.png" alt="대절버스" style="width: 100%; margin-bottom: 20px; border-radius: 12px; display: block; margin-left: auto; margin-right: auto;">
         <a href="https://naver.me/5yhhSS3u" target="_blank" class="btn-point" style="max-width: 300px; margin: 0 auto; display: block;">타는 곳 지도</a>
     </section>
 
@@ -277,7 +277,7 @@
                 <p style="font-size: 0.85rem; color: #888; margin: 0 0 5px 0;">신부 이지연</p>
                 <div class="acc-row"><span>새마을금고 9003-1978-4884-1</span><button class="btn-copy-sm" onclick="copyToClipboard('9003-1978-4884-1')">복사</button></div>
                 <a href="https://qr.kakaopay.com/Ej8bBn70Q" target="_blank" class="btn-kakaopay">
-                    <img src="https://developers.kakaopay.com/tool/resource/static/img/button/pay/payment_icon_yellow_small.png" alt="카카오페이" style="height: 18px;"> 카카오페이 송금
+                    <img src="https://developers.kakao.com/tool/resource/static/img/button/pay/payment_icon_yellow_small.png" alt="카카오페이" style="height: 18px;"> 카카오페이 송금
                 </a>
             </div>
             <div class="acc-group">
