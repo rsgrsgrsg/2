@@ -14,7 +14,7 @@
     <style>
         :root { 
             --point-black: #000000; 
-            --point-color: #D1A7A7;
+            --point-color: #D1A7A7; /* Dusty Rose 색상 */
             --deep-gray: #333333; 
             --bg-white: #ffffff; 
         }
@@ -22,7 +22,10 @@
         /* 보안 및 기본 설정 */
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; }
         input, textarea, [id*="acc-"], [id*="addr-"] { -webkit-user-select: text; user-select: text; }
-        body { font-family: 'Noto Serif KR', serif; margin: 0; color: var(--point-black); background: var(--bg-white); line-height: 1.8; word-break: keep-all; }
+        
+        /* 전체 화면 배경과 카드형 컨테이너 */
+        body { font-family: 'Noto Serif KR', serif; margin: 0; color: var(--point-black); background: #eee; line-height: 1.8; word-break: keep-all; }
+        .page-container { max-width: 600px; margin: 0 auto; background: var(--bg-white); box-shadow: 0 0 20px rgba(0,0,0,0.1); }
 
         /* AOS 안전장치 */
         [data-aos] { opacity: 1 !important; transform: translate(0) scale(1) !important; transition: none !important; }
@@ -33,21 +36,30 @@
         .section-title { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--point-black); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 30px; display: block; }
         .h-divider { width: 100%; height: 1px; background-color: var(--point-black); margin: 0; }
 
-        /* 사이즈 제한 스타일 */
-        .btn-point { background: var(--point-color); color: white; border: none; padding: 15px; width: 100%; cursor: pointer; letter-spacing: 2px; font-weight: 700; font-family: inherit; font-size: 0.9rem; display: block; text-align: center; text-decoration: none; border-radius: 8px; }
-        .btn-copy-sm { background: var(--point-color); color: white; border: none; padding: 6px 12px; font-size: 0.75rem; cursor: pointer; font-family: inherit; border-radius: 6px; }
-        
-        /* [중요] 레이아웃 및 최대 사이즈 제한 */
-        .hero-slider { height: 100vh; width: 100%; max-width: 500px; margin: 0 auto; overflow: hidden; position: relative; background: #fff; }
-        .map-link-area { width: 100%; max-width: 500px; display: block; margin: 20px auto; border: 1px solid #eee; background-color: #f4f4f4; background-size: cover; background-position: center; border-radius: 8px; overflow: hidden; }
-        .bus-image { width: 100%; max-width: 400px; margin: 0 auto 20px auto; border-radius: 12px; display: block; }
+        /* 통합 버튼 디자인 */
+        .btn-point { 
+            background: var(--point-color); color: white; border: none; padding: 15px; width: 100%; cursor: pointer; letter-spacing: 2px; font-weight: 700; font-family: inherit; font-size: 0.9rem; display: block; text-align: center; text-decoration: none; box-sizing: border-box; border-radius: 8px;
+        }
 
-        /* BGM 버튼 */
-        .bgm-btn { position: fixed; top: 15px; right: 15px; z-index: 9990; width: 42px; height: 42px; background: rgba(255, 255, 255, 0.85); border: 1px solid #ddd; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--point-color); font-size: 1.1rem; box-shadow: 0 2px 6px rgba(0,0,0,0.1); outline: none; }
+        /* 작은 복사 버튼 디자인 */
+        .btn-copy-sm { 
+            background: var(--point-color); color: white; border: none; padding: 6px 12px; font-size: 0.75rem; cursor: pointer; font-family: inherit; border-radius: 6px;
+        }
+
+        /* BGM 버튼 스타일 */
+        .bgm-btn {
+            position: fixed; top: 15px; right: 15px; z-index: 9990;
+            width: 42px; height: 42px; background: rgba(255, 255, 255, 0.85);
+            border: 1px solid #ddd; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; color: var(--point-color); font-size: 1.1rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1); outline: none;
+        }
         .bgm-btn.playing i.fa-music { animation: spin 3s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* 메인 슬라이더 내부 */
+        /* 메인 슬라이더 */
+        .hero-slider { height: 100vh; width: 100%; overflow: hidden; position: relative; background: #fff; }
         .hero-container { display: flex; height: 100%; width: 100%; will-change: transform; }
         .hero-item { min-width: 100%; height: 100%; position: relative; }
         .hero-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
@@ -55,7 +67,11 @@
         .prev-btn { left: 10px; } .next-btn { right: 10px; }
         .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 60px; color: white; text-align: center; pointer-events: none; z-index: 5; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
         .hero-names { font-size: 2.2rem; font-weight: 400; letter-spacing: 8px; margin-bottom: 15px; }
-        .hero-date { font-size: 1.5rem; letter-spacing: 1px; font-weight: 400; color: #ffffff; text-shadow: 0 0 8px rgba(0, 0, 0, 0.6); margin-top: 10px; }
+        
+        .hero-date { 
+            font-size: 1.5rem; letter-spacing: 1px; font-weight: 400; color: #ffffff; 
+            text-shadow: 0 0 8px rgba(0, 0, 0, 0.6); margin-top: 10px;
+        }
 
         /* 디데이 & 위치 */
         .countdown-wrap { display: flex; justify-content: center; gap: 30px; margin: 30px 0; }
@@ -63,10 +79,15 @@
         .count-label { font-size: 0.65rem; color: #999; letter-spacing: 2px; }
         .address-box { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; width: 100%; }
         
+        .map-link-area { width: 100%; display: block; margin: 20px auto; border: 1px solid #eee; background-color: #f4f4f4; background-size: cover; background-position: center; border-radius: 8px; overflow: hidden; }
+
         /* 갤러리 */
         .gallery-wrap { position: relative; overflow: hidden; max-height: 5000px; transition: max-height 0.8s ease-in-out; }
         .gallery-wrap.limited { max-height: 330px; }
-        .gallery-wrap.limited::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to bottom, transparent, var(--bg-white)); pointer-events: none; }
+        .gallery-wrap.limited::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 60px;
+            background: linear-gradient(to bottom, transparent, var(--bg-white)); pointer-events: none;
+        }
         .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 0 10px; }
         .gallery-item { aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer; background: #f0f0f0; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
@@ -80,10 +101,15 @@
         .v-prev { left: 10px; } .v-next { right: 10px; }
         .viewer-count { position: absolute; bottom: 40px; color: #fff; font-size: 0.85rem; letter-spacing: 2px; }
 
-        /* 방명록 입력 폼 */
+        /* 방명록 입력 폼 수정 */
         .gb-card { background: white; padding: 30px 20px; border: 1px solid #eee; max-width: 450px; margin: 0 auto; box-sizing: border-box; }
-        .gb-card input, .gb-card textarea { display: block; width: 100%; padding: 15px; border: 1px solid #eee; margin-bottom: 10px; font-family: inherit; font-size: 0.9rem; border-radius: 8px; outline: none; box-sizing: border-box; text-align: center; }
+        .gb-card input, .gb-card textarea { 
+            display: block; width: 100%; padding: 15px; border: 1px solid #eee; margin-bottom: 10px; font-family: inherit; font-size: 0.9rem; border-radius: 8px; outline: none; box-sizing: border-box; text-align: center;
+        }
+        
         #gb-list { margin-top: 20px; max-height: 400px; overflow-y: auto; border-top: 1px solid #f2f2f2; padding-right: 5px; }
+        #gb-list::-webkit-scrollbar { width: 3px; }
+        #gb-list::-webkit-scrollbar-thumb { background: #ddd; }
         .guest-item { border-bottom: 1px solid #f2f2f2; padding: 20px 0; text-align: left; }
         .guest-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 5px; display: block; }
         .guest-msg { font-size: 0.85rem; color: var(--deep-gray); line-height: 1.6; }
@@ -100,12 +126,13 @@
 </head>
 <body oncontextmenu="return false">
 
+<div class="page-container">
     <audio id="bgm" src="./assets/bgm.mp3" loop></audio>
     <button id="bgmBtn" class="bgm-btn" onclick="toggleBgm()">
         <i class="fas fa-music"></i>
     </button>
 
-    <div class="hero-slider" data-aos="fade-up">
+    <div class="hero-slider">
         <div class="hero-container" id="heroSlider">
             <div class="hero-item"><img src="./assets/main3.png"></div>
             <div class="hero-item"><img src="./assets/main1.png"></div>
@@ -152,7 +179,7 @@
         </div>
         
         <a href="https://naver.me/5apDP7nI" target="_blank" class="map-link-area" 
-           style="background-image: url('./assets/map_preview.png');">
+           style="background-image: url('./assets/map_preview.png'); width: 100%; aspect-ratio: 900 / 650; height: auto;">
         </a>
 
         <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
@@ -200,7 +227,7 @@
             부산 → 예식장: 오전 <strong>07시 00분</strong><br>
             예식장 → 부산: 오후 <strong>14시 30분</strong>
         </div>
-        <img src="./assets/bus.png" alt="대절버스" class="bus-image">
+        <img src="./assets/bus.png" alt="대절버스" style="width: 100%; max-width: 300px; margin-bottom: 20px; border-radius: 12px; display: block; margin-left: auto; margin-right: auto;">
         <a href="https://naver.me/5yhhSS3u" target="_blank" class="btn-point" style="max-width: 300px; margin: 0 auto; display: block;">타는 곳 지도</a>
     </section>
 
@@ -227,8 +254,7 @@
             카카오톡 공유하기
         </button>
     </section>
-
-    <div id="accModal" class="modal">
+</div><div id="accModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal()">×</span>
             <h3 style="font-weight: 700; border-bottom: 1px solid #000; padding-bottom: 10px; margin-bottom: 10px;">마음 전하실 곳</h3>
