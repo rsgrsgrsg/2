@@ -25,13 +25,28 @@
         body { font-family: 'Noto Serif KR', serif; margin: 0; color: var(--point-black); background: #eee; line-height: 1.8; word-break: keep-all; }
         .page-container { max-width: 600px; margin: 0 auto; background: var(--bg-white); box-shadow: 0 0 20px rgba(0,0,0,0.1); min-height: 100vh; overflow: hidden; position: relative; }
 
-        /* AOS가 정상 작동하도록 기존 강제 스타일 제거 */
         .section { padding: 80px 30px; text-align: center; }
         .section-title { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--point-black); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 30px; display: block; }
         .h-divider { width: 100%; height: 1px; background-color: var(--point-black); margin: 0; }
 
         .btn-point { background: var(--point-color); color: white; border: none; padding: 15px; width: 100%; cursor: pointer; letter-spacing: 2px; font-weight: 700; font-family: inherit; font-size: 0.9rem; display: block; text-align: center; text-decoration: none; box-sizing: border-box; border-radius: 8px; }
         .btn-copy-sm { background: var(--point-color); color: white; border: none; padding: 6px 12px; font-size: 0.75rem; cursor: pointer; font-family: inherit; border-radius: 6px; }
+
+        /* 버스 안내 스타일 추가 */
+        .bus-info-box { 
+    background-color: #f8f8f8; 
+    border-radius: 16px; 
+    padding: 30px; 
+    text-align: left; 
+    display: inline-block; /* 박스를 가운데 정렬하기 위함 */
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 350px; /* 박스 최대 너비 조절 */
+}
+        .info-row:last-child { margin-bottom: 0; }
+        .info-label { width: 80px; color: #888; font-size: 0.95rem; flex-shrink: 0; }
+        .info-value { color: #333; font-size: 0.95rem; line-height: 1.5; font-weight: 400; }
+        .info-value strong { font-weight: 700; }
 
         .bgm-btn { position: fixed; top: 15px; right: 15px; z-index: 9990; width: 42px; height: 42px; background: rgba(255, 255, 255, 0.85); border: 1px solid #ddd; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--point-color); font-size: 1.1rem; box-shadow: 0 2px 6px rgba(0,0,0,0.1); outline: none; }
         .bgm-btn.playing i.fa-music { animation: spin 3s linear infinite; }
@@ -45,11 +60,14 @@
         .prev-btn { left: 10px; } .next-btn { right: 10px; }
         .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 60px; color: white; text-align: center; pointer-events: none; z-index: 5; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
         .hero-names { font-size: 2.2rem; font-weight: 400; letter-spacing: 8px; margin-bottom: 15px; }
-        .hero-date { font-size: 1.5rem; letter-spacing: 1px; font-weight: 400; color: #ffffff; text-shadow: 0 0 8px rgba(0, 0, 0, 0.6); margin-top: 10px; }
+        .hero-date { font-size: 1.1rem; letter-spacing: 2px; font-weight: 400; color: #ffffff; text-shadow: 0 0 8px rgba(0, 0, 0, 0.6); margin-top: 10px; }
 
-        .countdown-wrap { display: flex; justify-content: center; gap: 30px; margin: 30px 0; }
-        .count-num { font-family: 'Montserrat', sans-serif; font-size: 1.8rem; font-weight: 300; }
-        .count-label { font-size: 0.65rem; color: #999; letter-spacing: 2px; }
+        .dday-date { font-size: 1.8rem; margin-bottom: 5px; }
+        .dday-time { font-size: 1.1rem; color: #666; margin-bottom: 25px; }
+        .countdown-wrap { display: flex; justify-content: center; gap: 20px; }
+        .count-num { font-family: 'Montserrat', sans-serif; font-size: 1.4rem; font-weight: 400; }
+        .count-label { font-size: 0.7rem; color: #999; margin-left: 3px; }
+
         .address-box { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; width: 100%; }
         .map-link-area { width: 100%; display: block; margin: 20px auto; border: 1px solid #eee; background-color: #f4f4f4; background-size: cover; background-position: center; border-radius: 8px; overflow: hidden; }
 
@@ -76,7 +94,7 @@
         .guest-item { border-bottom: 1px solid #f2f2f2; padding: 20px 0; text-align: left; }
         .guest-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 5px; display: block; }
         .guest-msg { font-size: 0.85rem; color: var(--deep-gray); line-height: 1.6; }
-
+        
         .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
         .modal-content { background: white; padding: 40px 25px; width: 90%; max-width: 400px; text-align: center; position: relative; max-height: 90vh; overflow-y: auto; border-radius: 12px; }
         .close-modal { position: absolute; right: 15px; top: 15px; font-size: 1.5rem; cursor: pointer; color: #999; }
@@ -105,39 +123,45 @@
         <div class="hero-overlay">
             <div data-aos="fade-up" data-aos-duration="2000">
                 <h1 class="hero-names">류승건 & 이지연</h1>
-                <p class="hero-date">2026. 8. 15.<br>토요일 오후 12시</p>
+                <p class="hero-date">2026. 08. 15 SAT PM 12 : 00</p>
             </div>
         </div>
     </div>
 
     <div class="h-divider"></div>
 
-    <section class="section" data-aos="fade-up" data-aos-delay="200">
+    <section class="section" data-aos="fade-up">
         <span class="section-title">Invitation</span>
         <p style="font-size: 1.1rem; line-height: 2.4;">곁에 있을 때 가장 나다워지는 사람을 만났습니다.<br>서로의 결을 닮아가며<br>함께할 새날의 시작을 약속합니다.</p>
     </section>
 
     <div class="h-divider"></div>
 
-    <section class="section" data-aos="fade-up" data-aos-delay="200">
+    <section class="section" data-aos="fade-up">
         <span class="section-title">D-Day</span>
+        <div class="dday-date">2026. 08. 15</div>
+        <div class="dday-time">토요일 오후 12시</div>
         <div class="countdown-wrap">
-            <div class="count-item"><span class="count-num" id="days">00</span><br><span class="count-label">DAYS</span></div>
-            <div class="count-item"><span class="count-num" id="hours">00</span><br><span class="count-label">HOURS</span></div>
-            <div class="count-item"><span class="count-num" id="mins">00</span><br><span class="count-label">MINS</span></div>
+            <div class="count-item"><span class="count-num" id="days">00</span><span class="count-label">days</span></div>
+            <div class="count-item"><span class="count-num" id="hours">00</span><span class="count-label">hours</span></div>
+            <div class="count-item"><span class="count-num" id="mins">00</span><span class="count-label">mins</span></div>
         </div>
     </section>
 
     <div class="h-divider"></div>
 
-    <section class="section" data-aos="fade-up" data-aos-delay="200">
+    <section class="section" data-aos="fade-up">
         <span class="section-title">Location</span>
-        <h3 style="font-size: 1.1rem; line-height: 2.4; font-weight: 400; margin-bottom: 15px;">메리빌리아 더 프레스티지<br>가든홀</h3>
+        <h3 style="font-size: 1.1rem; line-height: 2.4; font-weight: 400; margin-bottom: 15px;">메리빌리아 더 프레스티지 수원<br>가든홀</h3>
         <div class="address-box">
             <span id="addr-text" style="color: #888; font-size: 0.85rem;">경기 수원시 권선구 세화로 116</span>
             <button class="btn-copy-sm" style="background: var(--point-color); color: white;" onclick="copyToClipboard('경기 수원시 권선구 세화로 116')">복사</button>
         </div>
-        <a href="https://naver.me/5apDP7nI" target="_blank" class="map-link-area" style="background-image: url('./assets/map_preview.png'); width: 100%; aspect-ratio: 900 / 650; height: auto;"></a>
+        
+        <a href="https://naver.me/5apDP7nI" target="_blank" class="map-link-area" 
+           style="background-image: url('./assets/map_preview.png'); width: 100%; aspect-ratio: 900 / 650; height: auto;">
+        </a>
+
         <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
             <a href="https://naver.me/5apDP7nI" target="_blank" class="btn-point" style="flex: 1; margin: 0; padding: 12px;">네이버 지도</a>
             <a href="https://kko.to/EIt4OnhVm4" target="_blank" class="btn-point" style="flex: 1; margin: 0; padding: 12px;">카카오 네비</a>
@@ -146,7 +170,7 @@
 
     <div class="h-divider"></div>
 
-    <section class="section" data-aos="fade-up" data-aos-delay="200" id="gallerySection">
+    <section class="section" data-aos="fade-up" id="gallerySection">
         <span class="section-title">Gallery</span>
         <div class="gallery-wrap limited" id="galleryWrap">
             <div class="gallery-grid" id="galleryGrid"></div>
@@ -166,7 +190,7 @@
 
     <div class="h-divider"></div>
 
-    <section class="section" data-aos="fade-up" data-aos-delay="200" style="padding: 60px 30px;">
+    <section class="section" data-aos="fade-up" style="padding: 60px 30px;">
         <span class="section-title">Account</span>
         <p style="font-size: 1.1rem; line-height: 2.4; margin-bottom: 25px;">축복해주시는 소중한 마음 잊지 않고<br>예쁘게 잘 살겠습니다.</p>
         <button onclick="openModal()" class="btn-point" style="max-width: 300px; margin: 0 auto; display: block;">마음 전하실 곳</button>
@@ -174,18 +198,33 @@
 
     <div class="h-divider"></div>
 
-    <section class="section" data-aos="fade-up" data-aos-delay="200">
-        <span class="section-title">부산↔예식장 대절 버스 안내</span>
-        <div style="font-size: 1.1rem; line-height: 2.0; color: #333; margin-bottom: 20px;">
-            타는 곳<br>남구 문현동 한국은행 사거리<br><br>출발 시간<br>부산 → 예식장: 오전 <strong>07시 00분</strong><br>예식장 → 부산: 오후 <strong>14시 30분</strong>
+<section class="section" data-aos="fade-up">
+    <span class="section-title">부산 지역 전세 버스</span>
+    
+    <div class="bus-info-box" style="display: inline-block; text-align: left; width: 100%; max-width: 320px; background-color: #f8f8f8; border-radius: 16px; padding: 25px; margin-bottom: 20px;">
+        <div class="info-row" style="display: flex; margin-bottom: 8px;">
+            <div class="info-label" style="width: 80px; color: #888;">타는 곳</div>
+            <div class="info-value" style="color: #333; font-weight: 500;">남구 문현동 한국은행 사거리</div>
         </div>
-        <img src="./assets/bus.png" alt="대절버스" style="width: 100%; margin-bottom: 20px; border-radius: 12px; display: block; margin-left: auto; margin-right: auto;">
-        <a href="https://naver.me/5yhhSS3u" target="_blank" class="btn-point" style="max-width: 300px; margin: 0 auto; display: block;">타는 곳 지도</a>
-    </section>
+        <div class="info-row" style="display: flex; margin-bottom: 8px;">
+            <div class="info-label" style="width: 80px; color: #888;">출발시간</div>
+            <div class="info-value" style="color: #333; font-weight: 500;">오전 07:00</div>
+        </div>
+        <div class="info-row" style="display: flex;">
+            <div class="info-label" style="width: 80px; color: #888;">귀행시간</div>
+            <div class="info-value" style="color: #333; font-weight: 500;">오후 14:30</div>
+        </div>
+    </div>
+
+    <a href="https://naver.me/5aj0JT5P" target="_blank">
+        <img src="./assets/bus.png" alt="대절버스" style="width: 100%; max-width: 320px; margin: 0 auto 20px auto; border-radius: 12px; display: block;">
+    </a>
+    <a href="https://naver.me/5yhhSS3u" target="_blank" class="btn-point" style="max-width: 300px; margin: 0 auto; display: block;">타는 곳 지도</a>
+</section>
 
     <div class="h-divider"></div>
 
-    <section class="section" data-aos="fade-up" data-aos-delay="200">
+    <section class="section" data-aos="fade-up">
         <span class="section-title">Guestbook</span>
         <div class="gb-card">
             <div style="font-size: 0.75rem; color: #888; margin-bottom: 20px; text-align: center; line-height: 1.5; border: 1px solid #f2f2f2; padding: 15px; border-radius: 8px; background-color: #fafafa;">
@@ -200,7 +239,7 @@
 
     <div class="h-divider"></div>
 
-    <section class="section" data-aos="fade-up" data-aos-delay="200" style="padding: 60px 30px;">
+    <section class="section" data-aos="fade-up" style="padding: 60px 30px;">
         <p style="font-size: 0.9rem; margin-bottom: 25px;">소중한 분들께 초대장을 전해주세요.</p>
         <button onclick="shareKakao()" class="btn-point" style="background-color: #FEE500; color: #191919; max-width: 300px; margin: 0 auto; display: flex; justify-content: center; align-items: center;">
             카카오톡 공유하기
@@ -212,20 +251,27 @@
     <div class="modal-content">
         <span class="close-modal" onclick="closeModal()">×</span>
         <h3 style="font-weight: 700; border-bottom: 1px solid #000; padding-bottom: 10px; margin-bottom: 10px;">마음 전하실 곳</h3>
+        
         <div class="acc-group">
             <p style="font-size: 0.85rem; color: #888; margin: 0 0 5px 0;">신랑 류승건</p>
             <div class="acc-row"><span>우리은행 1002-841-241285</span><button class="btn-copy-sm" onclick="copyToClipboard('1002-841-241285')">복사</button></div>
-            <a href="https://qr.kakaopay.com/FNfa3PrZO" target="_blank" class="btn-kakaopay"><img src="https://developers.kakao.com/tool/resource/static/img/button/pay/payment_icon_yellow_small.png" alt="카카오페이" style="height: 18px;"> 카카오페이 송금</a>
+            <a href="https://qr.kakaopay.com/FNfa3PrZO" target="_blank" class="btn-kakaopay">
+                <img src="https://developers.kakao.com/tool/resource/static/img/button/pay/payment_icon_yellow_small.png" alt="카카오페이" style="height: 18px;"> 카카오페이 송금
+            </a>
         </div>
         <div class="acc-group">
             <p style="font-size: 0.85rem; color: #888; margin: 0 0 5px 0;">신랑측 아버지 류주형</p>
             <div class="acc-row"><span>농협 352-0863-6634-83</span><button class="btn-copy-sm" onclick="copyToClipboard('352-0863-6634-83')">복사</button></div>
         </div>
+
         <div style="width: 100%; height: 1px; background-color: #ddd; margin: 20px 0;"></div>
+
         <div class="acc-group">
             <p style="font-size: 0.85rem; color: #888; margin: 0 0 5px 0;">신부 이지연</p>
             <div class="acc-row"><span>새마을금고 9003-1978-4884-1</span><button class="btn-copy-sm" onclick="copyToClipboard('9003-1978-4884-1')">복사</button></div>
-            <a href="https://qr.kakaopay.com/Ej8bBn70Q" target="_blank" class="btn-kakaopay"><img src="https://developers.kakao.com/tool/resource/static/img/button/pay/payment_icon_yellow_small.png" alt="카카오페이" style="height: 18px;"> 카카오페이 송금</a>
+            <a href="https://qr.kakaopay.com/Ej8bBn70Q" target="_blank" class="btn-kakaopay">
+                <img src="https://developers.kakao.com/tool/resource/static/img/button/pay/payment_icon_yellow_small.png" alt="카카오페이" style="height: 18px;"> 카카오페이 송금
+            </a>
         </div>
         <div class="acc-group">
             <p style="font-size: 0.85rem; color: #888; margin: 0 0 5px 0;">신부측 아버지 이광구</p>
@@ -243,8 +289,7 @@
 <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"></script>
 <script>
-    AOS.init({ duration: 1200, once: true });
-    
+    window.onload = function() { AOS.init({ duration: 1200, once: true }); };
     const bgm = document.getElementById('bgm'); const bgmBtn = document.getElementById('bgmBtn'); let isBgmPlaying = false;
     function toggleBgm() { if (isBgmPlaying) { bgm.pause(); bgmBtn.classList.remove('playing'); } else { bgm.play().catch(e => console.log('BGM Play Error')); bgmBtn.classList.add('playing'); } isBgmPlaying = !isBgmPlaying; }
     document.body.addEventListener('click', function playOnFirstClick() { if(!isBgmPlaying) toggleBgm(); document.body.removeEventListener('click', playOnFirstClick); }, { once: true });
@@ -257,7 +302,7 @@
         heroContainer.addEventListener('transitionend', () => { isHeroMoving = false; if (heroIdx === 0) { heroContainer.style.transition = 'none'; heroIdx = totalHero; heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`; } else if (heroIdx === totalHero + 1) { heroContainer.style.transition = 'none'; heroIdx = 1; heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`; } });
     }
 
-    const galleryFiles = ['p01', 'p02', 'p03', 'p04', 'p05', 'p06', 'p11', 'p12', 'p13', 'p14', 'p15', 'p16', 'p17', 'p18', 'p19', 'p20', 'p21', 'p31', 'p32', 'p33', 'p34', 'p35', 'p36', 'p37', 'p39', 'p40', 'p51', 'p52', 'p53', 'p54', 'p56', 'p57', 'p58', 'p61', 'p62', 'p63', 'p64', 'p65'];
+    const galleryFiles = ['p01', 'p02', 'p03', 'p04', 'p05', 'p06', 'p11', 'p12', 'p13', 'p14', 'p15', 'p16', 'p17', 'p18', 'p19', 'p20', 'p21', 'p31', 'p32', 'p33', 'p34', 'p35', 'p37', 'p38', 'p39', 'p40', 'p41', 'p42', 'p43', 'p44', 'p45', 'p46', 'p47', 'p48', 'p49', 'p50'];
     const totalGalleryImages = galleryFiles.length; let gViewIdx = 0;
     function initGallery() { const grid = document.getElementById('galleryGrid'); if(!grid) return; galleryFiles.forEach((name, idx) => { const item = document.createElement('div'); item.className = 'gallery-item'; item.setAttribute('onclick', `openViewer(${idx})`); const ext = (name === 'p58') ? '.jpg' : '.png'; item.innerHTML = `<img src="./assets/p00/${name}${ext}" loading="lazy">`; grid.appendChild(item); }); }
     initGallery();
@@ -280,7 +325,7 @@
         const firebaseConfig = { apiKey: "AIzaSyD1LmVHTLYnecokZV67_hCDcM289fl3oiw", authDomain: "sg-jy-233e2.firebaseapp.com", databaseURL: "https://sg-jy-233e2-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "sg-jy-233e2", storageBucket: "sg-jy-233e2.firebasestorage.app", messagingSenderId: "217599075354", appId: "1:217599075354:web:c227474b5efc4fd280dda3" };
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
-        function updateCountdown() { const target = new Date('2026-08-15T12:00:00').getTime(); const now = new Date().getTime(); const diff = target - now; const d = Math.floor(diff / (1000 * 60 * 60 * 24)); const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)); if(document.getElementById('days')) { document.getElementById('days').innerText = d < 10 ? '0'+d : d; document.getElementById('hours').innerText = h < 10 ? '0'+h : h; document.getElementById('mins').innerText = m < 10 ? '0'+m : m; } }
+        function updateCountdown() { const target = new Date('2026-08-15T12:00:00').getTime(); const now = new Date().getTime(); const diff = target - now; const d = Math.floor(diff / (1000 * 60 * 60 * 24)); const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)); if(document.getElementById('days')) { document.getElementById('days').innerText = d; document.getElementById('hours').innerText = h; document.getElementById('mins').innerText = m; } }
         setInterval(updateCountdown, 1000); updateCountdown();
         function saveGuestMessage() { let name = document.getElementById('gb_name').value.trim(); let msg = document.getElementById('gb_msg').value.trim(); if (!name) { showToast("성함을 입력해주세요."); document.getElementById('gb_name').focus(); return; } if (!msg) { showToast("축하 메시지를 입력해주세요."); document.getElementById('gb_msg').focus(); return; } database.ref('guestbook').push({ name: sanitize(name), message: sanitize(msg), timestamp: Date.now() }).then(() => { showToast("소중한 메시지가 등록되었습니다."); document.getElementById('gb_name').value = ''; document.getElementById('gb_msg').value = ''; }); }
         database.ref('guestbook').on('value', (snapshot) => { const list = document.getElementById('gb-list'); if(!list) return; list.innerHTML = ''; const messages = []; snapshot.forEach(child => { messages.push(child.val()); }); messages.reverse().forEach(data => { const div = document.createElement('div'); div.className = 'guest-item'; div.innerHTML = `<span class="guest-name">${data.name}</span><div class="guest-msg">${data.message}</div>`; list.appendChild(div); }); });
