@@ -292,8 +292,9 @@
         heroContainer.addEventListener('transitionend', () => { isHeroMoving = false; if (heroIdx === 0) { heroContainer.style.transition = 'none'; heroIdx = totalHero; heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`; } else if (heroIdx === totalHero + 1) { heroContainer.style.transition = 'none'; heroIdx = 1; heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`; } });
     }
 
-    // [갤러리 설정] 확장자가 .png 인지 .jpg 인지 확인 후 아래 값을 수정하세요.
-    const IMG_EXT = '.png'; 
+    // [경로 수정] assets/ 바로 아래로 사진들을 옮겼으므로 경로를 assets/ 로 수정
+    const PATH = 'assets/'; 
+    const EXT = '.png';
 
     const galleryFiles = ['p01', 'p02', 'p03', 'p04', 'p05', 'p06', 'p11', 'p12', 'p13', 'p14', 'p15', 'p16', 'p17', 'p18', 'p19', 'p20', 'p21', 'p31', 'p32', 'p33', 'p34', 'p35', 'p37', 'p38', 'p39', 'p40', 'p41', 'p42', 'p43', 'p44', 'p45', 'p46', 'p47', 'p48', 'p49', 'p50'];
     const totalGalleryImages = galleryFiles.length; 
@@ -307,9 +308,7 @@
             const item = document.createElement('div'); 
             item.className = 'gallery-item'; 
             item.setAttribute('onclick', `openViewer(${idx})`); 
-            // 파일명에 맞는 확장자 적용
-            const fileExt = (name === 'p58') ? '.jpg' : IMG_EXT;
-            item.innerHTML = `<img src="./assets/p00/${name}${fileExt}" loading="lazy" onerror="this.style.display='none'">`; 
+            item.innerHTML = `<img src="${PATH}${name}${EXT}" loading="lazy" onerror="console.log('이미지 로드 실패: ${PATH}${name}${EXT}'); this.style.display='none'">`; 
             grid.appendChild(item); 
         }); 
     }
@@ -321,8 +320,7 @@
     function changeViewImg(dir) { gViewIdx = (gViewIdx + dir + totalGalleryImages) % totalGalleryImages; updateViewer(); }
     function updateViewer() { 
         const name = galleryFiles[gViewIdx]; 
-        const fileExt = (name === 'p58') ? '.jpg' : IMG_EXT;
-        document.getElementById('currentViewerImg').src = `./assets/p00/${name}${fileExt}`; 
+        document.getElementById('currentViewerImg').src = `${PATH}${name}${EXT}`; 
         document.getElementById('viewerCount').innerText = `${gViewIdx + 1} / ${totalGalleryImages}`; 
     }
     
