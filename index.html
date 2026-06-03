@@ -29,20 +29,15 @@
         .section-title { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--point-black); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 30px; display: block; }
         .h-divider { width: 100%; height: 1px; background-color: var(--point-black); margin: 0; }
 
-        .btn-point { background: var(--point-color); color: white; border: none; padding: 15px; width: 100%; cursor: pointer; letter-spacing: 2px; font-weight: 700; font-family: inherit; font-size: 0.9rem; display: block; text-align: center; text-decoration: none; box-sizing: border-box; border-radius: 8px; }
+        /* 버튼 기본 스타일 */
+        .btn-point { background: var(--point-color); color: white; border: none; padding: 12px; width: 100%; cursor: pointer; letter-spacing: 2px; font-weight: 700; font-family: inherit; font-size: 0.9rem; display: block; text-align: center; text-decoration: none; box-sizing: border-box; border-radius: 8px; }
+        
+        /* 버튼을 300px 너비로 고정하고 중앙 정렬하는 클래스 */
+        .btn-fixed { max-width: 300px; margin: 0 auto; }
+
         .btn-copy-sm { background: var(--point-color); color: white; border: none; padding: 6px 12px; font-size: 0.75rem; cursor: pointer; font-family: inherit; border-radius: 6px; }
 
-        /* 버스 안내 스타일 추가 */
-        .bus-info-box { 
-    background-color: #f8f8f8; 
-    border-radius: 16px; 
-    padding: 30px; 
-    text-align: left; 
-    display: inline-block; /* 박스를 가운데 정렬하기 위함 */
-    margin-bottom: 20px;
-    width: 100%;
-    max-width: 350px; /* 박스 최대 너비 조절 */
-}
+        .bus-info-box { background-color: #f8f8f8; border-radius: 16px; padding: 30px; text-align: left; display: inline-block; margin-bottom: 20px; width: 100%; max-width: 350px; }
         .info-row:last-child { margin-bottom: 0; }
         .info-label { width: 80px; color: #888; font-size: 0.95rem; flex-shrink: 0; }
         .info-value { color: #333; font-size: 0.95rem; line-height: 1.5; font-weight: 400; }
@@ -163,9 +158,33 @@
         </a>
 
         <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
-            <a href="https://naver.me/5apDP7nI" target="_blank" class="btn-point" style="flex: 1; margin: 0; padding: 12px;">네이버 지도</a>
-            <a href="https://kko.to/EIt4OnhVm4" target="_blank" class="btn-point" style="flex: 1; margin: 0; padding: 12px;">카카오 네비</a>
+            <a href="https://naver.me/5apDP7nI" target="_blank" class="btn-point" style="flex: 1; padding: 12px;">네이버 지도</a>
+            <a href="https://kko.to/EIt4OnhVm4" target="_blank" class="btn-point" style="flex: 1; padding: 12px;">카카오 네비</a>
         </div>
+    </section>
+
+    <div class="h-divider"></div>
+
+    <section class="section" data-aos="fade-up">
+        <span class="section-title">부산 지역 전세 버스</span>
+        <div class="bus-info-box" style="display: inline-block; text-align: left; width: 100%; max-width: 350px; background-color: #f8f8f8; border-radius: 16px; padding: 25px; margin-bottom: 20px;">
+            <div class="info-row" style="display: flex; margin-bottom: 8px;">
+                <div class="info-label" style="width: 80px; color: #888;">타는 곳</div>
+                <div class="info-value" style="color: #333; font-weight: 500;">남구 문현동 한국은행 사거리</div>
+            </div>
+            <div class="info-row" style="display: flex; margin-bottom: 8px;">
+                <div class="info-label" style="width: 80px; color: #888;">출발시간</div>
+                <div class="info-value" style="color: #333; font-weight: 500;">오전 07:00</div>
+            </div>
+            <div class="info-row" style="display: flex;">
+                <div class="info-label" style="width: 80px; color: #888;">귀행시간</div>
+                <div class="info-value" style="color: #333; font-weight: 500;">오후 14:30</div>
+            </div>
+        </div>
+        <a href="https://naver.me/5aj0JT5P" target="_blank" style="margin-bottom: 20px; display: block;">
+            <img src="./assets/bus.png" alt="대절버스" style="width: 100%; border-radius: 12px; display: block;">
+        </a>
+        <a href="https://naver.me/5yhhSS3u" target="_blank" class="btn-point btn-fixed">타는 곳 지도</a>
     </section>
 
     <div class="h-divider"></div>
@@ -175,7 +194,7 @@
         <div class="gallery-wrap limited" id="galleryWrap">
             <div class="gallery-grid" id="galleryGrid"></div>
         </div>
-        <button id="moreBtn" class="btn-point" style="max-width: 200px; margin: 20px auto; padding: 12px;" onclick="toggleGallery()">사진 더보기</button>
+        <button id="moreBtn" class="btn-point btn-fixed" onclick="toggleGallery()">사진 더보기</button>
     </section>
 
     <div id="galleryViewer">
@@ -193,34 +212,8 @@
     <section class="section" data-aos="fade-up" style="padding: 60px 30px;">
         <span class="section-title">Account</span>
         <p style="font-size: 1.1rem; line-height: 2.4; margin-bottom: 25px;">축복해주시는 소중한 마음 잊지 않고<br>예쁘게 잘 살겠습니다.</p>
-        <button onclick="openModal()" class="btn-point" style="max-width: 300px; margin: 0 auto; display: block;">마음 전하실 곳</button>
+        <button onclick="openModal()" class="btn-point btn-fixed">마음 전하실 곳</button>
     </section>
-
-    <div class="h-divider"></div>
-
-<section class="section" data-aos="fade-up">
-    <span class="section-title">부산 지역 전세 버스</span>
-    
-    <div class="bus-info-box" style="display: inline-block; text-align: left; width: 100%; max-width: 320px; background-color: #f8f8f8; border-radius: 16px; padding: 25px; margin-bottom: 20px;">
-        <div class="info-row" style="display: flex; margin-bottom: 8px;">
-            <div class="info-label" style="width: 80px; color: #888;">타는 곳</div>
-            <div class="info-value" style="color: #333; font-weight: 500;">남구 문현동 한국은행 사거리</div>
-        </div>
-        <div class="info-row" style="display: flex; margin-bottom: 8px;">
-            <div class="info-label" style="width: 80px; color: #888;">출발시간</div>
-            <div class="info-value" style="color: #333; font-weight: 500;">오전 07:00</div>
-        </div>
-        <div class="info-row" style="display: flex;">
-            <div class="info-label" style="width: 80px; color: #888;">귀행시간</div>
-            <div class="info-value" style="color: #333; font-weight: 500;">오후 14:30</div>
-        </div>
-    </div>
-
-    <a href="https://naver.me/5aj0JT5P" target="_blank">
-        <img src="./assets/bus.png" alt="대절버스" style="width: 100%; max-width: 320px; margin: 0 auto 20px auto; border-radius: 12px; display: block;">
-    </a>
-    <a href="https://naver.me/5yhhSS3u" target="_blank" class="btn-point" style="max-width: 300px; margin: 0 auto; display: block;">타는 곳 지도</a>
-</section>
 
     <div class="h-divider"></div>
 
@@ -232,7 +225,7 @@
             </div>
             <input type="text" id="gb_name" placeholder="성함">
             <textarea id="gb_msg" rows="3" placeholder="축하 메시지"></textarea>
-            <button onclick="saveGuestMessage()" class="btn-point">메시지 남기기</button>
+            <button onclick="saveGuestMessage()" class="btn-point btn-fixed">메시지 남기기</button>
             <div id="gb-list"></div>
         </div>
     </section>
@@ -241,7 +234,7 @@
 
     <section class="section" data-aos="fade-up" style="padding: 60px 30px;">
         <p style="font-size: 0.9rem; margin-bottom: 25px;">소중한 분들께 초대장을 전해주세요.</p>
-        <button onclick="shareKakao()" class="btn-point" style="background-color: #FEE500; color: #191919; max-width: 300px; margin: 0 auto; display: flex; justify-content: center; align-items: center;">
+        <button onclick="shareKakao()" class="btn-point btn-fixed" style="background-color: #FEE500; color: #191919;">
             카카오톡 공유하기
         </button>
     </section>
