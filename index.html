@@ -29,12 +29,9 @@
         .section-title { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--point-black); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 30px; display: block; }
         .h-divider { width: 100%; height: 1px; background-color: var(--point-black); margin: 0; }
 
-        /* 버튼 기본 스타일 */
+        /* 버튼 스타일 */
         .btn-point { background: var(--point-color); color: white; border: none; padding: 12px; width: 100%; cursor: pointer; letter-spacing: 2px; font-weight: 700; font-family: inherit; font-size: 0.9rem; display: block; text-align: center; text-decoration: none; box-sizing: border-box; border-radius: 8px; }
-        
-        /* 버튼을 300px 너비로 고정하고 중앙 정렬하는 클래스 */
         .btn-fixed { max-width: 300px; margin: 0 auto; }
-
         .btn-copy-sm { background: var(--point-color); color: white; border: none; padding: 6px 12px; font-size: 0.75rem; cursor: pointer; font-family: inherit; border-radius: 6px; }
 
         .bus-info-box { background-color: #f8f8f8; border-radius: 16px; padding: 30px; text-align: left; display: inline-block; margin-bottom: 20px; width: 100%; max-width: 350px; }
@@ -158,8 +155,8 @@
         </a>
 
         <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
-            <a href="https://naver.me/5apDP7nI" target="_blank" class="btn-point" style="flex: 1; padding: 12px;">네이버 지도</a>
-            <a href="https://kko.to/EIt4OnhVm4" target="_blank" class="btn-point" style="flex: 1; padding: 12px;">카카오 네비</a>
+            <a href="https://naver.me/5apDP7nI" target="_blank" class="btn-point btn-fixed" style="padding: 12px;">네이버 지도</a>
+            <a href="https://kko.to/EIt4OnhVm4" target="_blank" class="btn-point btn-fixed" style="padding: 12px;">카카오 네비</a>
         </div>
     </section>
 
@@ -182,7 +179,7 @@
             </div>
         </div>
         <a href="https://naver.me/5aj0JT5P" target="_blank" style="margin-bottom: 20px; display: block;">
-            <img src="./assets/bus.png" alt="대절버스" style="width: 100%; border-radius: 12px; display: block;">
+            <img src="./assets/bus.png" alt="대절버스" style="width: 100%; border-radius: 12px; display: block;" onerror="this.onerror=null; this.src='https://via.placeholder.com/300x150?text=Image+Not+Found';">
         </a>
         <a href="https://naver.me/5yhhSS3u" target="_blank" class="btn-point btn-fixed">타는 곳 지도</a>
     </section>
