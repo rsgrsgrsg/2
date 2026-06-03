@@ -292,15 +292,39 @@
         heroContainer.addEventListener('transitionend', () => { isHeroMoving = false; if (heroIdx === 0) { heroContainer.style.transition = 'none'; heroIdx = totalHero; heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`; } else if (heroIdx === totalHero + 1) { heroContainer.style.transition = 'none'; heroIdx = 1; heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`; } });
     }
 
+    // [갤러리 설정] 확장자가 .png 인지 .jpg 인지 확인 후 아래 값을 수정하세요.
+    const IMG_EXT = '.png'; 
+
     const galleryFiles = ['p01', 'p02', 'p03', 'p04', 'p05', 'p06', 'p11', 'p12', 'p13', 'p14', 'p15', 'p16', 'p17', 'p18', 'p19', 'p20', 'p21', 'p31', 'p32', 'p33', 'p34', 'p35', 'p37', 'p38', 'p39', 'p40', 'p41', 'p42', 'p43', 'p44', 'p45', 'p46', 'p47', 'p48', 'p49', 'p50'];
-    const totalGalleryImages = galleryFiles.length; let gViewIdx = 0;
-    function initGallery() { const grid = document.getElementById('galleryGrid'); if(!grid) return; galleryFiles.forEach((name, idx) => { const item = document.createElement('div'); item.className = 'gallery-item'; item.setAttribute('onclick', `openViewer(${idx})`); const ext = (name === 'p58') ? '.jpg' : '.png'; item.innerHTML = `<img src="./assets/p00/${name}${ext}" loading="lazy">`; grid.appendChild(item); }); }
+    const totalGalleryImages = galleryFiles.length; 
+    let gViewIdx = 0;
+
+    function initGallery() { 
+        const grid = document.getElementById('galleryGrid'); 
+        if(!grid) return; 
+        grid.innerHTML = '';
+        galleryFiles.forEach((name, idx) => { 
+            const item = document.createElement('div'); 
+            item.className = 'gallery-item'; 
+            item.setAttribute('onclick', `openViewer(${idx})`); 
+            // 파일명에 맞는 확장자 적용
+            const fileExt = (name === 'p58') ? '.jpg' : IMG_EXT;
+            item.innerHTML = `<img src="./assets/p00/${name}${fileExt}" loading="lazy" onerror="this.style.display='none'">`; 
+            grid.appendChild(item); 
+        }); 
+    }
     initGallery();
+
     function toggleGallery() { const wrap = document.getElementById('galleryWrap'); const btn = document.getElementById('moreBtn'); if (wrap.classList.contains('limited')) { wrap.classList.remove('limited'); btn.innerText = '사진 접기'; } else { wrap.classList.add('limited'); btn.innerText = '사진 더보기'; document.getElementById('gallerySection').scrollIntoView({ behavior: 'smooth' }); } }
     function openViewer(idx) { gViewIdx = idx; updateViewer(); document.getElementById('galleryViewer').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
     function closeViewer() { document.getElementById('galleryViewer').style.display = 'none'; document.body.style.overflow = 'auto'; }
     function changeViewImg(dir) { gViewIdx = (gViewIdx + dir + totalGalleryImages) % totalGalleryImages; updateViewer(); }
-    function updateViewer() { const name = galleryFiles[gViewIdx]; const ext = (name === 'p58') ? '.jpg' : '.png'; document.getElementById('currentViewerImg').src = `./assets/p00/${name}${ext}`; document.getElementById('viewerCount').innerText = `${gViewIdx + 1} / ${totalGalleryImages}`; }
+    function updateViewer() { 
+        const name = galleryFiles[gViewIdx]; 
+        const fileExt = (name === 'p58') ? '.jpg' : IMG_EXT;
+        document.getElementById('currentViewerImg').src = `./assets/p00/${name}${fileExt}`; 
+        document.getElementById('viewerCount').innerText = `${gViewIdx + 1} / ${totalGalleryImages}`; 
+    }
     
     function showToast(msg) { const toast = document.createElement('div'); toast.innerText = msg; toast.style.position = 'fixed'; toast.style.bottom = '20px'; toast.style.left = '50%'; toast.style.transform = 'translateX(-50%)'; toast.style.backgroundColor = 'rgba(0,0,0,0.8)'; toast.style.color = 'white'; toast.style.padding = '10px 20px'; toast.style.borderRadius = '5px'; toast.style.zIndex = '99999'; document.body.appendChild(toast); setTimeout(() => { toast.remove(); }, 2000); }
     function copyToClipboard(val) { let textToCopy = val; const element = document.getElementById(val); if (element) textToCopy = element.innerText; navigator.clipboard.writeText(textToCopy).then(() => { showToast("복사되었습니다."); }); }
