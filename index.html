@@ -29,18 +29,16 @@
         .section-title { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--point-black); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 30px; display: block; }
         .h-divider { width: 100%; height: 1px; background-color: var(--point-black); margin: 0; }
 
-        /* 버튼 스타일 */
         .btn-point { background: var(--point-color); color: white; border: none; padding: 12px; width: 100%; cursor: pointer; letter-spacing: 2px; font-weight: 700; font-family: inherit; font-size: 0.9rem; display: block; text-align: center; text-decoration: none; box-sizing: border-box; border-radius: 8px; }
         .btn-fixed { max-width: 300px; margin: 0 auto; }
-        #moreBtn { margin-top: 40px !important; } /* 버튼 위쪽 간격 추가 */
+        #moreBtn { margin-top: 40px !important; }
         .btn-copy-sm { background: var(--point-color); color: white; border: none; padding: 6px 12px; font-size: 0.75rem; cursor: pointer; font-family: inherit; border-radius: 6px; }
 
         .bus-info-box { background-color: #f8f8f8; border-radius: 16px; padding: 30px; text-align: left; display: inline-block; margin-bottom: 20px; width: 100%; max-width: 350px; }
         .info-row:last-child { margin-bottom: 0; }
         .info-label { width: 80px; color: #888; font-size: 0.95rem; flex-shrink: 0; }
         .info-value { color: #333; font-size: 0.95rem; line-height: 1.5; font-weight: 400; }
-        .info-value strong { font-weight: 700; }
-
+        
         .bgm-btn { position: fixed; top: 15px; right: 15px; z-index: 9990; width: 42px; height: 42px; background: rgba(255, 255, 255, 0.85); border: 1px solid #ddd; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--point-color); font-size: 1.1rem; box-shadow: 0 2px 6px rgba(0,0,0,0.1); outline: none; }
         .bgm-btn.playing i.fa-music { animation: spin 3s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
@@ -293,10 +291,10 @@
         heroContainer.addEventListener('transitionend', () => { isHeroMoving = false; if (heroIdx === 0) { heroContainer.style.transition = 'none'; heroIdx = totalHero; heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`; } else if (heroIdx === totalHero + 1) { heroContainer.style.transition = 'none'; heroIdx = 1; heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`; } });
     }
 
-    // [경로 수정] 갤러리 이미지 경로를 p99 폴더로 변경
+    // 갤러리 경로 및 리스트
     const PATH = './assets/p99/'; 
     const EXT = '.png';
-    const CACHE_V = '?v=9'; // 캐시 초기화 (숫자 계속 업데이트)
+    const CACHE_V = '?v=10'; // 수정할 때마다 이 숫자를 바꿔주면 브라우저 캐시 문제를 해결할 수 있습니다.
 
     const galleryFiles = ['p01', 'p02', 'p03', 'p04', 'p05', 'p06', 'p07', 'p08', 'p09', 'p10', 'p11', 'p12', 'p13', 'p14', 'p15', 'p16', 'p17', 'p18', 'p19', 'p20', 'p21', 'p22', 'p23', 'p24', 'p25', 'p26', 'p27', 'p28', 'p29', 'p30', 'p31', 'p32', 'p33', 'p34', 'p35', 'p36'];
     const totalGalleryImages = galleryFiles.length; 
@@ -310,7 +308,7 @@
             const item = document.createElement('div'); 
             item.className = 'gallery-item'; 
             item.setAttribute('onclick', `openViewer(${idx})`); 
-            item.innerHTML = `<img src="${PATH}${name}${EXT}${CACHE_V}" loading="lazy" onerror="console.log('이미지 로드 실패: ${PATH}${name}${EXT}'); this.style.display='none'">`; 
+            item.innerHTML = `<img src="${PATH}${name}${EXT}${CACHE_V}" loading="lazy" onerror="console.error('이미지 로드 실패:', '${PATH}${name}${EXT}')">`; 
             grid.appendChild(item); 
         }); 
     }
