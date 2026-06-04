@@ -98,7 +98,7 @@
 <body oncontextmenu="return false">
 
 <div class="page-container">
-    <audio id="bgm" src="./assets/bgm.mp3" loop autoplay></audio>
+    <audio id="bgm" src="./assets/bgm.mp3" loop></audio>
     <button id="bgmBtn" class="bgm-btn" onclick="toggleBgm()"><i class="fas fa-music"></i></button>
 
     <div class="hero-slider" id="heroSliderWrap">
@@ -278,28 +278,43 @@
 <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"></script>
 <script>
-    // 자동 재생 로직 및 초기화
+    let isBgmPlaying = false;
+    const bgm = document.getElementById('bgm'); 
+    const bgmBtn = document.getElementById('bgmBtn');
+
+    // [음악 재생 보완] 페이지 로드 시 자동 재생 시도
     window.onload = function() { 
         AOS.init({ duration: 1200, once: true }); 
-        const audio = document.getElementById('bgm');
-        audio.play().then(() => {
-            document.getElementById('bgmBtn').classList.add('playing');
+        bgm.play().then(() => {
             isBgmPlaying = true;
-        }).catch(e => console.log('자동 재생 차단됨'));
+            bgmBtn.classList.add('playing');
+        }).catch(e => console.log('자동 재생 차단'));
     };
 
-    const bgm = document.getElementById('bgm'); const bgmBtn = document.getElementById('bgmBtn'); let isBgmPlaying = false;
-    function toggleBgm() { if (isBgmPlaying) { bgm.pause(); bgmBtn.classList.remove('playing'); } else { bgm.play().catch(e => console.log('BGM Play Error')); bgmBtn.classList.add('playing'); } isBgmPlaying = !isBgmPlaying; }
-    
-    // 방문자 클릭 시 강제 재생 보완
-    document.body.addEventListener('click', function playOnFirstClick() { 
-        if(!isBgmPlaying) {
-            bgm.play();
-            bgmBtn.classList.add('playing');
-            isBgmPlaying = true;
+    // [음악 재생 보완] 모든 상호작용 시 음악 재생
+    function startAudioOnInteraction() {
+        if (!isBgmPlaying) {
+            bgm.play().then(() => {
+                isBgmPlaying = true;
+                bgmBtn.classList.add('playing');
+            }).catch(e => console.log('상호작용 재생 실패'));
         }
-        document.body.removeEventListener('click', playOnFirstClick); 
-    }, { once: true });
+        document.removeEventListener('touchstart', startAudioOnInteraction);
+        document.removeEventListener('click', startAudioOnInteraction);
+    }
+    document.addEventListener('touchstart', startAudioOnInteraction);
+    document.addEventListener('click', startAudioOnInteraction);
+
+    function toggleBgm() { 
+        if (isBgmPlaying) { 
+            bgm.pause(); 
+            bgmBtn.classList.remove('playing'); 
+        } else { 
+            bgm.play().catch(e => console.log('BGM Play Error')); 
+            bgmBtn.classList.add('playing'); 
+        } 
+        isBgmPlaying = !isBgmPlaying; 
+    }
 
     let heroIdx = 1; const totalHero = 3; let isHeroMoving = false;
     const heroContainer = document.getElementById('heroSlider');
