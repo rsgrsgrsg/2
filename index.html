@@ -293,12 +293,12 @@
         heroContainer.addEventListener('transitionend', () => { isHeroMoving = false; if (heroIdx === 0) { heroContainer.style.transition = 'none'; heroIdx = totalHero; heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`; } else if (heroIdx === totalHero + 1) { heroContainer.style.transition = 'none'; heroIdx = 1; heroContainer.style.transform = `translateX(-${heroIdx * 100}%)`; } });
     }
 
-    // [경로 수정] 상대 경로(./)를 사용하여 어느 환경에서든 assets 폴더를 찾도록 설정
-    const PATH = './assets/'; 
+    // [경로 수정] 갤러리 이미지 경로를 p99 폴더로 변경
+    const PATH = './assets/p99/'; 
     const EXT = '.png';
     const CACHE_V = '?v=9'; // 캐시 초기화 (숫자 계속 업데이트)
 
-    const galleryFiles = ['p01', 'p02', 'p03', 'p04', 'p05', 'p06', 'p11', 'p12', 'p13', 'p14', 'p15', 'p16', 'p17', 'p18', 'p19', 'p20', 'p21', 'p31', 'p32', 'p33', 'p34', 'p35', 'p37', 'p38', 'p39', 'p40', 'p41', 'p42', 'p43', 'p44', 'p45', 'p46', 'p47', 'p48', 'p49', 'p50'];
+    const galleryFiles = ['p01', 'p02', 'p03', 'p04', 'p05', 'p06', 'p07', 'p08', 'p09', 'p10', 'p11', 'p12', 'p13', 'p14', 'p15', 'p16', 'p17', 'p18', 'p19', 'p20', 'p21', 'p22', 'p23', 'p24', 'p25', 'p26', 'p27', 'p28', 'p29', 'p30', 'p31', 'p32', 'p33', 'p34', 'p35', 'p36'];
     const totalGalleryImages = galleryFiles.length; 
     let gViewIdx = 0;
 
