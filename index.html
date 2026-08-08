@@ -227,7 +227,16 @@
             <a href="https://naver.me/5apDP7nI" target="_blank" class="btn-point btn-fixed" style="padding: 14px;">네이버 지도</a>
             <a href="https://kko.to/EIt4OnhVm4" target="_blank" class="btn-point btn-fixed" style="padding: 14px;">카카오 네비</a>
         </div>
+        <button onclick="openWalkModal()" class="btn-point btn-fixed" style="margin-top: 10px; padding: 14px; background: #B5E655; color: #191919; box-shadow: 0 6px 16px rgba(181,230,85,0.35);">실내 이동 도보 안내</button>
     </section>
+
+    <div id="walkModal" class="modal">
+        <div class="modal-content" style="max-width: 480px; padding: 30px 16px 24px;">
+            <span class="close-modal" onclick="closeWalkModal()">×</span>
+            <h3 class="modal-title">실내 이동 도보 안내</h3>
+            <img src="./assets/p99/p999.png" alt="실내 이동 도보 안내" style="width: 100%; display: block; border-radius: 10px;">
+        </div>
+    </div>
 
     <div class="h-divider" data-aos="fade-up"><span class="dot"></span></div>
 
@@ -449,6 +458,8 @@
     function copyToClipboard(val) { let textToCopy = val; const element = document.getElementById(val); if (element) textToCopy = element.innerText; navigator.clipboard.writeText(textToCopy).then(() => { showToast("복사되었습니다."); }); }
     function openModal() { document.getElementById('accModal').style.display = 'flex'; }
     function closeModal() { document.getElementById('accModal').style.display = 'none'; }
+    function openWalkModal() { document.getElementById('walkModal').style.display = 'flex'; }
+    function closeWalkModal() { document.getElementById('walkModal').style.display = 'none'; }
     function sanitize(str) { const temp = document.createElement('div'); temp.textContent = str; return temp.innerHTML; }
 
     if (!Kakao.isInitialized()) Kakao.init('a5ea5495dd09ddffc0e6d746f448858b');
